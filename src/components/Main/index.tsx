@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import sha256 from 'crypto';
+import {userApi} from '../../api';
 import LogoImage from '../../assets/LOGO.png';
 import {
   Container,
@@ -14,8 +16,29 @@ import {
 } from './styles';
 
 const Main: React.FC = () => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (event: React.FormEvent) => {
+    event.preventDefault();
+    const requestBody = {
+        email: email,
+        password: sha256.createHash('sha256').update(password).digest('hex')
+    };
+    userApi.signIn(requestBody)
+        .then(({data}) => {
+            console.log(data);
+            alert('SUCCESS!');
+        })
+        .catch(({response: {status}}) => {
+            if(status === 400) {
+                alert('[400] 요청 형식이 잘못되었습니다.');
+            } else if(status === 404) {
+                alert('이메일 또는 비밀번호가 일치하지 않습니다.');
+                
+            }
+        })
+  }
 
   return (
     <Container>
@@ -32,11 +55,13 @@ const Main: React.FC = () => {
               id="email"
               placeholder="ID"
               onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
-                console.log(event.currentTarget.value);
+                setEmail(event.currentTarget.value);
               }}
             />
-            <Input type="password" id="password" placeholder="PASSWORD" />
-            <SignInButton>Sign in</SignInButton>
+            <Input type="password" id="password" placeholder="PASSWORD" onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                setPassword(event.currentTarget.value);
+            }}/>
+            <SignInButton onClick={(event: React.FormEvent) => handleLogin(event)}>Sign in</SignInButton>
           </TextContainer>
         </LoginContainer>
       </Wrapper>

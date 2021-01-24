@@ -1,6 +1,8 @@
+import React from 'react';
+import Router from './Router';
 
 const App: React.FC = () => {
-  return <div className="App">ㅁㄴㅇㄹㄹ</div>;
+  return <Router />
 };
 
 export default App;

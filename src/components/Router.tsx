@@ -5,13 +5,7 @@ const RouterComponent: React.FC = () => {
     return (
         <Switch>
             <Route path="/" exact>
-                <Main />
-            </Route>
-            <Route path="/warehouses">
-                <Warehouses />
-            </Route>
-            <Route path="/quotecontacts">
-                <QuoteContacts />
+                <div>HI</div>
             </Route>
             <Redirect path="*" to="/" />
         </Switch>

@@ -42,6 +42,7 @@ const Main: React.FC = () => {
     if (password === '') {
       message.warning('비밀번호를 입력해 주세요.');
       return;
+
     }
     const requestBody = {
       email: email,

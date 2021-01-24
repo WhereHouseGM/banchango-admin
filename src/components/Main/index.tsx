@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import sha256 from 'crypto';
-import {userApi} from '../../api';
+import { userApi } from '../../api';
+import { message } from 'antd';
 import LogoImage from '../../assets/LOGO.png';
 import {
   Container,
@@ -22,23 +23,25 @@ const Main: React.FC = () => {
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
     const requestBody = {
-        email: email,
-        password: sha256.createHash('sha256').update(password).digest('hex')
+      email: email,
+      password: sha256.createHash('sha256').update(password).digest('hex'),
     };
-    userApi.signIn(requestBody)
-        .then(({data}) => {
-            console.log(data);
-            alert('SUCCESS!');
-        })
-        .catch(({response: {status}}) => {
-            if(status === 400) {
-                alert('[400] 요청 형식이 잘못되었습니다.');
-            } else if(status === 404) {
-                alert('이메일 또는 비밀번호가 일치하지 않습니다.');
-                
-            }
-        })
-  }
+    userApi
+      .signIn(requestBody)
+      .then(({ data }) => {
+        console.log(data);
+        alert('SUCCESS!');
+      })
+      .catch(({ response: { status } }) => {
+        if (status === 400) {
+          message.destroy();
+          message.warning('[400] 요청 형식이 잘못되었습니다.');
+        } else if (status === 404) {
+          message.destroy();
+          message.error('이메일 또는 비밀번호가 일치하지 않습니다.');
+        }
+      });
+  };
 
   return (
     <Container>
@@ -58,10 +61,19 @@ const Main: React.FC = () => {
                 setEmail(event.currentTarget.value);
               }}
             />
-            <Input type="password" id="password" placeholder="PASSWORD" onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+            <Input
+              type="password"
+              id="password"
+              placeholder="PASSWORD"
+              onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                 setPassword(event.currentTarget.value);
-            }}/>
-            <SignInButton onClick={(event: React.FormEvent) => handleLogin(event)}>Sign in</SignInButton>
+              }}
+            />
+            <SignInButton
+              onClick={(event: React.FormEvent) => handleLogin(event)}
+            >
+              Sign in
+            </SignInButton>
           </TextContainer>
         </LoginContainer>
       </Wrapper>

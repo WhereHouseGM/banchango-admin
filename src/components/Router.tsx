@@ -1,11 +1,12 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
+import Main from '../Routes/Main';
 
 const RouterComponent: React.FC = () => {
     return (
         <Switch>
             <Route path="/" exact>
-                <div>HI</div>
+                <Main />
             </Route>
             <Redirect path="*" to="/" />
         </Switch>

@@ -1,7 +1,7 @@
 import Main from '../../components/Main';
 
 const Presenter: React.FC = () => {
-    return <Main />
+  return <Main />;
 };
 
 export default Presenter;

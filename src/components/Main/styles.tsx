@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    height: 100vh;
-    overflow: auto;
+  height: 100vh;
+  overflow: auto;
 `;
 
 export const Wrapper = styled.div`
@@ -37,10 +37,10 @@ export const ImageContainer = styled.div`
   flex-direction: column;
 `;
 
-export const Image = styled.div<{logoImage: string}>`
+export const Image = styled.div<{ logoImage: string }>`
   width: 150px;
   height: 45px;
-  background-image: url(${props => props.logoImage});
+  background-image: url(${(props) => props.logoImage});
   background-size: contain;
   align-self: center;
   background-repeat: no-repeat;
@@ -79,20 +79,20 @@ export const Input = styled.input`
   border-radius: 5px;
   width: 300px;
   margin-top: 10px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   font-size: 15px;
-  line-height: 3.0;
+  line-height: 3;
   text-align: left;
   &:focus {
     background-color: lightgray;
-    border-bottom: 2px solid ${props => props.theme.blueColor};
+    border-bottom: 2px solid ${(props) => props.theme.blueColor};
   }
 `;
 
 export const SignInButton = styled.button`
   width: 300px;
-  border: 2px solid ${props => props.theme.blueColor};
-  color: ${props => props.theme.blueColor};
+  border: 2px solid ${(props) => props.theme.blueColor};
+  color: ${(props) => props.theme.blueColor};
   text-align: center;
   margin: 34px 0 15px 0;
   border-radius: 15px;

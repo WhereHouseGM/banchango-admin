@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoImage from '../../assets/LOGO.png';
 import {
   Container,
@@ -14,6 +14,9 @@ import {
 } from './styles';
 
 const Main: React.FC = () => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
   return (
     <Container>
       <Wrapper>
@@ -24,7 +27,14 @@ const Main: React.FC = () => {
           <TextContainer>
             <MainText>Sign in</MainText>
             <SubText>Banchangohub Admin Page</SubText>
-            <Input type="text" id="email" placeholder="ID" />
+            <Input
+              type="text"
+              id="email"
+              placeholder="ID"
+              onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                console.log(event.currentTarget.value);
+              }}
+            />
             <Input type="password" id="password" placeholder="PASSWORD" />
             <SignInButton>Sign in</SignInButton>
           </TextContainer>

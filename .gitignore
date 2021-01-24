@@ -14,7 +14,7 @@
 /build
 
 # caches
-react-app-env.d.ts
+src/react-app-env.d.ts
 
 # misc
 .DS_Store

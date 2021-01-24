@@ -29,8 +29,8 @@ const Main: React.FC = () => {
     userApi
       .signIn(requestBody)
       .then(({ data }) => {
+        // TODO : FIX LOCATION WHEN LOGIN SUCCESS
         console.log(data);
-        alert('SUCCESS!');
       })
       .catch(({ response: { status } }) => {
         if (status === 400) {

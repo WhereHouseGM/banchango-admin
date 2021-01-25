@@ -59,7 +59,6 @@ const ErrorPage: React.FC<IErrorPageProps> = ({
       <GoToMainPage
         onClick={() => {
             if(locationToGo !== null && locationToGo !== undefined) {
-                console.log("IF")
                 history.push(locationToGo);
             } else if(newLocation !== null && newLocation !== undefined) {
                 window.open(newLocation);

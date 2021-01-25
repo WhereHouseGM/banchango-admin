@@ -6,7 +6,7 @@ const Main: React.FC = () => {
   return (
     <>
     <Helmet>
-      <title>반창고 허브 | 어드민 페이 </title>
+      <title>반창고 허브 | 어드민 페이지</title>
     </Helmet>
   <Presenter />
   </>

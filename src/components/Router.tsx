@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Main from '../Routes/Main';
 import Path from '../Routes/Path';
+import Warehouses from '../Routes/Warehouses';
 
 const RouterComponent: React.FC = () => {
   return (
@@ -16,6 +17,9 @@ const RouterComponent: React.FC = () => {
       </Route>
       <Route path="/path" exact>
         <Path />
+      </Route>
+      <Route path="/warehouses/:warehouseStatus">
+        <Warehouses />
       </Route>
       <Redirect path="*" to="/" />
     </Switch>

@@ -8,18 +8,25 @@ import {
 import Main from '../Routes/Main';
 import Path from '../Routes/Path';
 import Warehouses from '../Routes/Warehouses';
+import TokenValidator from '../components/Common/TokenValidator';
 
 const RouterComponent: React.FC = () => {
   return (
     <Switch>
       <Route path="/" exact>
-        <Main />
+        <TokenValidator>
+          <Main />
+        </TokenValidator>
       </Route>
       <Route path="/path" exact>
+        <TokenValidator>
         <Path />
+        </TokenValidator>
       </Route>
       <Route path="/warehouses/:warehouseStatus">
+        <TokenValidator>
         <Warehouses />
+        </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />
     </Switch>

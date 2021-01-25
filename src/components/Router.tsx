@@ -20,12 +20,12 @@ const RouterComponent: React.FC = () => {
       </Route>
       <Route path="/path" exact>
         <TokenValidator>
-        <Path />
+          <Path />
         </TokenValidator>
       </Route>
       <Route path="/warehouses/:warehouseStatus">
         <TokenValidator>
-        <Warehouses />
+          <Warehouses />
         </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />

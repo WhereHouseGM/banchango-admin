@@ -37,11 +37,11 @@ const GoToMainPage = styled.div`
 `;
 
 interface IErrorPageProps {
-    title: string;
-    message: string;
-    locationToGo?: string;
-    newLocation?: string;
-    buttonMessage: string;
+  title: string;
+  message: string;
+  locationToGo?: string;
+  newLocation?: string;
+  buttonMessage: string;
 }
 
 const ErrorPage: React.FC<IErrorPageProps> = ({
@@ -58,11 +58,11 @@ const ErrorPage: React.FC<IErrorPageProps> = ({
       <Body>{message}</Body>
       <GoToMainPage
         onClick={() => {
-            if(locationToGo !== null && locationToGo !== undefined) {
-                history.push(locationToGo);
-            } else if(newLocation !== null && newLocation !== undefined) {
-                window.open(newLocation);
-            }
+          if (locationToGo !== null && locationToGo !== undefined) {
+            history.push(locationToGo);
+          } else if (newLocation !== null && newLocation !== undefined) {
+            window.open(newLocation);
+          }
         }}
       >
         {buttonMessage}
@@ -70,6 +70,5 @@ const ErrorPage: React.FC<IErrorPageProps> = ({
     </Container>
   );
 };
-
 
 export default ErrorPage;

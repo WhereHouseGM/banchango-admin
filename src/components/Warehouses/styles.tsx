@@ -116,3 +116,18 @@ export const Date = styled.div`
   font-weight: bold;
   width: 30%;
 `;
+
+export const ShowMoreButton = styled.div`
+  align-self: center;
+  flex: 1;
+  justify-self: center;
+  padding: 15px;
+  margin-top: 20px;
+  width: 30%;
+  font-size: 20px;
+  border-radius: 20px;
+  color: white;
+  background-color: #2e559a;
+  font-weight: bold;
+  cursor: pointer;
+`;

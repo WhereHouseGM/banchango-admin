@@ -6,7 +6,6 @@ const HeaderComponent: React.FC<RouteComponentProps> = (props) => {
   const {
     location: { pathname },
   } = props;
-  console.log(props);
 
   return (
     <Header>

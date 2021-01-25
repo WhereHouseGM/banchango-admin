@@ -1,6 +1,7 @@
 import {PropsWithChildren, ReactElement, ReactNode, useCallback} from 'react';
 import jwtDecode from 'jwt-decode';
 import {useLocation} from 'react-router-dom';
+import ErrorPage from './ErrorPage';
 
 interface ITokenAndTypeValidatorProps {
     children: PropsWithChildren<ReactNode>;
@@ -34,27 +35,22 @@ const TokenAndTypeValidator: React.FC<ITokenAndTypeValidatorProps> = ({children}
         switch(location.pathname) {
             case PathNames.MAIN:
                 if(isUserLoggedIn()) {
-                    alert('로그인이 이미 되어 있었습니다. 다시 로그인하세용.');
                     localStorage.clear();
-                    return children;
+                    return <ErrorPage title="이미 로그인이 되어 있었습니다." message="제가 로그아웃 처리 해드렸습니다." locationToGo="/" buttonMessage="다시 로그인하기"/>
                 } else {
                     return children;
                 }
             default:
                 if(isUserLoggedIn()) {
                     if(isTokenExpired()) {
-                        alert('유효기간이 만료되었습니다. 다시 로그인 해주세요.');
                         localStorage.clear();
-                        window.location.href = "/";
-                        return;
+                        return <ErrorPage title="로그인 휴효기간이 만료되었습니다." message="제가 로그아웃 처리 해드렸습니다." locationToGo="/" buttonMessage="다시 로그인하러 가기" />
                     } else {
                         return children;
                     }
                 } else {
-                    alert('잘못된 접근입니다. 다시 로그인 해주세요.');
                     localStorage.clear();
-                    window.location.href = "/";
-                    return;
+                    return <ErrorPage title="잘못된 접근입니다." message="로그인을 먼저 해주세요." locationToGo="/" buttonMessage="로그인"/>;
                 }
         }
     }, [location.pathname, children]);

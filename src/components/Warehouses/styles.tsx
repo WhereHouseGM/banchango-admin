@@ -33,6 +33,7 @@ export const Wrapper = styled.div`
 export const InformationContainer = styled.div`
   background-color: white;
   width: 375px;
+  min-height: 500px;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid #d5d5d5;

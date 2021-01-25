@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://api.banchangohub.com/v3/',
+  baseURL: 'https://api.banchangohub.com/v3/admin/',
 });
 
 export const userApi = {
@@ -10,7 +10,7 @@ export const userApi = {
 
 export const warehouseApi = {
   getWarehouses: (token: string, page: number, size: number, status?: string) =>
-    api.get('/admin/warehouses', {
+    api.get('warehouses', {
       headers: {
         Authorization: `Bearer ${token}`,
       },

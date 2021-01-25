@@ -1,7 +1,7 @@
-import Header from '../../components/Header';
+import Warehouses from '../../components/Warehouses';
 
 const Presenter: React.FC = () => {
-    return <Header />;
+  return <Warehouses />;
 };
 
 export default Presenter;

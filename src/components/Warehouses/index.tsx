@@ -58,7 +58,7 @@ const Warehouses: React.FC = () => {
           }
         }
       });
-  }, [pageIndex, isExtraLoading, setResults, params.warehouseStatus, token]);
+  }, [pageIndex, isExtraLoading, setResults, params, token]);
 
   useEffect(() => {
     getApi();
@@ -82,7 +82,10 @@ const Warehouses: React.FC = () => {
               <Image logoImage={LogoImage}></Image>
             </ImageContainer>
             <Text>창고 정보 관리</Text>
-            <Header />
+            <Header handleClick={() => {
+                setIsExtraLoading(false);
+                setPageIndex(0);
+            }} warehouseStatus={params.warehouseStatus}/>
             <NavBar>
               <NavText width={'10%'}>상태</NavText>
               <NavText width={'60%'}>창고 정보</NavText>
@@ -91,8 +94,8 @@ const Warehouses: React.FC = () => {
             {results.map((result, idx) => {
               return (
                 <WarehouseContainer key={idx}>
-                  <Status color={statusToColor('DELETED')}>
-                    {statusToText('DELETED')}
+                  <Status color={statusToColor(result.status)}>
+                    {statusToText(result.status)}
                   </Status>
                   <WarehouseInformationWrapper>
                     <Name>{result.name}</Name>

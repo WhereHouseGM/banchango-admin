@@ -17,7 +17,7 @@ export const warehouseApi = {
       params: {
         page: page,
         size: size,
-        status: status,
+        status: status !== 'ALL' ? status : null,
       },
     }),
 };

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -44,4 +45,24 @@ export const Image = styled.div<{ logoImage: string }>`
   background-size: contain;
   align-self: center;
   background-repeat: no-repeat;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Button = styled(Link)`
+  width: 90%;
+  text-align: center;
+  padding: 20px;
+  font-size: 25px;
+  line-height: 1.5;
+  border: 1px solid ${(props) => props.theme.blueColor};
+  border-radius: 3px;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: ${(props) => props.theme.blueColor};
+  margin-bottom: 10px;
 `;

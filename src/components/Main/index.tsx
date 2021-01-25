@@ -3,6 +3,7 @@ import sha256 from 'crypto';
 import { userApi } from '../../api';
 import { message } from 'antd';
 import LogoImage from '../../assets/LOGO.png';
+import { useHistory } from 'react-router-dom';
 import {
   Container,
   Wrapper,
@@ -22,6 +23,7 @@ const Main: React.FC = () => {
   const emailRef: React.RefObject<HTMLInputElement> = createRef();
   const passwordRef: React.RefObject<HTMLInputElement> = createRef();
   const buttonRef: React.RefObject<HTMLButtonElement> = createRef();
+  const history = useHistory();
 
   const clearInputs = () => {
     if (emailRef.current) {
@@ -49,9 +51,9 @@ const Main: React.FC = () => {
     };
     userApi
       .signIn(requestBody)
-      .then(({ data }) => {
-        // TODO : FIX LOCATION WHEN LOGIN SUCCESS
-        console.log(data);
+      .then(({ data: { accessToken } }) => {
+        localStorage.setItem('AccessToken', accessToken);
+        history.push('/path');
       })
       .catch(({ response: { status } }) => {
         if (status === 400) {

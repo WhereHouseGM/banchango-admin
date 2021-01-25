@@ -2,7 +2,7 @@ import React from 'react';
 import Presenter from './Presenter';
 import Helmet from 'react-helmet';
 
-const Main: React.FC = () => {
+const Path: React.FC = () => {
   return (
     <>
       <Helmet>
@@ -13,4 +13,4 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+export default Path;

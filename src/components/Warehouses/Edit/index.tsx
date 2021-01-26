@@ -1,4 +1,4 @@
-import React, { useState, createRef } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Wrapper,
@@ -77,34 +77,6 @@ interface IEditDataProps {
 }
 
 const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
-  const nameRef: React.RefObject<HTMLInputElement> = createRef();
-  const spaceRef: React.RefObject<HTMLInputElement> = createRef();
-  const addressRef: React.RefObject<HTMLInputElement> = createRef();
-  const addressDetailRef: React.RefObject<HTMLInputElement> = createRef();
-  const descriptionRef: React.RefObject<HTMLTextAreaElement> = createRef();
-  const availableWeekdaysRef: React.RefObject<HTMLInputElement> = createRef();
-  const insurancesRef: React.RefObject<HTMLInputElement> = createRef();
-  const cctvExistRef: React.RefObject<HTMLInputElement> = createRef();
-  const openAtRef: React.RefObject<HTMLInputElement> = createRef();
-  const closeAtRef: React.RefObject<HTMLInputElement> = createRef();
-  const availableTimeDetailRef: React.RefObject<HTMLInputElement> = createRef();
-  const securityCompaniesRef: React.RefObject<HTMLInputElement> = createRef();
-  const doorLockExistRef: React.RefObject<HTMLInputElement> = createRef();
-  const airConditioningTypeRef: React.RefObject<HTMLInputElement> = createRef();
-  const workerExistRef: React.RefObject<HTMLInputElement> = createRef();
-  const canParkRef: React.RefObject<HTMLInputElement> = createRef();
-  const mainItemTypesRef: React.RefObject<HTMLInputElement> = createRef();
-  const warehouseTypeRef: React.RefObject<HTMLInputElement> = createRef();
-  const minReleasePerMonthRef: React.RefObject<HTMLInputElement> = createRef();
-  const deliveryTypesRef: React.RefObject<HTMLInputElement> = createRef();
-  const warehouseFacilityUsagesRef: React.RefObject<HTMLInputElement> = createRef();
-  const warehouseUsageCautionsRef: React.RefObject<HTMLInputElement> = createRef();
-  const warehouseConditionRef: React.RefObject<HTMLInputElement> = createRef();
-  const latitudeRef: React.RefObject<HTMLInputElement> = createRef();
-  const longitudeRef: React.RefObject<HTMLInputElement> = createRef();
-  const statusRef: React.RefObject<HTMLInputElement> = createRef();
-  const facilityChecksRef: React.RefObject<HTMLInputElement> = createRef();
-
   const [inputs, setInputs] = useState({
     name: warehouseData.name,
     space: warehouseData.space,
@@ -150,7 +122,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
         name="deliveryTypes"
         type="text"
         width="256px"
-        ref={deliveryTypesRef}
       />
       &nbsp;
       <AddButton onClick={() => addDeliveryTypes()}>추가</AddButton>
@@ -165,7 +136,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
         name="warehouseFacilityUsages"
         type="text"
         width="316px"
-        ref={warehouseFacilityUsagesRef}
       />
       &nbsp;
       <AddButton onClick={() => addWarehouseFacilityUsages()}>추가</AddButton>
@@ -180,7 +150,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
         name="warehouseUsageCautions"
         type="text"
         width="316px"
-        ref={warehouseUsageCautionsRef}
       />
       &nbsp;
       <AddButton onClick={() => addWarehouseUsageCautions()}>추가</AddButton>
@@ -189,7 +158,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
 
   const [insurances, setInsurances] = useState([
     <ButtonAndInputContainer key="INSURANCES0">
-      <Input type="text" width="256px" name="insurances" ref={insurancesRef} />
+      <Input type="text" width="256px" name="insurances" />
       &nbsp;
       <AddButton onClick={() => addInsurances()}>추가</AddButton>
     </ButtonAndInputContainer>,
@@ -197,12 +166,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
 
   const [securityCompanies, setSecurityCompanies] = useState([
     <ButtonAndInputContainer key="SECCOMPS0">
-      <Input
-        type="text"
-        width="256px"
-        name="securityCompanies"
-        ref={securityCompaniesRef}
-      />
+      <Input type="text" width="256px" name="securityCompanies" />
       &nbsp;
       <AddButton onClick={() => addSecurityCompanies()}>추가</AddButton>
     </ButtonAndInputContainer>,
@@ -213,12 +177,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     let key = arrOfInsurances.length;
     arrOfInsurances.push(
       <ButtonAndInputContainer key={`INSURANCES${key}`}>
-        <Input
-          type="text"
-          width="256px"
-          name="insurances"
-          ref={insurancesRef}
-        />
+        <Input type="text" width="256px" name="insurances" />
         &nbsp;
         {key === 1 ? (
           <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
@@ -233,12 +192,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     let key = arrOfSecurityCompanies.length;
     arrOfSecurityCompanies.push(
       <ButtonAndInputContainer key={`SECCOMPS${key}`}>
-        <Input
-          type="text"
-          width="256px"
-          name="securityCompanies"
-          ref={securityCompaniesRef}
-        />
+        <Input type="text" width="256px" name="securityCompanies" />
         &nbsp;
         {key === 1 ? (
           <RemoveButton onClick={() => removeSecurityCompanies()}>
@@ -260,7 +214,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
           name="deliveryTypes"
           type="text"
           width="256px"
-          ref={deliveryTypesRef}
         />
         &nbsp;
         {key === 1 ? (
@@ -282,7 +235,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
           name="warehouseFacilityUsages"
           type="text"
           width="316px"
-          ref={warehouseFacilityUsagesRef}
         />
         &nbsp;
         {key === 1 ? (
@@ -306,7 +258,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
           name="warehouseUsageCautions"
           type="text"
           width="316px"
-          ref={warehouseUsageCautionsRef}
         />
         &nbsp;
         {key === 1 ? (
@@ -430,7 +381,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     setWarehouseUsageCautionsToState();
     setInsurancesToState();
     setSecurityCompaniesToState();
-    let requestBody = inputs;
+    let requestBody = { ...inputs, ...facilityCheck };
     if (inputs.name === null || inputs.name.trim() === '') {
       message.warning('창고명을 입력해주세요.');
       return;
@@ -536,7 +487,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   type="text"
                   placeholder="창고명"
                   width="256px"
-                  ref={nameRef}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({ ...inputs, name: event.currentTarget.value });
                   }}
@@ -552,7 +502,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   name="space"
                   placeholder="창고 평수(평 단위 숫자만 입력)"
                   width="256px"
-                  ref={spaceRef}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -573,7 +522,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   name="address"
                   placeholder="인천광역시 서구"
                   width="256px"
-                  ref={addressRef}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -592,7 +540,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   name="addressDetail"
                   placeholder="상세 주소"
                   width="256px"
-                  ref={addressDetailRef}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -611,7 +558,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
               placeholder="창고"
               width="480px"
               height="240px"
-              ref={descriptionRef}
               onChange={(event: React.SyntheticEvent<HTMLTextAreaElement>) => {
                 if (event.currentTarget.value.length >= 399) {
                   message.warning(
@@ -640,7 +586,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   type="text"
                   placeholder="09:00"
                   width="256px"
-                  ref={openAtRef}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({ ...inputs, openAt: event.currentTarget.value });
                   }}
@@ -656,7 +601,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   type="text"
                   placeholder="18:00"
                   width="256px"
-                  ref={closeAtRef}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -676,7 +620,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 type="text"
                 placeholder="물류 센터 사정에 따라 변경될 수 있습니다."
                 width="316px"
-                ref={availableTimeDetailRef}
                 onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setInputs({
                     ...inputs,
@@ -697,7 +640,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="radio"
                       value={day.value}
                       name="availableWeekdays"
-                      ref={availableWeekdaysRef}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
@@ -726,7 +668,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 type="number"
                 placeholder="없으면 1 입력"
                 width="316px"
-                ref={minReleasePerMonthRef}
                 onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setInputs({
                     ...inputs,
@@ -760,7 +701,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     type="radio"
                     value={type.value}
                     name="warehouseType"
-                    ref={warehouseTypeRef}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,
                     ) => {
@@ -787,7 +727,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     type="radio"
                     value={type.value}
                     name="airConditioningType"
-                    ref={airConditioningTypeRef}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,
                     ) => {
@@ -815,7 +754,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={type.value}
                       name="mainItemTypes"
-                      ref={mainItemTypesRef}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
@@ -854,7 +792,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={check.value}
                       name="facilityChecks"
-                      ref={facilityChecksRef}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
@@ -862,7 +799,8 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                           [key: string]: boolean;
                         }
                         let tempFacilityCheck: IFacilityChecks = facilityCheck;
-                        tempFacilityCheck[event.currentTarget.value] = true;
+                        tempFacilityCheck[event.currentTarget.value] =
+                          event.currentTarget.checked;
                         setFacilityCheck(tempFacilityCheck);
                       }}
                     />
@@ -886,7 +824,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={condition.value}
                       name="warehouseCondition"
-                      ref={warehouseConditionRef}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {

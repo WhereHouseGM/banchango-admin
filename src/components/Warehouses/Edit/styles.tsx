@@ -17,6 +17,7 @@ export const Wrapper = styled.div`
 export const RegisterContainer = styled.div`
   width: 750px;
   border-radius: 15px;
+  border: 1px solid black;
   overflow: hidden;
   margin-top: 20px;
   @media screen and (max-width: 750px) {
@@ -26,7 +27,6 @@ export const RegisterContainer = styled.div`
 `;
 
 export const ImageContainer = styled.div`
-  background-color: #1d489b;
   height: 112px;
   display: flex;
   box-pack: center;

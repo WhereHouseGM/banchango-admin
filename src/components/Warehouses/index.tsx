@@ -48,6 +48,7 @@ const Warehouses: React.FC = () => {
         } else {
           setResults(requests);
         }
+        console.log(requests);
       })
       .catch(({ response: { status } }) => {
         if (status === 404) {
@@ -103,7 +104,11 @@ const Warehouses: React.FC = () => {
                   <WarehouseInformationWrapper>
                     <Name>{result.name}</Name>
                     <ButtonsContainer>
-                      <Button to={`/warehouses/edit/data/${result.warehouseId}`}>정보</Button>
+                      <Button
+                        to={`/warehouses/edit/data/${result.warehouseId}`}
+                      >
+                        정보
+                      </Button>
                       <Button to="/">이미지</Button>
                     </ButtonsContainer>
                   </WarehouseInformationWrapper>

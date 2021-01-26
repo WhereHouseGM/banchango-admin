@@ -24,7 +24,7 @@ const RouterComponent: React.FC = () => {
           <Path />
         </TokenValidator>
       </Route>
-      <Route path="/warehouses/:warehouseStatus">
+      <Route path="/warehouses/:warehouseStatus" exact={true}>
         <TokenValidator>
           <Warehouses />
         </TokenValidator>

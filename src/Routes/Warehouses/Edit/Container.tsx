@@ -43,6 +43,7 @@ const Container: React.FC = () => {
     warehouseApi
       .getWarehouseData(token, parseInt(params.warehouseId))
       .then(({ data }) => {
+        message.destroy();
         setWarehouseData(data);
       })
       .catch(({ response: { status } }) => {

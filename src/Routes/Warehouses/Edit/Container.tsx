@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import Presenter from './Presenter';
 import { warehouseApi } from '../../../api';
 import { message } from 'antd';
+import Loading from '../../../components/Loading';
 
 const Container: React.FC = () => {
   const params = useParams<{ warehouseId: string }>();
+  const [loading, setLoading] = useState(true);
   const [warehouseData, setWarehouseData] = useState({
     name: '',
     space: -1,
@@ -39,12 +41,11 @@ const Container: React.FC = () => {
   });
   const token = localStorage.getItem('AccessToken') || 'abc';
   const getApi = useCallback(() => {
-    message.loading('잠시만 기다려 주세요.');
     warehouseApi
       .getWarehouseData(token, parseInt(params.warehouseId))
       .then(({ data }) => {
-        message.destroy();
         setWarehouseData(data);
+        setLoading(false);
       })
       .catch(({ response: { status } }) => {
         message.destroy();
@@ -64,6 +65,7 @@ const Container: React.FC = () => {
             '알 수 없는 오류가 발생했습니다. 관리자에게 문의해 주세요.',
           );
         }
+        setLoading(false);
       });
   }, [params, token]);
 
@@ -71,7 +73,9 @@ const Container: React.FC = () => {
     getApi();
   }, [getApi]);
 
-  return <Presenter warehouseData={warehouseData} />;
+  return (
+    <> {loading ? <Loading /> : <Presenter warehouseData={warehouseData} />}</>
+  );
 };
 
 export default Container;

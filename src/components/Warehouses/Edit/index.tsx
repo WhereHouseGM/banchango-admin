@@ -695,7 +695,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
             </InputTitle>
             <RadioButtonContainer>
               {warehouseTypes.map((type, index) => (
-                <React.Fragment key={index + `WH_TYPE`}>
+                <div key={index + `WH_TYPE`}>
                   <RadioButton
                     id={type.id}
                     type="radio"
@@ -713,7 +713,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   <RadioButtonLabel htmlFor={type.id}>
                     {type.children}
                   </RadioButtonLabel>
-                </React.Fragment>
+                </div>
               ))}
             </RadioButtonContainer>
             <InputTitle>
@@ -721,7 +721,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
             </InputTitle>
             <RadioButtonContainer>
               {airConditioningTypes.map((type, index) => (
-                <React.Fragment key={index + `AC_TYPE`}>
+                <div key={index + `AC_TYPE`}>
                   <RadioButton
                     id={type.id}
                     type="radio"
@@ -739,7 +739,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   <RadioButtonLabel htmlFor={type.id}>
                     {type.children}
                   </RadioButtonLabel>
-                </React.Fragment>
+                </div>
               ))}
             </RadioButtonContainer>
             <InputTitle>
@@ -863,7 +863,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
               {warehouseUsageCautions}
             </ItemContainer>
             <SubmitButton onClick={() => register()}>
-              창고 등록 요청하기
+              창고 정보 변경하기
             </SubmitButton>
           </TextContainer>
         </RegisterContainer>

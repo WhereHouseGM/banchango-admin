@@ -26,4 +26,10 @@ export const warehouseApi = {
         Authorization: `Bearer ${token}`,
       },
     }),
+  getWarehouseData: (token: string, warehouseId: number) =>
+    api.get(`warehouses/${warehouseId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

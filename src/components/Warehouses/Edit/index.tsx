@@ -23,7 +23,6 @@ import {
   ButtonAndInputContainer,
   RemoveButton,
   SubmitButton,
-  ArrayInput,
 } from './styles';
 
 import LogoImage from '../../../assets/LOGO.png';
@@ -203,6 +202,16 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     let tempInputs = inputs;
     tempInputs.warehouseUsageCautions = _warehouseUsageCautions;
     setInputs(tempInputs);
+  };
+
+  const checkMatch = (T: string, S: Array<string>): boolean => {
+    let result = false;
+    for (let s of S) {
+      if (T === s) {
+        result = true;
+      }
+    }
+    return result;
   };
 
   const register = () => {
@@ -601,6 +610,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     type="radio"
                     value={type.value}
                     name="warehouseType"
+                    checked={type.value === inputs.warehouseType}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,
                     ) => {
@@ -627,6 +637,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     type="radio"
                     value={type.value}
                     name="airConditioningType"
+                    checked={type.value === inputs.airConditioningType}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,
                     ) => {
@@ -654,24 +665,26 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={type.value}
                       name="mainItemTypes"
+                      checked={checkMatch(type.value, inputs.mainItemTypes)}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
-                        let tempInputs = inputs;
+                        let tempInputs = inputs.mainItemTypes;
                         if (event.currentTarget.checked) {
-                          if (tempInputs.mainItemTypes.length >= 3) {
+                          if (tempInputs.length >= 3) {
                             alert('대표 품목은 최대 3개까지 선택 가능합니다.');
+                            let length = tempInputs.length;
+                            tempInputs.splice(length - 1, 1);
+                            setInputs({ ...inputs, mainItemTypes: tempInputs });
                           }
-                          tempInputs.mainItemTypes.push(
-                            event.currentTarget.value,
-                          );
+                          tempInputs.push(event.currentTarget.value);
                         } else {
-                          let index = tempInputs.mainItemTypes.indexOf(
+                          let index = tempInputs.indexOf(
                             event.currentTarget.value,
                           );
-                          tempInputs.mainItemTypes.splice(index, 1);
+                          tempInputs.splice(index, 1);
                         }
-                        setInputs(tempInputs);
+                        setInputs({ ...inputs, mainItemTypes: tempInputs });
                       }}
                     />
                     <RadioButtonLabel htmlFor={type.id}>

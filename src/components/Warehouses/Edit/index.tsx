@@ -65,9 +65,9 @@ interface IEditDataProps {
     mainImageUrl: string;
     deliveryTypes: Array<string>;
     warehouseCondition: Array<string>;
-    warehouseFacilityUsages: Array<string> | null;
-    warehouseUsageCautions: Array<string> | null;
-    images: Array<string> | null;
+    warehouseFacilityUsages: Array<string>;
+    warehouseUsageCautions: Array<string>;
+    images: Array<string>;
     status: string;
     insurances: Array<string>;
     securityCompanies: Array<string>;
@@ -115,214 +115,274 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
 
   const [facilityCheck, setFacilityCheck] = useState(FacilityChecksInterface);
 
-  const [deliveryTypes, setDeliveryTypes] = useState([
-    <ButtonAndInputContainer key="DELIVERYTYPES0">
-      <Input
-        className="deliveryTypes"
-        name="deliveryTypes"
-        type="text"
-        width="256px"
-      />
-      &nbsp;
-      <AddButton onClick={() => addDeliveryTypes()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
-  const [warehouseFacilityUsages, setWarehouseFaciltiyUsages] = useState([
-    <ButtonAndInputContainer key="WHFACILITYUSAGES0">
-      <ArrayInput
-        id="warehouseFacilityUsages0"
-        className="warehouseFacilityUsages"
-        name="warehouseFacilityUsages"
-        type="text"
-        width="316px"
-      />
-      &nbsp;
-      <AddButton onClick={() => addWarehouseFacilityUsages()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
-  const [warehouseUsageCautions, setWarehouseUsageCautions] = useState([
-    <ButtonAndInputContainer key="WHUSAGECAUTIONS0">
-      <ArrayInput
-        id="warehouseUsageCautions0"
-        className="warehouseUsageCautions"
-        name="warehouseUsageCautions"
-        type="text"
-        width="316px"
-      />
-      &nbsp;
-      <AddButton onClick={() => addWarehouseUsageCautions()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
-  const [insurances, setInsurances] = useState([
-    inputs.insurances.map((insurance, idx) => {
-      return (
-        <ButtonAndInputContainer key={`INSURANCES${idx}`}>
-          <Input
-            type="text"
-            width="256px"
-            name="insurances"
-            value={insurance}
-          />
-          &nbsp;
-          <AddButton onClick={() => addInsurances()}>추가</AddButton>
-        </ButtonAndInputContainer>
-      );
-    }),
-  ]);
-
-  const [securityCompanies, setSecurityCompanies] = useState([
-    <ButtonAndInputContainer key="SECCOMPS0">
-      <Input type="text" width="256px" name="securityCompanies" />
-      &nbsp;
-      <AddButton onClick={() => addSecurityCompanies()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
   const addInsurances = () => {
-    let arrOfInsurances = insurances;
-    let key = arrOfInsurances.length;
-    arrOfInsurances.push(
-      <ButtonAndInputContainer key={`INSURANCES${key}`}>
-        <Input type="text" width="256px" name="insurances" />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setInsurances([...arrOfInsurances]);
+    let temp = inputs.insurances;
+    temp.push('');
+    setInputs({ ...inputs, insurances: temp });
+  };
+
+  const removeInsurances = (idx: number) => {
+    let temp = inputs.insurances;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, insurances: temp });
   };
 
   const addSecurityCompanies = () => {
-    let arrOfSecurityCompanies = securityCompanies;
-    let key = arrOfSecurityCompanies.length;
-    arrOfSecurityCompanies.push(
-      <ButtonAndInputContainer key={`SECCOMPS${key}`}>
-        <Input type="text" width="256px" name="securityCompanies" />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={() => removeSecurityCompanies()}>
-            삭제
-          </RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setSecurityCompanies([...arrOfSecurityCompanies]);
+    let temp = inputs.securityCompanies;
+    temp.push('');
+    setInputs({ ...inputs, securityCompanies: temp });
+  };
+
+  const removeSecurityCompanies = (idx: number) => {
+    let temp = inputs.securityCompanies;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, securityCompanies: temp });
   };
 
   const addDeliveryTypes = () => {
-    let tempDeliveryTypes = deliveryTypes;
-    let key = tempDeliveryTypes.length;
-    tempDeliveryTypes.push(
-      <ButtonAndInputContainer key={`DELIVERYTYPES${key}`}>
-        <Input
-          className="deliveryTypes"
-          name="deliveryTypes"
-          type="text"
-          width="256px"
-        />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={removeDeliveryTypes}>삭제</RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setDeliveryTypes([...tempDeliveryTypes]);
+    let temp = inputs.deliveryTypes;
+    temp.push('');
+    setInputs({ ...inputs, deliveryTypes: temp });
+  };
+
+  const removeDeliveryTypes = (idx: number) => {
+    let temp = inputs.deliveryTypes;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, deliveryTypes: temp });
   };
 
   const addWarehouseFacilityUsages = () => {
-    let arrOfWarehouseFacilityUsages = warehouseFacilityUsages;
-    let key = arrOfWarehouseFacilityUsages.length;
-    arrOfWarehouseFacilityUsages.push(
-      <ButtonAndInputContainer key={`WHFACILITYUSAGES${key}`}>
-        <ArrayInput
-          id={`warehouseFacilityUsages${key}`}
-          className="warehouseFacilityUsages"
-          name="warehouseFacilityUsages"
-          type="text"
-          width="316px"
-        />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={removeWarehouseFacilityUsages}>
-            삭제
-          </RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setWarehouseFaciltiyUsages([...arrOfWarehouseFacilityUsages]);
+    let temp = inputs.warehouseFacilityUsages;
+    temp.push('');
+    setInputs({ ...inputs });
+  };
+
+  const removeWarehouseFacilityUsages = (idx: number) => {
+    let temp = inputs.warehouseFacilityUsages;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, warehouseFacilityUsages: temp });
   };
 
   const addWarehouseUsageCautions = () => {
-    let arrOfWarehouseUsageCautions = warehouseUsageCautions;
-    let key = arrOfWarehouseUsageCautions.length;
-    arrOfWarehouseUsageCautions.push(
-      <ButtonAndInputContainer key={`WHUSAGECAUTIONS${key}`}>
-        <ArrayInput
-          id={`warehouseUsageCautions${key}`}
-          className="warehouseUsageCautions"
-          name="warehouseUsageCautions"
-          type="text"
-          width="316px"
-        />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={removeWarehouseUsageCautions}>
-            삭제
-          </RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setWarehouseUsageCautions([...arrOfWarehouseUsageCautions]);
+    let temp = inputs.warehouseUsageCautions;
+    temp.push('');
+    setInputs({ ...inputs, warehouseUsageCautions: temp });
   };
 
-  const removeDeliveryTypes = () => {
-    let beforeDeliveryTypes = deliveryTypes;
-    beforeDeliveryTypes.pop();
-    setDeliveryTypes([...beforeDeliveryTypes]);
+  const removeWarehouseUsageCautions = (idx: number) => {
+    let temp = inputs.warehouseUsageCautions;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, warehouseUsageCautions: temp });
   };
 
-  const removeWarehouseFacilityUsages = () => {
-    let arrOfWarehouseFacilityUsages = warehouseFacilityUsages;
-    arrOfWarehouseFacilityUsages.pop();
-    setWarehouseFaciltiyUsages([...arrOfWarehouseFacilityUsages]);
-  };
+  //   const [deliveryTypes, setDeliveryTypes] = useState([
+  //     <ButtonAndInputContainer key="DELIVERYTYPES0">
+  //       <Input
+  //         className="deliveryTypes"
+  //         name="deliveryTypes"
+  //         type="text"
+  //         width="256px"
+  //       />
+  //       &nbsp;
+  //       <AddButton onClick={() => addDeliveryTypes()}>추가</AddButton>
+  //     </ButtonAndInputContainer>,
+  //   ]);
 
-  const removeWarehouseUsageCautions = () => {
-    let arrOfWarehouseUsageCautions = warehouseUsageCautions;
-    arrOfWarehouseUsageCautions.pop();
-    setWarehouseUsageCautions([...arrOfWarehouseUsageCautions]);
-  };
+  //   const [warehouseFacilityUsages, setWarehouseFaciltiyUsages] = useState([
+  //     <ButtonAndInputContainer key="WHFACILITYUSAGES0">
+  //       <ArrayInput
+  //         id="warehouseFacilityUsages0"
+  //         className="warehouseFacilityUsages"
+  //         name="warehouseFacilityUsages"
+  //         type="text"
+  //         width="316px"
+  //       />
+  //       &nbsp;
+  //       <AddButton onClick={() => addWarehouseFacilityUsages()}>추가</AddButton>
+  //     </ButtonAndInputContainer>,
+  //   ]);
 
-  const removeInsurances = () => {
-    let arrOfInsurances = insurances;
-    arrOfInsurances.pop();
-    setInsurances([...arrOfInsurances]);
-  };
+  //   const [warehouseUsageCautions, setWarehouseUsageCautions] = useState([
+  //     <ButtonAndInputContainer key="WHUSAGECAUTIONS0">
+  //       <ArrayInput
+  //         id="warehouseUsageCautions0"
+  //         className="warehouseUsageCautions"
+  //         name="warehouseUsageCautions"
+  //         type="text"
+  //         width="316px"
+  //       />
+  //       &nbsp;
+  //       <AddButton onClick={() => addWarehouseUsageCautions()}>추가</AddButton>
+  //     </ButtonAndInputContainer>,
+  //   ]);
 
-  const removeSecurityCompanies = () => {
-    let arrOfSecurityCompanies = securityCompanies;
-    arrOfSecurityCompanies.pop();
-    setSecurityCompanies([...arrOfSecurityCompanies]);
-  };
+  //   const [insurances, setInsurances] = useState([
+  //     inputs.insurances.map((insurance, idx) => {
+  //       return (
+  //         <ButtonAndInputContainer key={`INSURANCES${idx}`}>
+  //           <Input
+  //             type="text"
+  //             width="256px"
+  //             name="insurances"
+  //             value={insurance}
+  //           />
+  //           &nbsp;
+  //           <AddButton onClick={() => addInsurances()}>추가</AddButton>
+  //         </ButtonAndInputContainer>
+  //       );
+  //     }),
+  //   ]);
 
-  const setDeliveryTypesToState = () => {
-    let list = document.getElementsByName(
-      InputType.DELIVERY_TYPES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _deliveryTypes = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _deliveryTypes.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.deliveryTypes = _deliveryTypes;
-    setInputs(tempInputs);
-  };
+  //   const [securityCompanies, setSecurityCompanies] = useState([
+  //     <ButtonAndInputContainer key="SECCOMPS0">
+  //       <Input type="text" width="256px" name="securityCompanies" />
+  //       &nbsp;
+  //       <AddButton onClick={() => addSecurityCompanies()}>추가</AddButton>
+  //     </ButtonAndInputContainer>,
+  //   ]);
+
+  //   const addInsurances = () => {
+  //     let arrOfInsurances = insurances;
+  //     let key = arrOfInsurances.length;
+  //     arrOfInsurances.push(
+  //       <ButtonAndInputContainer key={`INSURANCES${key}`}>
+  //         <Input type="text" width="256px" name="insurances" />
+  //         &nbsp;
+  //         {key === 1 ? (
+  //           <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
+  //         ) : null}
+  //       </ButtonAndInputContainer>,
+  //     );
+  //     setInsurances([...arrOfInsurances]);
+  //   };
+
+  //   const addSecurityCompanies = () => {
+  //     let arrOfSecurityCompanies = securityCompanies;
+  //     let key = arrOfSecurityCompanies.length;
+  //     arrOfSecurityCompanies.push(
+  //       <ButtonAndInputContainer key={`SECCOMPS${key}`}>
+  //         <Input type="text" width="256px" name="securityCompanies" />
+  //         &nbsp;
+  //         {key === 1 ? (
+  //           <RemoveButton onClick={() => removeSecurityCompanies()}>
+  //             삭제
+  //           </RemoveButton>
+  //         ) : null}
+  //       </ButtonAndInputContainer>,
+  //     );
+  //     setSecurityCompanies([...arrOfSecurityCompanies]);
+  //   };
+
+  //   const addDeliveryTypes = () => {
+  //     let tempDeliveryTypes = deliveryTypes;
+  //     let key = tempDeliveryTypes.length;
+  //     tempDeliveryTypes.push(
+  //       <ButtonAndInputContainer key={`DELIVERYTYPES${key}`}>
+  //         <Input
+  //           className="deliveryTypes"
+  //           name="deliveryTypes"
+  //           type="text"
+  //           width="256px"
+  //         />
+  //         &nbsp;
+  //         {key === 1 ? (
+  //           <RemoveButton onClick={removeDeliveryTypes}>삭제</RemoveButton>
+  //         ) : null}
+  //       </ButtonAndInputContainer>,
+  //     );
+  //     setDeliveryTypes([...tempDeliveryTypes]);
+  //   };
+
+  //   const addWarehouseFacilityUsages = () => {
+  //     let arrOfWarehouseFacilityUsages = warehouseFacilityUsages;
+  //     let key = arrOfWarehouseFacilityUsages.length;
+  //     arrOfWarehouseFacilityUsages.push(
+  //       <ButtonAndInputContainer key={`WHFACILITYUSAGES${key}`}>
+  //         <ArrayInput
+  //           id={`warehouseFacilityUsages${key}`}
+  //           className="warehouseFacilityUsages"
+  //           name="warehouseFacilityUsages"
+  //           type="text"
+  //           width="316px"
+  //         />
+  //         &nbsp;
+  //         {key === 1 ? (
+  //           <RemoveButton onClick={removeWarehouseFacilityUsages}>
+  //             삭제
+  //           </RemoveButton>
+  //         ) : null}
+  //       </ButtonAndInputContainer>,
+  //     );
+  //     setWarehouseFaciltiyUsages([...arrOfWarehouseFacilityUsages]);
+  //   };
+
+  //   const addWarehouseUsageCautions = () => {
+  //     let arrOfWarehouseUsageCautions = warehouseUsageCautions;
+  //     let key = arrOfWarehouseUsageCautions.length;
+  //     arrOfWarehouseUsageCautions.push(
+  //       <ButtonAndInputContainer key={`WHUSAGECAUTIONS${key}`}>
+  //         <ArrayInput
+  //           id={`warehouseUsageCautions${key}`}
+  //           className="warehouseUsageCautions"
+  //           name="warehouseUsageCautions"
+  //           type="text"
+  //           width="316px"
+  //         />
+  //         &nbsp;
+  //         {key === 1 ? (
+  //           <RemoveButton onClick={removeWarehouseUsageCautions}>
+  //             삭제
+  //           </RemoveButton>
+  //         ) : null}
+  //       </ButtonAndInputContainer>,
+  //     );
+  //     setWarehouseUsageCautions([...arrOfWarehouseUsageCautions]);
+  //   };
+
+  //   const removeDeliveryTypes = () => {
+  //     let beforeDeliveryTypes = deliveryTypes;
+  //     beforeDeliveryTypes.pop();
+  //     setDeliveryTypes([...beforeDeliveryTypes]);
+  //   };
+
+  //   const removeWarehouseFacilityUsages = () => {
+  //     let arrOfWarehouseFacilityUsages = warehouseFacilityUsages;
+  //     arrOfWarehouseFacilityUsages.pop();
+  //     setWarehouseFaciltiyUsages([...arrOfWarehouseFacilityUsages]);
+  //   };
+
+  //   const removeWarehouseUsageCautions = () => {
+  //     let arrOfWarehouseUsageCautions = warehouseUsageCautions;
+  //     arrOfWarehouseUsageCautions.pop();
+  //     setWarehouseUsageCautions([...arrOfWarehouseUsageCautions]);
+  //   };
+
+  //   const removeInsurances = () => {
+  //     let arrOfInsurances = insurances;
+  //     arrOfInsurances.pop();
+  //     setInsurances([...arrOfInsurances]);
+  //   };
+
+  //   const removeSecurityCompanies = () => {
+  //     let arrOfSecurityCompanies = securityCompanies;
+  //     arrOfSecurityCompanies.pop();
+  //     setSecurityCompanies([...arrOfSecurityCompanies]);
+  //   };
+
+  //   const setDeliveryTypesToState = () => {
+  //     let list = document.getElementsByName(
+  //       InputType.DELIVERY_TYPES,
+  //     ) as NodeListOf<HTMLInputElement>;
+  //     let _deliveryTypes = [];
+  //     for (let i = 0; i < list.length; i++) {
+  //       if (list[i].value.trim() !== '') {
+  //         _deliveryTypes.push(list[i].value);
+  //       }
+  //     }
+  //     let tempInputs = inputs;
+  //     tempInputs.deliveryTypes = _deliveryTypes;
+  //     setInputs(tempInputs);
+  //   };
 
   const setWarehouseFacilityUsagesToState = () => {
     let list = document.getElementsByName(
@@ -354,104 +414,104 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     setInputs(tempInputs);
   };
 
-  const setInsurancesToState = () => {
-    let list = document.getElementsByName(
-      InputType.INSURANCES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _insurances = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _insurances.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.insurances = _insurances;
-    setInputs(tempInputs);
-  };
+  //   const setInsurancesToState = () => {
+  //     let list = document.getElementsByName(
+  //       InputType.INSURANCES,
+  //     ) as NodeListOf<HTMLInputElement>;
+  //     let _insurances = [];
+  //     for (let i = 0; i < list.length; i++) {
+  //       if (list[i].value.trim() !== '') {
+  //         _insurances.push(list[i].value);
+  //       }
+  //     }
+  //     let tempInputs = inputs;
+  //     tempInputs.insurances = _insurances;
+  //     setInputs(tempInputs);
+  //   };
 
-  const setSecurityCompaniesToState = () => {
-    let list = document.getElementsByName(
-      InputType.SECURITY_COMPANIES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _securityCompanies = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _securityCompanies.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.securityCompanies = _securityCompanies;
-    setInputs(tempInputs);
-  };
+  //   const setSecurityCompaniesToState = () => {
+  //     let list = document.getElementsByName(
+  //       InputType.SECURITY_COMPANIES,
+  //     ) as NodeListOf<HTMLInputElement>;
+  //     let _securityCompanies = [];
+  //     for (let i = 0; i < list.length; i++) {
+  //       if (list[i].value.trim() !== '') {
+  //         _securityCompanies.push(list[i].value);
+  //       }
+  //     }
+  //     let tempInputs = inputs;
+  //     tempInputs.securityCompanies = _securityCompanies;
+  //     setInputs(tempInputs);
+  //   };
 
   const register = () => {
-    setDeliveryTypesToState();
+    // setDeliveryTypesToState();
     setWarehouseFacilityUsagesToState();
     setWarehouseUsageCautionsToState();
-    setInsurancesToState();
-    setSecurityCompaniesToState();
+    // setInsurancesToState();
+    // setSecurityCompaniesToState();
     let requestBody = { ...inputs, ...facilityCheck };
-    if (inputs.name === null || inputs.name.trim() === '') {
-      message.warning('창고명을 입력해주세요.');
-      return;
-    } else if (inputs.space === 0 || inputs.space === 0) {
-      message.warning('창고 평수를 입력해주세요.');
-      return;
-    } else if (inputs.address === null || inputs.address.trim() === '') {
-      message.warning('주소를 입력해주세요.');
-      return;
-    } else if (
-      inputs.addressDetail === null ||
-      inputs.addressDetail.trim() === ''
-    ) {
-      message.warning('상세 주소를 입력해주세요.');
-      return;
-    } else if (
-      inputs.description === null ||
-      inputs.description.trim() === ''
-    ) {
-      message.warning('창고 소개를 입력해주세요.');
-      return;
-    } else if (inputs.openAt === null || inputs.openAt.trim() === '') {
-      message.warning('영업 시작 시간을 입력해주세요.');
-      return;
-    } else if (inputs.closeAt === null || inputs.closeAt.trim() === '') {
-      message.warning('영업 종료 시간을 입력해주세요.');
-      return;
-    } else if (
-      inputs.availableTimeDetail === null ||
-      inputs.availableTimeDetail.trim() === ''
-    ) {
-      message.warning('영업 시간 유의사항을 입력해주세요');
-      return;
-    } else if (inputs.availableWeekdays === null) {
-      message.warning('영업요일을 선택해주세요.');
-      return;
-    } else if (inputs.minReleasePerMonth === null) {
-      message.warning('월 최소 출고량을 입력해 주세요.');
-      return;
-    } else if (inputs.insurances.length === 0) {
-      message.warning('보험사를 1개 이상 입력해주세요.');
-      return;
-    } else if (inputs.securityCompanies.length === 0) {
-      message.warning('경비 업체를 1개 이상 입력해주세요.');
-      return;
-    } else if (inputs.warehouseType === null) {
-      message.warning('업종을 선택해주세요.');
-      return;
-    } else if (inputs.airConditioningType === null) {
-      message.warning('냉난방 지원 방식을 선택해주세요.');
-      return;
-    } else if (inputs.mainItemTypes.length === 0) {
-      message.warning('대표 품목을 1개 이상 선택해주세요.');
-      return;
-    } else if (inputs.warehouseCondition.length === 0) {
-      message.warning('창고 유형을 1개 이상 선택해주세요.');
-      return;
-    } else if (inputs.deliveryTypes.length === 0) {
-      message.warning('제휴 택배사를 1개 이상 입력해주세요.');
-      return;
-    }
+    // if (inputs.name === null || inputs.name.trim() === '') {
+    //   message.warning('창고명을 입력해주세요.');
+    //   return;
+    // } else if (inputs.space === 0 || inputs.space === 0) {
+    //   message.warning('창고 평수를 입력해주세요.');
+    //   return;
+    // } else if (inputs.address === null || inputs.address.trim() === '') {
+    //   message.warning('주소를 입력해주세요.');
+    //   return;
+    // } else if (
+    //   inputs.addressDetail === null ||
+    //   inputs.addressDetail.trim() === ''
+    // ) {
+    //   message.warning('상세 주소를 입력해주세요.');
+    //   return;
+    // } else if (
+    //   inputs.description === null ||
+    //   inputs.description.trim() === ''
+    // ) {
+    //   message.warning('창고 소개를 입력해주세요.');
+    //   return;
+    // } else if (inputs.openAt === null || inputs.openAt.trim() === '') {
+    //   message.warning('영업 시작 시간을 입력해주세요.');
+    //   return;
+    // } else if (inputs.closeAt === null || inputs.closeAt.trim() === '') {
+    //   message.warning('영업 종료 시간을 입력해주세요.');
+    //   return;
+    // } else if (
+    //   inputs.availableTimeDetail === null ||
+    //   inputs.availableTimeDetail.trim() === ''
+    // ) {
+    //   message.warning('영업 시간 유의사항을 입력해주세요');
+    //   return;
+    // } else if (inputs.availableWeekdays === null) {
+    //   message.warning('영업요일을 선택해주세요.');
+    //   return;
+    // } else if (inputs.minReleasePerMonth === null) {
+    //   message.warning('월 최소 출고량을 입력해 주세요.');
+    //   return;
+    // } else if (inputs.insurances.length === 0) {
+    //   message.warning('보험사를 1개 이상 입력해주세요.');
+    //   return;
+    // } else if (inputs.securityCompanies.length === 0) {
+    //   message.warning('경비 업체를 1개 이상 입력해주세요.');
+    //   return;
+    // } else if (inputs.warehouseType === null) {
+    //   message.warning('업종을 선택해주세요.');
+    //   return;
+    // } else if (inputs.airConditioningType === null) {
+    //   message.warning('냉난방 지원 방식을 선택해주세요.');
+    //   return;
+    // } else if (inputs.mainItemTypes.length === 0) {
+    //   message.warning('대표 품목을 1개 이상 선택해주세요.');
+    //   return;
+    // } else if (inputs.warehouseCondition.length === 0) {
+    //   message.warning('창고 유형을 1개 이상 선택해주세요.');
+    //   return;
+    // } else if (inputs.deliveryTypes.length === 0) {
+    //   message.warning('제휴 택배사를 1개 이상 입력해주세요.');
+    //   return;
+    // }
     console.log(requestBody);
     // message.loading('잠시만 기다려주세요.');
     // return warehouseApi
@@ -700,13 +760,73 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 <InputTitle>
                   보험사 / 보험명<span style={{ color: 'red' }}>*</span>
                 </InputTitle>
-                {insurances}
+                {inputs.insurances.map((insurance, idx) => {
+                  return (
+                    <ButtonAndInputContainer key={`INSURANCES${idx}`}>
+                      <Input
+                        type="text"
+                        width="256px"
+                        name="insurances"
+                        value={insurance}
+                        onChange={(
+                          event: React.SyntheticEvent<HTMLInputElement>,
+                        ) => {
+                          let temp = inputs.insurances;
+                          temp[idx] = event.currentTarget.value;
+                          setInputs({ ...inputs, insurances: temp });
+                        }}
+                      />
+                      &nbsp;
+                      {idx === 0 ? (
+                        <AddButton onClick={() => addInsurances()}>
+                          추가
+                        </AddButton>
+                      ) : null}
+                      {idx !== 0 ? (
+                        <RemoveButton onClick={() => removeInsurances(idx)}>
+                          삭제
+                        </RemoveButton>
+                      ) : null}
+                    </ButtonAndInputContainer>
+                  );
+                })}
               </ItemContainer>
               <ItemContainer>
                 <InputTitle>
                   경비 업체<span style={{ color: 'red' }}>*</span>
                 </InputTitle>
-                {securityCompanies}
+                {inputs.securityCompanies.map((company, idx) => {
+                  return (
+                    <ButtonAndInputContainer key={`SEC_COMPS${idx}`}>
+                      <Input
+                        type="text"
+                        width="256px"
+                        name="securityCompanies"
+                        value={company}
+                        onChange={(
+                          event: React.SyntheticEvent<HTMLInputElement>,
+                        ) => {
+                          let temp = inputs.securityCompanies;
+                          temp[idx] = event.currentTarget.value;
+                          setInputs({ ...inputs, securityCompanies: temp });
+                        }}
+                      />
+                      &nbsp;
+                      {idx === 0 ? (
+                        <AddButton onClick={() => addSecurityCompanies()}>
+                          추가
+                        </AddButton>
+                      ) : null}
+                      {idx !== 0 ? (
+                        <RemoveButton
+                          onClick={() => removeSecurityCompanies(idx)}
+                        >
+                          삭제
+                        </RemoveButton>
+                      ) : null}
+                    </ButtonAndInputContainer>
+                  );
+                })}
               </ItemContainer>
             </TwoElementContainer>
             <InputTitle>
@@ -871,15 +991,106 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
               <InputTitle>
                 제휴 택배사<span style={{ color: 'red' }}>*</span>
               </InputTitle>
-              {deliveryTypes}
+              {inputs.deliveryTypes.map((type, idx) => {
+                return (
+                  <ButtonAndInputContainer key={`DELIVERY_TYPES${idx}`}>
+                    <Input
+                      type="text"
+                      width="256px"
+                      name="deliveryTypes"
+                      value={type}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
+                        let temp = inputs.deliveryTypes;
+                        temp[idx] = event.currentTarget.value;
+                        setInputs({ ...inputs, deliveryTypes: temp });
+                      }}
+                    />
+                    &nbsp;
+                    {idx === 0 ? (
+                      <AddButton onClick={() => addDeliveryTypes()}>
+                        추가
+                      </AddButton>
+                    ) : null}
+                    {idx !== 0 ? (
+                      <RemoveButton onClick={() => removeDeliveryTypes(idx)}>
+                        삭제
+                      </RemoveButton>
+                    ) : null}
+                  </ButtonAndInputContainer>
+                );
+              })}
             </ItemContainer>
             <ItemContainer>
               <InputTitle>창고 시설 안내사항</InputTitle>
-              {warehouseFacilityUsages}
+              {inputs.warehouseFacilityUsages.map((usage, idx) => {
+                return (
+                  <ButtonAndInputContainer key={`WH_FACILITY_USAGES${idx}`}>
+                    <Input
+                      type="text"
+                      width="316px"
+                      name="warehouseFacilityUsages"
+                      value={usage}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
+                        let temp = inputs.warehouseFacilityUsages;
+                        temp[idx] = event.currentTarget.value;
+                        setInputs({ ...inputs, warehouseFacilityUsages: temp });
+                      }}
+                    />
+                    &nbsp;
+                    {idx === 0 ? (
+                      <AddButton onClick={() => addWarehouseFacilityUsages()}>
+                        추가
+                      </AddButton>
+                    ) : null}
+                    {idx !== 0 ? (
+                      <RemoveButton
+                        onClick={() => removeWarehouseFacilityUsages(idx)}
+                      >
+                        삭제
+                      </RemoveButton>
+                    ) : null}
+                  </ButtonAndInputContainer>
+                );
+              })}
             </ItemContainer>
             <ItemContainer>
               <InputTitle>창고 이용 주의사항</InputTitle>
-              {warehouseUsageCautions}
+              {inputs.warehouseUsageCautions.map((caution, idx) => {
+                return (
+                  <ButtonAndInputContainer key={`WH_USAGE_CAUTIONS${idx}`}>
+                    <Input
+                      type="text"
+                      width="316px"
+                      name="warehouseUsageCautions"
+                      value={caution}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
+                        let temp = inputs.warehouseUsageCautions;
+                        temp[idx] = event.currentTarget.value;
+                        setInputs({ ...inputs, warehouseUsageCautions: temp });
+                      }}
+                    />
+                    &nbsp;
+                    {idx === 0 ? (
+                      <AddButton onClick={() => addWarehouseUsageCautions()}>
+                        추가
+                      </AddButton>
+                    ) : null}
+                    {idx !== 0 ? (
+                      <RemoveButton
+                        onClick={() => removeWarehouseUsageCautions(idx)}
+                      >
+                        삭제
+                      </RemoveButton>
+                    ) : null}
+                  </ButtonAndInputContainer>
+                );
+              })}
             </ItemContainer>
             <SubmitButton onClick={() => register()}>
               창고 정보 변경하기

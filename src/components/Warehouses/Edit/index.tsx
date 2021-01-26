@@ -103,35 +103,45 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   const latitudeRef: React.RefObject<HTMLInputElement> = createRef();
   const longitudeRef: React.RefObject<HTMLInputElement> = createRef();
   const statusRef: React.RefObject<HTMLInputElement> = createRef();
+  const facilityChecksRef: React.RefObject<HTMLInputElement> = createRef();
 
   const [inputs, setInputs] = useState({
-    name: '',
-    space: 0,
-    address: '',
-    addressDetail: '',
-    description: '',
-    availableWeekdays: 0,
-    openAt: '',
-    closeAt: '',
-    availableTimeDetail: '',
-    insurances: [],
-    cctvExist: 0,
-    securityCompanies: [],
-    doorLockExist: 0,
-    airConditioningType: '',
-    workerExist: 0,
-    canPark: 0,
-    mainItemTypes: [],
-    warehouseType: '',
-    minReleasePerMonth: 0,
-    deliveryTypes: [],
-    warehouseFacilityUsages: [],
-    warehouseUsageCautions: [],
-    warehouseCondition: [],
-    latitude: 1.1,
-    longitude: 1.1,
-    status: '',
+    name: warehouseData.name,
+    space: warehouseData.space,
+    address: warehouseData.address,
+    addressDetail: warehouseData.addressDetail,
+    description: warehouseData.description,
+    availableWeekdays: warehouseData.availableWeekdays,
+    openAt: warehouseData.openAt,
+    closeAt: warehouseData.closeAt,
+    availableTimeDetail: warehouseData.availableTimeDetail,
+    insurances: warehouseData.insurances,
+    securityCompanies: warehouseData.securityCompanies,
+    airConditioningType: warehouseData.airConditioningType,
+    mainItemTypes: warehouseData.mainItemTypes,
+    warehouseType: warehouseData.warehouseType,
+    minReleasePerMonth: warehouseData.minReleasePerMonth,
+    deliveryTypes: warehouseData.deliveryTypes,
+    warehouseFacilityUsages: warehouseData.warehouseFacilityUsages,
+    warehouseUsageCautions: warehouseData.warehouseUsageCautions,
+    warehouseCondition: warehouseData.warehouseCondition,
+    latitude: warehouseData.latitude,
+    longitude: warehouseData.longitude,
+    status: warehouseData.status,
   });
+
+  interface IFacilityChecks {
+    [key: string]: boolean;
+  }
+
+  const a: IFacilityChecks = {
+    cctvExist: warehouseData.cctvExist,
+    workerExist: warehouseData.workerExist,
+    doorLockExist: warehouseData.doorLockExist,
+    canPark: warehouseData.canPark,
+  };
+
+  const [facilityCheck, setFacilityCheck] = useState(a);
 
   const [deliveryTypes, setDeliveryTypes] = useState([
     <ButtonAndInputContainer key="DELIVERYTYPES0">
@@ -340,7 +350,9 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   };
 
   const setDeliveryTypesToState = () => {
-    let list = document.getElementsByName(InputType.DELIVERY_TYPES);
+    let list = document.getElementsByName(
+      InputType.DELIVERY_TYPES,
+    ) as NodeListOf<HTMLInputElement>;
     let _deliveryTypes = [];
     for (let i = 0; i < list.length; i++) {
       if (list[i].value.trim() !== '') {
@@ -353,7 +365,9 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   };
 
   const setWarehouseFacilityUsagesToState = () => {
-    let list = document.getElementsByName(InputType.WAREHOUSE_FACILITY_USAGES);
+    let list = document.getElementsByName(
+      InputType.WAREHOUSE_FACILITY_USAGES,
+    ) as NodeListOf<HTMLInputElement>;
     let _warehouseFacilityUsages = [];
     for (let i = 0; i < list.length; i++) {
       if (list[i].value.trim() !== '') {
@@ -366,7 +380,9 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   };
 
   const setWarehouseUsageCautionsToState = () => {
-    let list = document.getElementsByName(InputType.WAREHOUSE_USAGE_CAUTIONS);
+    let list = document.getElementsByName(
+      InputType.WAREHOUSE_USAGE_CAUTIONS,
+    ) as NodeListOf<HTMLInputElement>;
     let _warehouseUsageCautions = [];
     for (let i = 0; i < list.length; i++) {
       if (list[i].value.trim() !== '') {
@@ -379,7 +395,9 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   };
 
   const setInsurancesToState = () => {
-    let list = document.getElementsByName(InputType.INSURANCES);
+    let list = document.getElementsByName(
+      InputType.INSURANCES,
+    ) as NodeListOf<HTMLInputElement>;
     let _insurances = [];
     for (let i = 0; i < list.length; i++) {
       if (list[i].value.trim() !== '') {
@@ -392,7 +410,9 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   };
 
   const setSecurityCompaniesToState = () => {
-    let list = document.getElementsByName(InputType.SECURITY_COMPANIES);
+    let list = document.getElementsByName(
+      InputType.SECURITY_COMPANIES,
+    ) as NodeListOf<HTMLInputElement>;
     let _securityCompanies = [];
     for (let i = 0; i < list.length; i++) {
       if (list[i].value.trim() !== '') {
@@ -834,12 +854,16 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={check.value}
                       name="facilityChecks"
+                      ref={facilityChecksRef}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
-                        let tempInputs = inputs;
-                        tempInputs[event.currentTarget.value] = true;
-                        setInputs(tempInputs);
+                        interface IFacilityChecks {
+                          [key: string]: boolean;
+                        }
+                        let tempFacilityCheck: IFacilityChecks = facilityCheck;
+                        tempFacilityCheck[event.currentTarget.value] = true;
+                        setFacilityCheck(tempFacilityCheck);
                       }}
                     />
                     <RadioButtonLabel htmlFor={check.id}>

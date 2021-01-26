@@ -11,7 +11,6 @@ const HeaderComponent: React.FC<IHeaderComponentProps> = ({
   warehouseStatus,
 }) => {
   return (
-            
     <Header>
       <List>
         <Item current={'ALL' === warehouseStatus}>

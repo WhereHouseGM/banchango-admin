@@ -9,6 +9,7 @@ import Main from '../Routes/Main';
 import Path from '../Routes/Path';
 import Warehouses from '../Routes/Warehouses';
 import TokenValidator from '../components/Common/TokenValidator';
+import EditData from '../Routes/Warehouses/Edit';
 
 const RouterComponent: React.FC = () => {
   return (
@@ -27,6 +28,9 @@ const RouterComponent: React.FC = () => {
         <TokenValidator>
           <Warehouses />
         </TokenValidator>
+      </Route>
+      <Route path="/warehouses/edit/data/:warehouseId">
+        <EditData />
       </Route>
       <Redirect path="*" to="/" />
     </Switch>

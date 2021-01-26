@@ -31,7 +31,7 @@ const RouterComponent: React.FC = () => {
       </Route>
       <Route path="/warehouses/edit/data/:warehouseId">
         <TokenValidator>
-        <EditData />
+          <EditData />
         </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />

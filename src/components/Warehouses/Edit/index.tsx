@@ -41,40 +41,42 @@ import {
 import { warehouseApi } from '../../../api';
 
 import { message } from 'antd';
-import { BackTopProps } from 'antd/lib/back-top';
 
 interface IEditDataProps {
-  name: string;
-  space: number;
-  address: string;
-  addressDetail: string;
-  description: string;
-  availableWeekdays: number;
-  openAt: string;
-  closeAt: string;
-  availableTimeDetail: string;
-  cctvExist: boolean;
-  doorLockExist: boolean;
-  airConditioningType: string;
-  workerExist: boolean;
-  canPark: boolean;
-  warehouseType: string;
-  minReleasePerMonth: number;
-  latitude: number;
-  longitude: number;
-  deliveryTypes: Array<string>;
-  warehouseCondition: Array<string>;
-  warehouseFacilityUsages: Array<string>;
-  warehouseUsageCautions: Array<string>;
-  images: Array<string>;
-  status: string;
-  insurances: Array<string>;
-  securityCompanies: Array<string>;
-  mainItemTypes: Array<string>;
-  blogUrl?: string;
+  warehouseData: {
+    name: string;
+    space: number;
+    address: string;
+    addressDetail: string;
+    description: string;
+    availableWeekdays: number;
+    openAt: string;
+    closeAt: string;
+    availableTimeDetail: string;
+    cctvExist: boolean;
+    doorLockExist: boolean;
+    airConditioningType: string;
+    workerExist: boolean;
+    canPark: boolean;
+    warehouseType: string;
+    minReleasePerMonth: number;
+    latitude: number;
+    longitude: number;
+    mainImageUrl: string;
+    deliveryTypes: Array<string>;
+    warehouseCondition: Array<string>;
+    warehouseFacilityUsages: Array<string> | null;
+    warehouseUsageCautions: Array<string> | null;
+    images: Array<string> | null;
+    status: string;
+    insurances: Array<string>;
+    securityCompanies: Array<string>;
+    mainItemTypes: Array<string>;
+    blogUrl?: string;
+  };
 }
 
-const EditData: React.FC<IEditDataProps> = () => {
+const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   const nameRef: React.RefObject<HTMLInputElement> = createRef();
   const spaceRef: React.RefObject<HTMLInputElement> = createRef();
   const addressRef: React.RefObject<HTMLInputElement> = createRef();

@@ -14,20 +14,7 @@ export const Wrapper = styled.div`
   align-content: center;
 `;
 
-export const BackgroundImage = styled.div<{ bgImage: string }>`
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-image: url(${(props) => props.bgImage});
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: -1;
-`;
-
 export const RegisterContainer = styled.div`
-  background-color: #1d489b;
   width: 750px;
   border-radius: 15px;
   overflow: hidden;

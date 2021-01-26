@@ -8,7 +8,7 @@ const EditData: React.FC = () => {
       <Helmet>
         <title>반창고 허브 | 창고 정보 수정</title>
       </Helmet>
-      <EditData />
+      <Presenter />
     </>
   );
 };

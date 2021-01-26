@@ -103,7 +103,7 @@ const Warehouses: React.FC = () => {
                   <WarehouseInformationWrapper>
                     <Name>{result.name}</Name>
                     <ButtonsContainer>
-                      <Button to="/">정보</Button>
+                      <Button to={`/warehouses/edit/data/${result.warehouseId}`}>정보</Button>
                       <Button to="/">이미지</Button>
                     </ButtonsContainer>
                   </WarehouseInformationWrapper>

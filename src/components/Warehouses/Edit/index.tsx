@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import {
   Container,
   Wrapper,
-  BackgroundImage,
   RegisterContainer,
   ImageContainer,
   RegisterImage,
@@ -27,7 +26,7 @@ import {
   ArrayInput,
 } from './styles';
 
-import LogoImage from '../../assets/LOGO.png';
+import LogoImage from '../../../assets/LOGO.png';
 
 import {
   warehouseTypes,
@@ -42,34 +41,94 @@ import {
 import { warehouseApi } from '../../../api';
 
 import { message } from 'antd';
+import { BackTopProps } from 'antd/lib/back-top';
 
-const EditData = () => {
+interface IEditDataProps {
+  name: string;
+  space: number;
+  address: string;
+  addressDetail: string;
+  description: string;
+  availableWeekdays: number;
+  openAt: string;
+  closeAt: string;
+  availableTimeDetail: string;
+  cctvExist: boolean;
+  doorLockExist: boolean;
+  airConditioningType: string;
+  workerExist: boolean;
+  canPark: boolean;
+  warehouseType: string;
+  minReleasePerMonth: number;
+  latitude: number;
+  longitude: number;
+  deliveryTypes: Array<string>;
+  warehouseCondition: Array<string>;
+  warehouseFacilityUsages: Array<string>;
+  warehouseUsageCautions: Array<string>;
+  images: Array<string>;
+  status: string;
+  insurances: Array<string>;
+  securityCompanies: Array<string>;
+  mainItemTypes: Array<string>;
+  blogUrl?: string;
+}
+
+const EditData: React.FC<IEditDataProps> = () => {
+  const nameRef: React.RefObject<HTMLInputElement> = createRef();
+  const spaceRef: React.RefObject<HTMLInputElement> = createRef();
+  const addressRef: React.RefObject<HTMLInputElement> = createRef();
+  const addressDetailRef: React.RefObject<HTMLInputElement> = createRef();
+  const descriptionRef: React.RefObject<HTMLTextAreaElement> = createRef();
+  const availableWeekdaysRef: React.RefObject<HTMLInputElement> = createRef();
+  const insurancesRef: React.RefObject<HTMLInputElement> = createRef();
+  const cctvExistRef: React.RefObject<HTMLInputElement> = createRef();
+  const openAtRef: React.RefObject<HTMLInputElement> = createRef();
+  const closeAtRef: React.RefObject<HTMLInputElement> = createRef();
+  const availableTimeDetailRef: React.RefObject<HTMLInputElement> = createRef();
+  const securityCompaniesRef: React.RefObject<HTMLInputElement> = createRef();
+  const doorLockExistRef: React.RefObject<HTMLInputElement> = createRef();
+  const airConditioningTypeRef: React.RefObject<HTMLInputElement> = createRef();
+  const workerExistRef: React.RefObject<HTMLInputElement> = createRef();
+  const canParkRef: React.RefObject<HTMLInputElement> = createRef();
+  const mainItemTypesRef: React.RefObject<HTMLInputElement> = createRef();
+  const warehouseTypeRef: React.RefObject<HTMLInputElement> = createRef();
+  const minReleasePerMonthRef: React.RefObject<HTMLInputElement> = createRef();
+  const deliveryTypesRef: React.RefObject<HTMLInputElement> = createRef();
+  const warehouseFacilityUsagesRef: React.RefObject<HTMLInputElement> = createRef();
+  const warehouseUsageCautionsRef: React.RefObject<HTMLInputElement> = createRef();
+  const warehouseConditionRef: React.RefObject<HTMLInputElement> = createRef();
+  const latitudeRef: React.RefObject<HTMLInputElement> = createRef();
+  const longitudeRef: React.RefObject<HTMLInputElement> = createRef();
+  const statusRef: React.RefObject<HTMLInputElement> = createRef();
+
   const [inputs, setInputs] = useState({
-    name: null,
-    space: null,
-    address: null,
-    addressDetail: null,
-    description: null,
-    availableWeekdays: null,
-    openAt: null,
-    closeAt: null,
-    availableTimeDetail: null,
+    name: '',
+    space: 0,
+    address: '',
+    addressDetail: '',
+    description: '',
+    availableWeekdays: 0,
+    openAt: '',
+    closeAt: '',
+    availableTimeDetail: '',
     insurances: [],
-    cctvExist: false,
+    cctvExist: 0,
     securityCompanies: [],
-    doorLockExist: false,
-    airConditioningType: null,
-    workerExist: false,
-    canPark: false,
+    doorLockExist: 0,
+    airConditioningType: '',
+    workerExist: 0,
+    canPark: 0,
     mainItemTypes: [],
-    warehouseType: null,
-    minReleasePerMonth: null,
+    warehouseType: '',
+    minReleasePerMonth: 0,
     deliveryTypes: [],
     warehouseFacilityUsages: [],
     warehouseUsageCautions: [],
     warehouseCondition: [],
-    latitude: 88.88,
-    longitude: 99.99,
+    latitude: 1.1,
+    longitude: 1.1,
+    status: '',
   });
 
   const [deliveryTypes, setDeliveryTypes] = useState([
@@ -79,6 +138,7 @@ const EditData = () => {
         name="deliveryTypes"
         type="text"
         width="256px"
+        ref={deliveryTypesRef}
       />
       &nbsp;
       <AddButton onClick={() => addDeliveryTypes()}>추가</AddButton>
@@ -93,6 +153,7 @@ const EditData = () => {
         name="warehouseFacilityUsages"
         type="text"
         width="316px"
+        ref={warehouseFacilityUsagesRef}
       />
       &nbsp;
       <AddButton onClick={() => addWarehouseFacilityUsages()}>추가</AddButton>
@@ -107,6 +168,7 @@ const EditData = () => {
         name="warehouseUsageCautions"
         type="text"
         width="316px"
+        ref={warehouseUsageCautionsRef}
       />
       &nbsp;
       <AddButton onClick={() => addWarehouseUsageCautions()}>추가</AddButton>
@@ -115,7 +177,7 @@ const EditData = () => {
 
   const [insurances, setInsurances] = useState([
     <ButtonAndInputContainer key="INSURANCES0">
-      <Input type="text" width="256px" name="insurances" />
+      <Input type="text" width="256px" name="insurances" ref={insurancesRef} />
       &nbsp;
       <AddButton onClick={() => addInsurances()}>추가</AddButton>
     </ButtonAndInputContainer>,
@@ -123,7 +185,12 @@ const EditData = () => {
 
   const [securityCompanies, setSecurityCompanies] = useState([
     <ButtonAndInputContainer key="SECCOMPS0">
-      <Input type="text" width="256px" name="securityCompanies" />
+      <Input
+        type="text"
+        width="256px"
+        name="securityCompanies"
+        ref={securityCompaniesRef}
+      />
       &nbsp;
       <AddButton onClick={() => addSecurityCompanies()}>추가</AddButton>
     </ButtonAndInputContainer>,
@@ -134,7 +201,12 @@ const EditData = () => {
     let key = arrOfInsurances.length;
     arrOfInsurances.push(
       <ButtonAndInputContainer key={`INSURANCES${key}`}>
-        <Input type="text" width="256px" name="insurances" />
+        <Input
+          type="text"
+          width="256px"
+          name="insurances"
+          ref={insurancesRef}
+        />
         &nbsp;
         {key === 1 ? (
           <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
@@ -149,7 +221,12 @@ const EditData = () => {
     let key = arrOfSecurityCompanies.length;
     arrOfSecurityCompanies.push(
       <ButtonAndInputContainer key={`SECCOMPS${key}`}>
-        <Input type="text" width="256px" name="securityCompanies" />
+        <Input
+          type="text"
+          width="256px"
+          name="securityCompanies"
+          ref={securityCompaniesRef}
+        />
         &nbsp;
         {key === 1 ? (
           <RemoveButton onClick={() => removeSecurityCompanies()}>
@@ -171,6 +248,7 @@ const EditData = () => {
           name="deliveryTypes"
           type="text"
           width="256px"
+          ref={deliveryTypesRef}
         />
         &nbsp;
         {key === 1 ? (
@@ -192,6 +270,7 @@ const EditData = () => {
           name="warehouseFacilityUsages"
           type="text"
           width="316px"
+          ref={warehouseFacilityUsagesRef}
         />
         &nbsp;
         {key === 1 ? (
@@ -215,6 +294,7 @@ const EditData = () => {
           name="warehouseUsageCautions"
           type="text"
           width="316px"
+          ref={warehouseUsageCautionsRef}
         />
         &nbsp;
         {key === 1 ? (
@@ -332,7 +412,7 @@ const EditData = () => {
     if (inputs.name === null || inputs.name.trim() === '') {
       message.warning('창고명을 입력해주세요.');
       return;
-    } else if (inputs.space === null) {
+    } else if (inputs.space === 0 || inputs.space === 0) {
       message.warning('창고 평수를 입력해주세요.');
       return;
     } else if (inputs.address === null || inputs.address.trim() === '') {
@@ -390,41 +470,35 @@ const EditData = () => {
       message.warning('제휴 택배사를 1개 이상 입력해주세요.');
       return;
     }
-    message.loading('잠시만 기다려주세요.');
-    return warehouseApi
-      .register(requestBody, localStorage.getItem('AccessToken'))
-      .then(() => {
-        message.destroy();
-        alert('창고 등록 요청이 정상적으로 처리되었습니다.');
-        return 'SUCCESS';
-      })
-      .catch(({ response: { status } }) => {
-        message.destroy();
-        if (status === 400) {
-          alert('[400]요청 형식이 잘못되었습니다.');
-        } else if (status === 401) {
-          alert('[401] 로그인을 다시 해주세요.');
-        } else if (status === 403) {
-          alert('[403] 해당 요청을 수행할 수 있는 권한이 없습니다.');
-        } else if (status === 500) {
-          alert('[500]서버 오류가 발생했습니다.');
-        }
-      });
+    console.log(requestBody);
+    // message.loading('잠시만 기다려주세요.');
+    // return warehouseApi
+    //   .register(requestBody, localStorage.getItem('AccessToken'))
+    //   .then(() => {
+    //     message.destroy();
+    //     alert('창고 등록 요청이 정상적으로 처리되었습니다.');
+    //     return 'SUCCESS';
+    //   })
+    //   .catch(({ response: { status } }) => {
+    //     message.destroy();
+    //     if (status === 400) {
+    //       alert('[400]요청 형식이 잘못되었습니다.');
+    //     } else if (status === 401) {
+    //       alert('[401] 로그인을 다시 해주세요.');
+    //     } else if (status === 403) {
+    //       alert('[403] 해당 요청을 수행할 수 있는 권한이 없습니다.');
+    //     } else if (status === 500) {
+    //       alert('[500]서버 오류가 발생했습니다.');
+    //     }
+    //   });
   };
 
   return (
     <Container>
       <Wrapper>
-        <BackgroundImage
-          bgImage={RegisterBackground}
-          alt="Background Image."
-        ></BackgroundImage>
         <RegisterContainer>
           <ImageContainer>
-            <RegisterImage
-              bgImage={MainImage}
-              alt="Main Image."
-            ></RegisterImage>
+            <RegisterImage bgImage={LogoImage}></RegisterImage>
           </ImageContainer>
           <TextContainer>
             <HeaderTitleTop>온라인 셀러를 위한</HeaderTitleTop>
@@ -440,8 +514,9 @@ const EditData = () => {
                   type="text"
                   placeholder="창고명"
                   width="256px"
-                  onChange={(event) => {
-                    setInputs({ ...inputs, name: event.target.value });
+                  ref={nameRef}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({ ...inputs, name: event.currentTarget.value });
                   }}
                 />
               </ItemContainer>
@@ -455,10 +530,11 @@ const EditData = () => {
                   name="space"
                   placeholder="창고 평수(평 단위 숫자만 입력)"
                   width="256px"
-                  onChange={(event) => {
+                  ref={spaceRef}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
-                      space: parseInt(event.target.value),
+                      space: parseInt(event.currentTarget.value),
                     });
                   }}
                 />
@@ -475,8 +551,12 @@ const EditData = () => {
                   name="address"
                   placeholder="인천광역시 서구"
                   width="256px"
-                  onChange={(event) => {
-                    setInputs({ ...inputs, address: event.target.value });
+                  ref={addressRef}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      address: event.currentTarget.value,
+                    });
                   }}
                 />
               </ItemContainer>
@@ -490,8 +570,12 @@ const EditData = () => {
                   name="addressDetail"
                   placeholder="상세 주소"
                   width="256px"
-                  onChange={(event) => {
-                    setInputs({ ...inputs, addressDetail: event.target.value });
+                  ref={addressDetailRef}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      addressDetail: event.currentTarget.value,
+                    });
                   }}
                 />
               </ItemContainer>
@@ -501,20 +585,26 @@ const EditData = () => {
             </InputTitle>
             <DescriptionInput
               id="description"
-              type="text"
               name="description"
               placeholder="창고"
               width="480px"
               height="240px"
-              onChange={(event) => {
-                if (event.target.value.length >= 399) {
+              ref={descriptionRef}
+              onChange={(event: React.SyntheticEvent<HTMLTextAreaElement>) => {
+                if (event.currentTarget.value.length >= 399) {
                   message.warning(
                     '창고 소개는 최대 400자 까지 입력 가능합니다.',
                   );
-                  event.target.value = event.target.value.slice(0, 399);
+                  event.currentTarget.value = event.currentTarget.value.slice(
+                    0,
+                    399,
+                  );
                   return;
                 }
-                setInputs({ ...inputs, description: event.target.value });
+                setInputs({
+                  ...inputs,
+                  description: event.currentTarget.value,
+                });
               }}
             />
             <TwoElementContainer>
@@ -528,8 +618,9 @@ const EditData = () => {
                   type="text"
                   placeholder="09:00"
                   width="256px"
-                  onChange={(event) => {
-                    setInputs({ ...inputs, openAt: event.target.value });
+                  ref={openAtRef}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({ ...inputs, openAt: event.currentTarget.value });
                   }}
                 />
               </ItemContainer>
@@ -543,8 +634,12 @@ const EditData = () => {
                   type="text"
                   placeholder="18:00"
                   width="256px"
-                  onChange={(event) => {
-                    setInputs({ ...inputs, closeAt: event.target.value });
+                  ref={closeAtRef}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      closeAt: event.currentTarget.value,
+                    });
                   }}
                 />
               </ItemContainer>
@@ -559,10 +654,11 @@ const EditData = () => {
                 type="text"
                 placeholder="물류 센터 사정에 따라 변경될 수 있습니다."
                 width="316px"
-                onChange={(event) => {
+                ref={availableTimeDetailRef}
+                onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setInputs({
                     ...inputs,
-                    availableTimeDetail: event.target.value,
+                    availableTimeDetail: event.currentTarget.value,
                   });
                 }}
               />
@@ -579,10 +675,15 @@ const EditData = () => {
                       type="radio"
                       value={day.value}
                       name="availableWeekdays"
-                      onChange={(event) => {
+                      ref={availableWeekdaysRef}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
                         setInputs({
                           ...inputs,
-                          availableWeekdays: parseInt(event.target.value),
+                          availableWeekdays: parseInt(
+                            event.currentTarget.value,
+                          ),
                         });
                       }}
                     />
@@ -603,10 +704,11 @@ const EditData = () => {
                 type="number"
                 placeholder="없으면 1 입력"
                 width="316px"
-                onChange={(event) => {
+                ref={minReleasePerMonthRef}
+                onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setInputs({
                     ...inputs,
-                    minReleasePerMonth: parseInt(event.target.value),
+                    minReleasePerMonth: parseInt(event.currentTarget.value),
                   });
                 }}
               />
@@ -636,10 +738,13 @@ const EditData = () => {
                     type="radio"
                     value={type.value}
                     name="warehouseType"
-                    onChange={(event) => {
+                    ref={warehouseTypeRef}
+                    onChange={(
+                      event: React.SyntheticEvent<HTMLInputElement>,
+                    ) => {
                       setInputs({
                         ...inputs,
-                        warehouseType: event.target.value,
+                        warehouseType: event.currentTarget.value,
                       });
                     }}
                   />
@@ -660,10 +765,13 @@ const EditData = () => {
                     type="radio"
                     value={type.value}
                     name="airConditioningType"
-                    onChange={(event) => {
+                    ref={airConditioningTypeRef}
+                    onChange={(
+                      event: React.SyntheticEvent<HTMLInputElement>,
+                    ) => {
                       setInputs({
                         ...inputs,
-                        airConditioningType: event.target.value,
+                        airConditioningType: event.currentTarget.value,
                       });
                     }}
                   />
@@ -685,16 +793,21 @@ const EditData = () => {
                       type="checkbox"
                       value={type.value}
                       name="mainItemTypes"
-                      onChange={(event) => {
+                      ref={mainItemTypesRef}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
                         let tempInputs = inputs;
-                        if (event.target.checked) {
+                        if (event.currentTarget.checked) {
                           if (tempInputs.mainItemTypes.length >= 3) {
                             alert('대표 품목은 최대 3개까지 선택 가능합니다.');
                           }
-                          tempInputs.mainItemTypes.push(event.target.value);
+                          tempInputs.mainItemTypes.push(
+                            event.currentTarget.value,
+                          );
                         } else {
                           let index = tempInputs.mainItemTypes.indexOf(
-                            event.target.value,
+                            event.currentTarget.value,
                           );
                           tempInputs.mainItemTypes.splice(index, 1);
                         }
@@ -719,9 +832,11 @@ const EditData = () => {
                       type="checkbox"
                       value={check.value}
                       name="facilityChecks"
-                      onChange={(event) => {
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
                         let tempInputs = inputs;
-                        tempInputs[event.target.value] = true;
+                        tempInputs[event.currentTarget.value] = true;
                         setInputs(tempInputs);
                       }}
                     />
@@ -745,15 +860,18 @@ const EditData = () => {
                       type="checkbox"
                       value={condition.value}
                       name="warehouseCondition"
-                      onChange={(event) => {
+                      ref={warehouseConditionRef}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
                         let tempInputs = inputs;
-                        if (event.target.checked) {
+                        if (event.currentTarget.checked) {
                           tempInputs.warehouseCondition.push(
-                            event.target.value,
+                            event.currentTarget.value,
                           );
                         } else {
                           let index = tempInputs.warehouseCondition.indexOf(
-                            event.target.value,
+                            event.currentTarget.value,
                           );
                           tempInputs.warehouseCondition.splice(index, 1);
                         }
@@ -781,16 +899,7 @@ const EditData = () => {
               <InputTitle>창고 이용 주의사항</InputTitle>
               {warehouseUsageCautions}
             </ItemContainer>
-            <SubmitButton
-              onClick={async () => {
-                if ((await register()) === 'SUCCESS') {
-                  registerEvent.success();
-                  window.location.href = '/mypage/houselist';
-                } else {
-                  registerEvent.failed();
-                }
-              }}
-            >
+            <SubmitButton onClick={() => register()}>
               창고 등록 요청하기
             </SubmitButton>
           </TextContainer>

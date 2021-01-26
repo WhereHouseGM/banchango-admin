@@ -20,4 +20,10 @@ export const warehouseApi = {
         status: status !== 'ALL' ? status : null,
       },
     }),
+  updateWarehouses: (token: string, warehouseId: number, body: object) =>
+    api.put(`warehouses/${warehouseId}`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };

@@ -48,7 +48,6 @@ const Warehouses: React.FC = () => {
         } else {
           setResults(requests);
         }
-        console.log(requests);
       })
       .catch(({ response: { status } }) => {
         if (status === 404) {

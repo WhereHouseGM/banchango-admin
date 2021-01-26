@@ -106,14 +106,14 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     [key: string]: boolean;
   }
 
-  const a: IFacilityChecks = {
+  const FacilityChecksInterface: IFacilityChecks = {
     cctvExist: warehouseData.cctvExist,
     workerExist: warehouseData.workerExist,
     doorLockExist: warehouseData.doorLockExist,
     canPark: warehouseData.canPark,
   };
 
-  const [facilityCheck, setFacilityCheck] = useState(a);
+  const [facilityCheck, setFacilityCheck] = useState(FacilityChecksInterface);
 
   const [deliveryTypes, setDeliveryTypes] = useState([
     <ButtonAndInputContainer key="DELIVERYTYPES0">
@@ -157,11 +157,20 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   ]);
 
   const [insurances, setInsurances] = useState([
-    <ButtonAndInputContainer key="INSURANCES0">
-      <Input type="text" width="256px" name="insurances" />
-      &nbsp;
-      <AddButton onClick={() => addInsurances()}>추가</AddButton>
-    </ButtonAndInputContainer>,
+    inputs.insurances.map((insurance, idx) => {
+      return (
+        <ButtonAndInputContainer key={`INSURANCES${idx}`}>
+          <Input
+            type="text"
+            width="256px"
+            name="insurances"
+            value={insurance}
+          />
+          &nbsp;
+          <AddButton onClick={() => addInsurances()}>추가</AddButton>
+        </ButtonAndInputContainer>
+      );
+    }),
   ]);
 
   const [securityCompanies, setSecurityCompanies] = useState([
@@ -487,6 +496,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   type="text"
                   placeholder="창고명"
                   width="256px"
+                  value={inputs.name}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({ ...inputs, name: event.currentTarget.value });
                   }}
@@ -502,6 +512,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   name="space"
                   placeholder="창고 평수(평 단위 숫자만 입력)"
                   width="256px"
+                  value={inputs.space}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -522,6 +533,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   name="address"
                   placeholder="인천광역시 서구"
                   width="256px"
+                  value={inputs.address}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -540,6 +552,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   name="addressDetail"
                   placeholder="상세 주소"
                   width="256px"
+                  value={inputs.addressDetail}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -558,6 +571,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
               placeholder="창고"
               width="480px"
               height="240px"
+              value={inputs.description}
               onChange={(event: React.SyntheticEvent<HTMLTextAreaElement>) => {
                 if (event.currentTarget.value.length >= 399) {
                   message.warning(
@@ -586,6 +600,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   type="text"
                   placeholder="09:00"
                   width="256px"
+                  value={inputs.openAt}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({ ...inputs, openAt: event.currentTarget.value });
                   }}
@@ -601,6 +616,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                   type="text"
                   placeholder="18:00"
                   width="256px"
+                  value={inputs.closeAt}
                   onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                     setInputs({
                       ...inputs,
@@ -620,6 +636,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 type="text"
                 placeholder="물류 센터 사정에 따라 변경될 수 있습니다."
                 width="316px"
+                value={inputs.availableTimeDetail}
                 onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setInputs({
                     ...inputs,
@@ -640,6 +657,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="radio"
                       value={day.value}
                       name="availableWeekdays"
+                      checked={inputs.availableWeekdays === day.value}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
@@ -668,6 +686,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 type="number"
                 placeholder="없으면 1 입력"
                 width="316px"
+                value={inputs.minReleasePerMonth}
                 onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setInputs({
                     ...inputs,

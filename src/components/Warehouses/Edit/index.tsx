@@ -179,36 +179,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     setInputs({ ...inputs, warehouseUsageCautions: temp });
   };
 
-  //   const setWarehouseFacilityUsagesToState = () => {
-  //     let list = document.getElementsByName(
-  //       InputType.WAREHOUSE_FACILITY_USAGES,
-  //     ) as NodeListOf<HTMLInputElement>;
-  //     let _warehouseFacilityUsages = [];
-  //     for (let i = 0; i < list.length; i++) {
-  //       if (list[i].value.trim() !== '') {
-  //         _warehouseFacilityUsages.push(list[i].value);
-  //       }
-  //     }
-  //     let tempInputs = inputs;
-  //     tempInputs.warehouseFacilityUsages = _warehouseFacilityUsages;
-  //     setInputs(tempInputs);
-  //   };
-
-  //   const setWarehouseUsageCautionsToState = () => {
-  //     let list = document.getElementsByName(
-  //       InputType.WAREHOUSE_USAGE_CAUTIONS,
-  //     ) as NodeListOf<HTMLInputElement>;
-  //     let _warehouseUsageCautions = [];
-  //     for (let i = 0; i < list.length; i++) {
-  //       if (list[i].value.trim() !== '') {
-  //         _warehouseUsageCautions.push(list[i].value);
-  //       }
-  //     }
-  //     let tempInputs = inputs;
-  //     tempInputs.warehouseUsageCautions = _warehouseUsageCautions;
-  //     setInputs(tempInputs);
-  //   };
-
   const checkMatch = (T: string, S: Array<string>): boolean => {
     let result = false;
     for (let s of S) {
@@ -220,11 +190,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   };
 
   const register = () => {
-    // setDeliveryTypesToState();
-    // setWarehouseFacilityUsagesToState();
-    // setWarehouseUsageCautionsToState();
-    // setInsurancesToState();
-    // setSecurityCompaniesToState();
     let requestBody = { ...inputs };
     // if (inputs.name === null || inputs.name.trim() === '') {
     //   message.warning('창고명을 입력해주세요.');

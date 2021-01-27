@@ -35,6 +35,7 @@ import {
   availableWeekdays,
   warehouseConditions,
   InputType,
+  warehouseStatus,
 } from './static';
 
 import { warehouseApi } from '../../../api';
@@ -104,6 +105,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     workerExist: warehouseData.workerExist,
     canPark: warehouseData.canPark,
     doorLockExist: warehouseData.doorLockExist,
+    blogUrl: warehouseData.blogUrl,
   });
 
   interface IFacilityChecks {
@@ -918,6 +920,52 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 );
               })}
             </ItemContainer>
+            <ItemContainer>
+              <InputTitle>
+                블로그 주소<span style={{ color: 'red' }}>*</span>
+              </InputTitle>
+              <Input
+                id="blogUrl"
+                name="blogUrl"
+                type="text"
+                placeholder="없으면 비워 두세요."
+                width="316px"
+                value={inputs.blogUrl || ''}
+                onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                  setInputs({
+                    ...inputs,
+                    blogUrl: event.currentTarget.value,
+                  });
+                }}
+              />
+            </ItemContainer>
+            <InputTitle>
+              창고 진행 상황<span style={{ color: 'red' }}>*</span>
+            </InputTitle>
+            <RadioButtonContainer>
+              {warehouseStatus.map((status, index) => (
+                <div key={index + `WH_STATUS`}>
+                  <RadioButton
+                    id={status.id}
+                    type="radio"
+                    value={status.value}
+                    name="airConditioningType"
+                    checked={status.value === inputs.status}
+                    onChange={(
+                      event: React.SyntheticEvent<HTMLInputElement>,
+                    ) => {
+                      setInputs({
+                        ...inputs,
+                        status: event.currentTarget.value,
+                      });
+                    }}
+                  />
+                  <RadioButtonLabel htmlFor={status.id}>
+                    {status.children}
+                  </RadioButtonLabel>
+                </div>
+              ))}
+            </RadioButtonContainer>
             <SubmitButton onClick={() => register()}>
               창고 정보 변경하기
             </SubmitButton>

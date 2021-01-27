@@ -196,3 +196,26 @@ export const warehouseConditions = [
     children: '컨테이너',
   },
 ];
+
+export const warehouseStatus = [
+  {
+    id: 'IN_PROGRESS',
+    value: 'IN_PROGRESS',
+    children: '접수(진행 중)',
+  },
+  {
+    id: 'REJECTED',
+    value: 'REJECTED',
+    children: '반려 처리',
+  },
+  {
+    id: 'VIEWABLE',
+    value: 'VIEWABLE',
+    children: '승인 처리',
+  },
+  {
+    id: 'DELETED',
+    value: 'DELETED',
+    children: '삭제 처리',
+  },
+];

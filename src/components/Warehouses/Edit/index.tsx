@@ -96,8 +96,14 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     warehouseType: warehouseData.warehouseType,
     minReleasePerMonth: warehouseData.minReleasePerMonth,
     deliveryTypes: warehouseData.deliveryTypes,
-    warehouseFacilityUsages: warehouseData.warehouseFacilityUsages || [''],
-    warehouseUsageCautions: warehouseData.warehouseUsageCautions || [''],
+    warehouseFacilityUsages:
+      warehouseData.warehouseFacilityUsages.length === 0
+        ? ['']
+        : warehouseData.warehouseFacilityUsages,
+    warehouseUsageCautions:
+      warehouseData.warehouseUsageCautions.length === 0
+        ? ['']
+        : warehouseData.warehouseUsageCautions,
     warehouseCondition: warehouseData.warehouseCondition,
     latitude: warehouseData.latitude,
     longitude: warehouseData.longitude,

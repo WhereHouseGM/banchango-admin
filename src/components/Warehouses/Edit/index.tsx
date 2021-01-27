@@ -96,8 +96,8 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     warehouseType: warehouseData.warehouseType,
     minReleasePerMonth: warehouseData.minReleasePerMonth,
     deliveryTypes: warehouseData.deliveryTypes,
-    warehouseFacilityUsages: warehouseData.warehouseFacilityUsages,
-    warehouseUsageCautions: warehouseData.warehouseUsageCautions,
+    warehouseFacilityUsages: warehouseData.warehouseFacilityUsages || [''],
+    warehouseUsageCautions: warehouseData.warehouseUsageCautions || [''],
     warehouseCondition: warehouseData.warehouseCondition,
     latitude: warehouseData.latitude,
     longitude: warehouseData.longitude,
@@ -248,7 +248,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
       .updateWarehouses(token, parseInt(params.warehouseId), requestBody)
       .then(() => {
         message.destroy();
-        alert('창고 등록 요청이 정상적으로 처리되었습니다.');
+        alert('창고 정보 변경 사항이 정상적으로 반영되었습니다.');
         history.push('/warehouses/ALL');
       })
       .catch(({ response: { status } }) => {
@@ -261,6 +261,8 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
           alert('[403] 해당 요청을 수행할 수 있는 권한이 없습니다.');
         } else if (status === 500) {
           alert('[500]서버 오류가 발생했습니다.');
+        } else {
+          alert('알 수 없는 오류!\n관리자에게 문의해 주세요.');
         }
       });
   };

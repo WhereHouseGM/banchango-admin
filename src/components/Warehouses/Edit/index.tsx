@@ -773,6 +773,46 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 </React.Fragment>
               ))}
             </CheckboxContainer>
+            <TwoElementContainer>
+              <ItemContainer>
+                <InputTitle>
+                  창고 위도 값<span style={{ color: 'red' }}>*</span>
+                </InputTitle>
+                <Input
+                  id="latitude"
+                  name="latitude"
+                  type="number"
+                  placeholder="34.128392"
+                  width="256px"
+                  value={inputs.latitude}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      latitude: parseFloat(event.currentTarget.value),
+                    });
+                  }}
+                />
+              </ItemContainer>
+              <ItemContainer>
+                <InputTitle>
+                  창고 경도 값<span style={{ color: 'red' }}>*</span>
+                </InputTitle>
+                <Input
+                  id="longitude"
+                  name="longitude"
+                  type="text"
+                  placeholder="128.123123"
+                  width="256px"
+                  value={inputs.longitude}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      longitude: parseFloat(event.currentTarget.value),
+                    });
+                  }}
+                />
+              </ItemContainer>
+            </TwoElementContainer>
             <ItemContainer>
               <InputTitle>
                 제휴 택배사<span style={{ color: 'red' }}>*</span>

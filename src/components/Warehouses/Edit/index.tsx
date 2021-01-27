@@ -40,6 +40,7 @@ import {
 import { warehouseApi } from '../../../api';
 
 import { message } from 'antd';
+import { RefactorActionInfo } from 'typescript';
 
 interface IEditDataProps {
   warehouseData: {
@@ -99,6 +100,10 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     latitude: warehouseData.latitude,
     longitude: warehouseData.longitude,
     status: warehouseData.status,
+    cctvExist: warehouseData.cctvExist,
+    workerExist: warehouseData.workerExist,
+    canPark: warehouseData.canPark,
+    doorLockExist: warehouseData.doorLockExist,
   });
 
   interface IFacilityChecks {
@@ -112,7 +117,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     canPark: warehouseData.canPark,
   };
 
-  const [facilityCheck, setFacilityCheck] = useState(FacilityChecksInterface);
+  //   const [facilityCheck, setFacilityCheck] = useState(FacilityChecksInterface);
 
   const addInsurances = () => {
     let temp = inputs.insurances;
@@ -174,35 +179,35 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     setInputs({ ...inputs, warehouseUsageCautions: temp });
   };
 
-  const setWarehouseFacilityUsagesToState = () => {
-    let list = document.getElementsByName(
-      InputType.WAREHOUSE_FACILITY_USAGES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _warehouseFacilityUsages = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _warehouseFacilityUsages.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.warehouseFacilityUsages = _warehouseFacilityUsages;
-    setInputs(tempInputs);
-  };
+  //   const setWarehouseFacilityUsagesToState = () => {
+  //     let list = document.getElementsByName(
+  //       InputType.WAREHOUSE_FACILITY_USAGES,
+  //     ) as NodeListOf<HTMLInputElement>;
+  //     let _warehouseFacilityUsages = [];
+  //     for (let i = 0; i < list.length; i++) {
+  //       if (list[i].value.trim() !== '') {
+  //         _warehouseFacilityUsages.push(list[i].value);
+  //       }
+  //     }
+  //     let tempInputs = inputs;
+  //     tempInputs.warehouseFacilityUsages = _warehouseFacilityUsages;
+  //     setInputs(tempInputs);
+  //   };
 
-  const setWarehouseUsageCautionsToState = () => {
-    let list = document.getElementsByName(
-      InputType.WAREHOUSE_USAGE_CAUTIONS,
-    ) as NodeListOf<HTMLInputElement>;
-    let _warehouseUsageCautions = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _warehouseUsageCautions.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.warehouseUsageCautions = _warehouseUsageCautions;
-    setInputs(tempInputs);
-  };
+  //   const setWarehouseUsageCautionsToState = () => {
+  //     let list = document.getElementsByName(
+  //       InputType.WAREHOUSE_USAGE_CAUTIONS,
+  //     ) as NodeListOf<HTMLInputElement>;
+  //     let _warehouseUsageCautions = [];
+  //     for (let i = 0; i < list.length; i++) {
+  //       if (list[i].value.trim() !== '') {
+  //         _warehouseUsageCautions.push(list[i].value);
+  //       }
+  //     }
+  //     let tempInputs = inputs;
+  //     tempInputs.warehouseUsageCautions = _warehouseUsageCautions;
+  //     setInputs(tempInputs);
+  //   };
 
   const checkMatch = (T: string, S: Array<string>): boolean => {
     let result = false;
@@ -216,11 +221,11 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
 
   const register = () => {
     // setDeliveryTypesToState();
-    setWarehouseFacilityUsagesToState();
-    setWarehouseUsageCautionsToState();
+    // setWarehouseFacilityUsagesToState();
+    // setWarehouseUsageCautionsToState();
     // setInsurancesToState();
     // setSecurityCompaniesToState();
-    let requestBody = { ...inputs, ...facilityCheck };
+    let requestBody = { ...inputs };
     // if (inputs.name === null || inputs.name.trim() === '') {
     //   message.warning('창고명을 입력해주세요.');
     //   return;
@@ -697,32 +702,70 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
             </CheckboxContainer>
             <InputTitle>창고 시설 해당사항 선택</InputTitle>
             <CheckboxContainer>
-              {facilityChecks.map((check, index) => (
-                <React.Fragment key={index + `CHECK`}>
-                  <CheckBoxLine>
-                    <CheckBox
-                      id={check.id}
-                      type="checkbox"
-                      value={check.value}
-                      name="facilityChecks"
-                      onChange={(
-                        event: React.SyntheticEvent<HTMLInputElement>,
-                      ) => {
-                        interface IFacilityChecks {
-                          [key: string]: boolean;
-                        }
-                        let tempFacilityCheck: IFacilityChecks = facilityCheck;
-                        tempFacilityCheck[event.currentTarget.value] =
-                          event.currentTarget.checked;
-                        setFacilityCheck(tempFacilityCheck);
-                      }}
-                    />
-                    <RadioButtonLabel htmlFor={check.id}>
-                      {check.children}
-                    </RadioButtonLabel>
-                  </CheckBoxLine>
-                </React.Fragment>
-              ))}
+              <CheckBoxLine>
+                <CheckBox
+                  id="cctvExist"
+                  type="checkbox"
+                  value="cctvExist"
+                  checked={inputs.cctvExist}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      cctvExist: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="cctvExist">CCTV</RadioButtonLabel>
+              </CheckBoxLine>
+              <CheckBoxLine>
+                <CheckBox
+                  id="doorLockExist"
+                  type="checkbox"
+                  value="doorLockExist"
+                  checked={inputs.doorLockExist}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      doorLockExist: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="doorLockExist">
+                  잠금 장치
+                </RadioButtonLabel>
+              </CheckBoxLine>
+              <CheckBoxLine>
+                <CheckBox
+                  id="workerExist"
+                  type="checkbox"
+                  value="workerExist"
+                  checked={inputs.workerExist}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      workerExist: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="workerExist">
+                  현장 인력
+                </RadioButtonLabel>
+              </CheckBoxLine>
+              <CheckBoxLine>
+                <CheckBox
+                  id="canPark"
+                  type="checkbox"
+                  value="canPark"
+                  checked={inputs.canPark}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      canPark: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="canPark">주차</RadioButtonLabel>
+              </CheckBoxLine>
             </CheckboxContainer>
             <InputTitle>
               창고 유형 선택(다중 선택 가능)
@@ -737,6 +780,10 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={condition.value}
                       name="warehouseCondition"
+                      checked={checkMatch(
+                        condition.value,
+                        inputs.warehouseCondition,
+                      )}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {

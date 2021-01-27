@@ -30,18 +30,15 @@ import LogoImage from '../../../assets/LOGO.png';
 import {
   warehouseTypes,
   mainItemTypes,
-  facilityChecks,
   airConditioningTypes,
   availableWeekdays,
   warehouseConditions,
-  InputType,
   warehouseStatus,
 } from './static';
 
 import { warehouseApi } from '../../../api';
 
 import { message } from 'antd';
-import { RefactorActionInfo } from 'typescript';
 
 interface IEditDataProps {
   warehouseData: {
@@ -107,19 +104,6 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     doorLockExist: warehouseData.doorLockExist,
     blogUrl: warehouseData.blogUrl,
   });
-
-  interface IFacilityChecks {
-    [key: string]: boolean;
-  }
-
-  const FacilityChecksInterface: IFacilityChecks = {
-    cctvExist: warehouseData.cctvExist,
-    workerExist: warehouseData.workerExist,
-    doorLockExist: warehouseData.doorLockExist,
-    canPark: warehouseData.canPark,
-  };
-
-  //   const [facilityCheck, setFacilityCheck] = useState(FacilityChecksInterface);
 
   const addInsurances = () => {
     let temp = inputs.insurances;

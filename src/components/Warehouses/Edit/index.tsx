@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   Container,
   Wrapper,
@@ -75,6 +76,9 @@ interface IEditDataProps {
 }
 
 const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
+  const params = useParams<{ warehouseId: string }>();
+  const history = useHistory();
+
   const [inputs, setInputs] = useState({
     name: warehouseData.name,
     space: warehouseData.space,
@@ -177,6 +181,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
 
   const register = () => {
     let requestBody = { ...inputs };
+    console.log(requestBody);
     // if (inputs.name === null || inputs.name.trim() === '') {
     //   message.warning('창고명을 입력해주세요.');
     //   return;
@@ -238,14 +243,15 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     //   message.warning('제휴 택배사를 1개 이상 입력해주세요.');
     //   return;
     // }
-    console.log(requestBody);
+    // // console.log(requestBody);
     // message.loading('잠시만 기다려주세요.');
+    // let token = localStorage.getItem('AccessToken') || 'ABC';
     // return warehouseApi
-    //   .register(requestBody, localStorage.getItem('AccessToken'))
+    //   .updateWarehouses(token, parseInt(params.warehouseId), requestBody)
     //   .then(() => {
     //     message.destroy();
     //     alert('창고 등록 요청이 정상적으로 처리되었습니다.');
-    //     return 'SUCCESS';
+    //     history.push('/warehouses/ALL');
     //   })
     //   .catch(({ response: { status } }) => {
     //     message.destroy();
@@ -738,18 +744,19 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
-                        let tempInputs = inputs;
+                        let tempInputs = inputs.warehouseCondition;
                         if (event.currentTarget.checked) {
-                          tempInputs.warehouseCondition.push(
-                            event.currentTarget.value,
-                          );
+                          tempInputs.push(event.currentTarget.value);
                         } else {
-                          let index = tempInputs.warehouseCondition.indexOf(
+                          let index = tempInputs.indexOf(
                             event.currentTarget.value,
                           );
-                          tempInputs.warehouseCondition.splice(index, 1);
+                          tempInputs.splice(index, 1);
                         }
-                        setInputs(tempInputs);
+                        setInputs({
+                          ...inputs,
+                          warehouseCondition: tempInputs,
+                        });
                       }}
                     />
                     <RadioButtonLabel htmlFor={condition.id}>
@@ -933,7 +940,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     id={status.id}
                     type="radio"
                     value={status.value}
-                    name="airConditioningType"
+                    name="status"
                     checked={status.value === inputs.status}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,

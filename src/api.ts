@@ -8,6 +8,20 @@ export const userApi = {
   signIn: (body: object) => api.post('users/sign-in', body),
 };
 
+export const estimateApi = {
+  getEstimates: (token: string, page: number, size: number, status?: string) =>
+    api.get('/estimates', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        page: page,
+        size: size,
+        status: status !== 'ALL' ? status : null,
+      },
+    }),
+};
+
 export const warehouseApi = {
   getWarehouses: (token: string, page: number, size: number, status?: string) =>
     api.get('warehouses', {

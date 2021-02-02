@@ -15,8 +15,6 @@ import {
   Status,
   WarehouseInformationWrapper,
   Name,
-  ButtonsContainer,
-  Button,
   Date,
   ShowMoreButton,
 } from './styles';
@@ -102,11 +100,9 @@ const Estimates: React.FC = () => {
                     {statusToText(result.status)}
                   </Status>
                   <WarehouseInformationWrapper>
-                    <Name>{result.name}</Name>
-                    <ButtonsContainer>
-                      <Button to={`/estimates/edit/${result.id}`}>정보</Button>
-                      <Button to="/">이미지</Button>
-                    </ButtonsContainer>
+                    <Name to={`/estimates/edit/${result.id}`}>
+                      {result.name}
+                    </Name>
                   </WarehouseInformationWrapper>
                   <Date>{result.lastModifiedAt}</Date>
                 </WarehouseContainer>

@@ -93,22 +93,10 @@ export const WarehouseInformationWrapper = styled.div`
   width: 60%;
 `;
 
-export const Name = styled.div`
+export const Name = styled(Link)`
   font-size: 12px;
   font-weight: bold;
   text-align: center;
-`;
-
-export const ButtonsContainer = styled.div``;
-
-export const Button = styled(Link)`
-  text-align: center;
-  padding: 1px;
-  color: black;
-  font-size: 8px;
-  margin-right: 2px;
-  border: 1px solid ${(props) => props.theme.blueColor};
-  border-radius: 2px;
 `;
 
 export const Date = styled.div`

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import Header from '../Header';
+import Header from './Header';
 import { useParams } from 'react-router-dom';
 import { statusToText, statusToColor } from './static';
 import {
@@ -13,13 +13,12 @@ import {
   NavText,
   WarehouseContainer,
   Status,
-  WarehouseInformationWrapper,
   Name,
   Date,
   ShowMoreButton,
 } from './styles';
 import LogoImage from '../../assets/LOGO.png';
-import { warehouseApi } from '../../api';
+import { estimateApi } from '../../api';
 import ErrorPage from '../Common/ErrorPage';
 import { message } from 'antd';
 
@@ -39,13 +38,13 @@ const Estimates: React.FC = () => {
   const token = localStorage.getItem('AccessToken') || 'abc';
 
   const getApi = useCallback(async () => {
-    warehouseApi
-      .getWarehouses(token, pageIndex, 10, params.estimateStatus)
-      .then(({ data: { requests } }) => {
+    estimateApi
+      .getEstimates(token, pageIndex, 10, params.estimateStatus)
+      .then(({ data: { estimates } }) => {
         if (isExtraLoading) {
-          setResults((prevResults) => [...prevResults, ...requests]);
+          setResults((prevResults) => [...prevResults, ...estimates]);
         } else {
-          setResults(requests);
+          setResults(estimates);
         }
       })
       .catch(({ response: { status } }) => {
@@ -86,7 +85,7 @@ const Estimates: React.FC = () => {
                 setIsExtraLoading(false);
                 setPageIndex(0);
               }}
-              warehouseStatus={params.estimateStatus}
+              estimateStatus={params.estimateStatus}
             />
             <NavBar>
               <NavText width={'10%'}>상태</NavText>
@@ -99,11 +98,7 @@ const Estimates: React.FC = () => {
                   <Status color={statusToColor(result.status)}>
                     {statusToText(result.status)}
                   </Status>
-                  <WarehouseInformationWrapper>
-                    <Name to={`/estimates/edit/${result.id}`}>
-                      {result.name}
-                    </Name>
-                  </WarehouseInformationWrapper>
+                  <Name to={`/estimates/edit/${result.id}`}>{result.name}</Name>
                   <Date>{result.lastModifiedAt}</Date>
                 </WarehouseContainer>
               );

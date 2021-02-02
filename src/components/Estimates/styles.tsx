@@ -85,18 +85,15 @@ export const Status = styled.div<{ color: string }>`
   text-align: center;
 `;
 
-export const WarehouseInformationWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 10px;
-  width: 60%;
-`;
-
 export const Name = styled(Link)`
   font-size: 12px;
   font-weight: bold;
+  width: 60%;
   text-align: center;
+  color: black;
+  &:hover {
+    background-color: 'red';
+  }
 `;
 
 export const Date = styled.div`

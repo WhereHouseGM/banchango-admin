@@ -8,7 +8,7 @@ export const userApi = {
   signIn: (body: object) => api.post('users/sign-in', body),
 };
 
-export const EstimateApi = {
+export const estimateApi = {
   getEstimates: (token: string, page: number, size: number, status?: string) =>
     api.get('/estimates', {
       headers: {

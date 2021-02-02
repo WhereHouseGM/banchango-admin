@@ -76,3 +76,5 @@ const Container: React.FC = () => {
     <> {loading ? <Loading /> : <Presenter estimateData={estimateData} />} </>
   );
 };
+
+export default Container;

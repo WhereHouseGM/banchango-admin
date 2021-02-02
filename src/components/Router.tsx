@@ -40,6 +40,7 @@ const RouterComponent: React.FC = () => {
           <Estimates />
         </TokenValidator>
       </Route>
+      <Route path="/estimates/edit/:estimateId">{/* TODO */}</Route>
       <Redirect path="*" to="/" />
     </Switch>
   );

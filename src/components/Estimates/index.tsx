@@ -26,14 +26,15 @@ import ErrorPage from '../Common/ErrorPage';
 import { message } from 'antd';
 
 interface ApiResult {
-  name: string;
   warehouseId: number;
-  lastModifiedAt: string;
   status: string;
+  name: string;
+  lastModifiedAt: string;
+  id: number;
 }
 
 const Estimates: React.FC = () => {
-  const params = useParams<{ warehouseStatus: string }>();
+  const params = useParams<{ estimateStatus: string }>();
   const [results, setResults] = useState<Array<ApiResult>>([]);
   const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
@@ -41,7 +42,7 @@ const Estimates: React.FC = () => {
 
   const getApi = useCallback(async () => {
     warehouseApi
-      .getWarehouses(token, pageIndex, 10, params.warehouseStatus)
+      .getWarehouses(token, pageIndex, 10, params.estimateStatus)
       .then(({ data: { requests } }) => {
         if (isExtraLoading) {
           setResults((prevResults) => [...prevResults, ...requests]);
@@ -87,7 +88,7 @@ const Estimates: React.FC = () => {
                 setIsExtraLoading(false);
                 setPageIndex(0);
               }}
-              warehouseStatus={params.warehouseStatus}
+              warehouseStatus={params.estimateStatus}
             />
             <NavBar>
               <NavText width={'10%'}>상태</NavText>
@@ -103,11 +104,7 @@ const Estimates: React.FC = () => {
                   <WarehouseInformationWrapper>
                     <Name>{result.name}</Name>
                     <ButtonsContainer>
-                      <Button
-                        to={`/warehouses/edit/data/${result.warehouseId}`}
-                      >
-                        정보
-                      </Button>
+                      <Button to={`/estimates/edit/${result.id}`}>정보</Button>
                       <Button to="/">이미지</Button>
                     </ButtonsContainer>
                   </WarehouseInformationWrapper>

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Header from '../Header';
 import { useParams } from 'react-router-dom';
+import { statusToText, statusToColor } from './static';
 import {
   Container,
   Wrapper,
@@ -19,7 +20,6 @@ import {
   Date,
   ShowMoreButton,
 } from './styles';
-import { statusToColor, statusToText } from './static';
 import LogoImage from '../../assets/LOGO.png';
 import { warehouseApi } from '../../api';
 import ErrorPage from '../Common/ErrorPage';
@@ -32,7 +32,7 @@ interface ApiResult {
   status: string;
 }
 
-const Warehouses: React.FC = () => {
+const Estimates: React.FC = () => {
   const params = useParams<{ warehouseStatus: string }>();
   const [results, setResults] = useState<Array<ApiResult>>([]);
   const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
@@ -81,7 +81,7 @@ const Warehouses: React.FC = () => {
             <ImageContainer>
               <Image logoImage={LogoImage}></Image>
             </ImageContainer>
-            <Text>창고 정보 관리</Text>
+            <Text>견적 요청 관리</Text>
             <Header
               handleClick={() => {
                 setIsExtraLoading(false);
@@ -131,4 +131,4 @@ const Warehouses: React.FC = () => {
     );
 };
 
-export default Warehouses;
+export default Estimates;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Wrapper, InformationContainer } from './styles';
+import { Container, Wrapper, InformationContainer, Title } from './styles';
 
 interface IUser {
   userId: number;
@@ -47,7 +47,7 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
     <Container>
       <Wrapper>
         <InformationContainer>
-          INFORMATIONS!, ID : {parseInt(params.estimateId)}
+          <Title>{estimateData.warehouseName} 견적 문의</Title>
         </InformationContainer>
       </Wrapper>
     </Container>

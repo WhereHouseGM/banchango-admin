@@ -25,3 +25,10 @@ export const InformationContainer = styled.div`
   overflow: hidden;
   border: 1px solid #d5d5d5;
 `;
+
+export const Title = styled.div`
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 15px;
+  font-size: 17px;
+`;

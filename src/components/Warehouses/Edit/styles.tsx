@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  font-family: sans-serif;
-`;
+export const Container = styled.div``;
 
 export const Wrapper = styled.div`
   box-align: center;

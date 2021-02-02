@@ -91,9 +91,6 @@ export const Name = styled(Link)`
   width: 60%;
   text-align: center;
   color: black;
-  &:hover {
-    background-color: 'red';
-  }
 `;
 
 export const Date = styled.div`

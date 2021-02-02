@@ -4,7 +4,7 @@ import UpdateData from '../../../components/Estimates/Update';
 
 interface IUser {
   userId: number;
-  name: number;
+  name: string;
   email: string;
   type: string;
   phoneNumber: string;
@@ -20,7 +20,7 @@ interface IItem {
   keepingNumber: number;
   weight: number;
   barcode: string;
-  sky: number;
+  sku: number;
   url?: string;
   perimeter: number;
   keepingType: string;

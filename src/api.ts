@@ -20,6 +20,12 @@ export const estimateApi = {
         status: status !== 'ALL' ? status : null,
       },
     }),
+  getEstimateData: (token: string, estimateId: number) =>
+    api.get(`estimates/${estimateId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
 
 export const warehouseApi = {

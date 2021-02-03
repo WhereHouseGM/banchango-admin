@@ -11,7 +11,7 @@ export const Item = styled.li<{ current: boolean }>`
   text-align: center;
   height: 25px;
   border-bottom: 2px solid
-    ${(props) => (props.current ? props.theme.blueColor : 'transparent')};
+    ${(props) => (props.current ? props.theme.blueColor : '#d5d5d5')};
   transition: border-bottom 0.3s ease-in-out;
   list-style: none;
   font-weight: ${(props) => (props.current ? 'bold' : 'normal')};

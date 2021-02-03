@@ -11,7 +11,7 @@ import {
   Text,
   NavBar,
   NavText,
-  WarehouseContainer,
+  EstimateContainer,
   Status,
   Name,
   Date,
@@ -94,13 +94,13 @@ const Estimates: React.FC = () => {
             </NavBar>
             {results.map((result, idx) => {
               return (
-                <WarehouseContainer key={idx}>
+                <EstimateContainer key={idx}>
                   <Status color={statusToColor(result.status)}>
                     {statusToText(result.status)}
                   </Status>
                   <Name to={`/estimates/edit/${result.id}`}>{result.name}</Name>
                   <Date>{result.lastModifiedAt}</Date>
-                </WarehouseContainer>
+                </EstimateContainer>
               );
             })}
             {results.length % 10 === 0 && results.length !== 0 ? (

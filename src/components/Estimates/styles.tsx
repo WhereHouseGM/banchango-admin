@@ -69,10 +69,11 @@ export const NavText = styled.div<{ width: string }>`
   text-align: center;
 `;
 
-export const WarehouseContainer = styled.div`
+export const EstimateContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 5px;
 `;
 
 export const Status = styled.div<{ color: string }>`

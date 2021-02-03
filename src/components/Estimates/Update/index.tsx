@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { estimateApi } from '../../../api';
 import { barcodeToText, EstimateStatus, keepingTypeToText } from './static';
 import {
   Container,
@@ -22,6 +23,7 @@ import {
   UpdateStatusButton,
   UpdateStatusButtonWrapper,
 } from './styles';
+import { message } from 'antd';
 
 interface IUser {
   userId: number;
@@ -62,9 +64,44 @@ interface IUpdateDataProps {
 const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
   const params = useParams<{ estimateId: string }>();
   const [estimateStatus, setEstimateStatus] = useState(estimateData.status);
-  useEffect(() => {
-    console.log(estimateData);
-  }, []);
+
+  const updateStatus = (): void => {
+    let token = localStorage.getItem('AccessToken') || 'abc';
+    let requestBody = {
+      status: estimateStatus,
+    };
+    message.loading('잠시만 기다려 주세요.');
+    estimateApi
+      .updateStatus(token, parseInt(params.estimateId), requestBody)
+      .then(() => {
+        message.destroy();
+        alert('견적 요청 상태가 정상적으로 변경되었습니다.');
+        window.location.href = '/estimates/ALL';
+      })
+      .catch(({ response: { status } }) => {
+        message.destroy();
+        if (status === 400) {
+          message.warning('[400] : 요청 형식이 잘못되었습니다.');
+          return;
+        } else if (status === 401) {
+          message.warning(
+            '[401] : 토큰이 잘못되었습니다. 다시 로그인 해주세요.',
+          );
+          return;
+        } else if (status === 403) {
+          message.warning(
+            '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
+          );
+          return;
+        } else if (status === 404) {
+          message.warning('[404] 해당 견적 요청을 찾을 수 없습니다.');
+          return;
+        } else {
+          message.warning('알 수 없는 오류가 발생했습니다.');
+          return;
+        }
+      });
+  };
   return (
     <Container>
       <Wrapper>
@@ -155,6 +192,9 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
                 <StatusButton
                   key={`SB${idx}`}
                   isMatch={estimateStatus === status.value}
+                  onClick={() => {
+                    setEstimateStatus(status.value);
+                  }}
                 >
                   {status.children}
                 </StatusButton>
@@ -162,7 +202,9 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
             })}
           </StatusButtonWrapper>
           <UpdateStatusButtonWrapper>
-            <UpdateStatusButton>상태 업데이트</UpdateStatusButton>
+            <UpdateStatusButton onClick={updateStatus}>
+              상태 업데이트
+            </UpdateStatusButton>
           </UpdateStatusButtonWrapper>
         </InformationContainer>
       </Wrapper>

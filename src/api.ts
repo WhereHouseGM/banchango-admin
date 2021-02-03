@@ -26,6 +26,12 @@ export const estimateApi = {
         Authorization: `Bearer ${token}`,
       },
     }),
+  updateStatus: (token: string, estimateId: number, body: object) =>
+    api.patch(`/estimates/${estimateId}/status`, body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
 
 export const warehouseApi = {

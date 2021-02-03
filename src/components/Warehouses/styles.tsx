@@ -50,7 +50,6 @@ export const Image = styled.div<{ logoImage: string }>`
 `;
 
 export const Text = styled.div`
-  font-family: sans-serif;
   margin-left: 10px;
   font-weight: bold;
 `;
@@ -64,7 +63,6 @@ export const NavBar = styled.div`
 `;
 
 export const NavText = styled.div<{ width: string }>`
-  font-family: sans-serif;
   font-weight: bold;
   width: ${(props) => props.width};
   font-size: 12px;
@@ -103,7 +101,7 @@ export const ButtonsContainer = styled.div``;
 
 export const Button = styled(Link)`
   text-align: center;
-  padding: 1px;
+  padding: 1px 2px 1px 2px;
   color: black;
   font-size: 8px;
   margin-right: 2px;

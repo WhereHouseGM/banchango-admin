@@ -50,7 +50,6 @@ export const Image = styled.div<{ logoImage: string }>`
 `;
 
 export const Text = styled.div`
-  font-family: sans-serif;
   margin-left: 10px;
   font-weight: bold;
 `;
@@ -64,17 +63,17 @@ export const NavBar = styled.div`
 `;
 
 export const NavText = styled.div<{ width: string }>`
-  font-family: sans-serif;
   font-weight: bold;
   width: ${(props) => props.width};
   font-size: 12px;
   text-align: center;
 `;
 
-export const WarehouseContainer = styled.div`
+export const EstimateContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 5px;
 `;
 
 export const Status = styled.div<{ color: string }>`

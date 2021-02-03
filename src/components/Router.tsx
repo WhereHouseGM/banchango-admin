@@ -42,7 +42,9 @@ const RouterComponent: React.FC = () => {
         </TokenValidator>
       </Route>
       <Route path="/estimates/edit/:estimateId">
-        <UpdateEstimateData />
+        <TokenValidator>
+          <UpdateEstimateData />
+        </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />
     </Switch>

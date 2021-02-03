@@ -9,6 +9,7 @@ export const List = styled.ul`
 export const Item = styled.li<{ current: boolean }>`
   flex: 1;
   text-align: center;
+  height: 25px;
   border-bottom: 2px solid
     ${(props) => (props.current ? props.theme.blueColor : 'transparent')};
   transition: border-bottom 0.3s ease-in-out;

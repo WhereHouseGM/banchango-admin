@@ -101,7 +101,7 @@ export const ButtonsContainer = styled.div``;
 
 export const Button = styled(Link)`
   text-align: center;
-  padding: 1px;
+  padding: 1px 2px 1px 2px;
   color: black;
   font-size: 8px;
   margin-right: 2px;

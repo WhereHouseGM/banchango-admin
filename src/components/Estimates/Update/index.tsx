@@ -15,6 +15,8 @@ import {
   ReleaseNumberContainer,
   Text,
   Content,
+  UserInfoContainer,
+  UserLineWrapper,
 } from './styles';
 
 interface IUser {
@@ -109,6 +111,12 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
           <BlueText>요청 및 유의사항</BlueText>
           <Content readOnly={true} value={estimateData.content} />
           <BlueText>셀러 정보</BlueText>
+          <UserInfoContainer>
+            <UserLineWrapper>
+              <BlueText>성함</BlueText>
+              <Text>{estimateData.user.name}</Text>
+            </UserLineWrapper>
+          </UserInfoContainer>
         </InformationContainer>
       </Wrapper>
     </Container>

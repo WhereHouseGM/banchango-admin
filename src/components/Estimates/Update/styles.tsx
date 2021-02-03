@@ -101,3 +101,10 @@ export const Content = styled.textarea`
   height: 250px;
   resize: none;
 `;
+
+export const UserInfoContainer = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export const UserLineWrapper = styled.div``;

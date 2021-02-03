@@ -134,7 +134,17 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
                   ) : (
                     <URLText
                       isUrlNull={false}
-                      onClick={() => window.open(item.url)}
+                      onClick={() => {
+                        if (!!item.url) {
+                          window.open(
+                            item.url.startsWith('http://') ||
+                              item.url.startsWith('https://')
+                              ? item.url
+                              : 'http://' + item.url,
+                            '_blank',
+                          );
+                        }
+                      }}
                     >
                       클릭
                     </URLText>

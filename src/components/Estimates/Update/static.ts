@@ -35,3 +35,18 @@ export const barcodeToText = (type: string): string => {
       return '알수없음';
   }
 };
+
+export const EstimateStatus = [
+  {
+    value: 'RECEPTED',
+    children: '접수',
+  },
+  {
+    value: 'IN_PROGRESS',
+    children: '진행중',
+  },
+  {
+    value: 'DONE',
+    children: '완료',
+  },
+];

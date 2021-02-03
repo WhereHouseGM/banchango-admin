@@ -86,9 +86,10 @@ export const ReleaseNumberContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const Text = styled.div`
+export const Text = styled.div<{ marginLeft?: string }>`
   font-size: 15px;
   font-weight: bold;
+  margin-left: ${(props) => (props.marginLeft ? props.marginLeft : 0)};
   :last-child {
     padding-right: 10px;
   }
@@ -103,8 +104,54 @@ export const Content = styled.textarea`
 `;
 
 export const UserInfoContainer = styled.div`
+  width: 100%;
+`;
+
+export const UserLineWrapper = styled.div`
+  display: flex;
+  padding: 15px;
+  justify-content: start;
+`;
+
+export const StatusButtonWrapper = styled.div`
   display: flex;
   width: 100%;
 `;
 
-export const UserLineWrapper = styled.div``;
+export const StatusButton = styled.div<{ isMatch: boolean }>`
+  border: 1px solid #d5d5d5;
+  text-align: center;
+  font-weight: bold;
+  width: calc(100% / 3);
+  padding: 10px 0;
+  color: ${(props) => (props.isMatch ? 'white' : 'black')};
+  background-color: ${(props) =>
+    props.isMatch ? props.theme.blueColor : 'white'};
+  transition: ${(props) => (props.isMatch ? 'none' : 'all .2s ease')};
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) =>
+      props.isMatch ? props.theme.blueColor : '#d5d5d5'};
+  }
+`;
+
+export const UpdateStatusButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+export const UpdateStatusButton = styled.div`
+  border: 1px solid ${(props) => props.theme.blueColor};
+  border-radius: 25px;
+  font-size: 20px;
+  color: ${(props) => props.theme.blueColor};
+  text-align: center;
+  padding: 10px 40px;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    background-color: #d5d5d5;
+  }
+`;

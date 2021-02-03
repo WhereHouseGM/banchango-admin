@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { barcodeToText, keepingTypeToText } from './static';
+import { barcodeToText, EstimateStatus, keepingTypeToText } from './static';
 import {
   Container,
   Wrapper,
@@ -17,6 +17,10 @@ import {
   Content,
   UserInfoContainer,
   UserLineWrapper,
+  StatusButtonWrapper,
+  StatusButton,
+  UpdateStatusButton,
+  UpdateStatusButtonWrapper,
 } from './styles';
 
 interface IUser {
@@ -57,6 +61,7 @@ interface IUpdateDataProps {
 
 const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
   const params = useParams<{ estimateId: string }>();
+  const [estimateStatus, setEstimateStatus] = useState(estimateData.status);
   useEffect(() => {
     console.log(estimateData);
   }, []);
@@ -113,10 +118,52 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
           <BlueText>셀러 정보</BlueText>
           <UserInfoContainer>
             <UserLineWrapper>
-              <BlueText>성함</BlueText>
-              <Text>{estimateData.user.name}</Text>
+              <BlueText fontSize="15px" padding="0">
+                성함
+              </BlueText>
+              <Text marginLeft="8px">{estimateData.user.name}</Text>
+            </UserLineWrapper>
+            <UserLineWrapper>
+              <BlueText fontSize="15px" padding="0">
+                회사
+              </BlueText>
+              <Text marginLeft="8px">{estimateData.user.companyName}</Text>
+            </UserLineWrapper>
+            <UserLineWrapper>
+              <BlueText fontSize="15px" padding="0">
+                유선
+              </BlueText>
+              <Text marginLeft="8px">{estimateData.user.telephoneNumber}</Text>
+            </UserLineWrapper>
+            <UserLineWrapper>
+              <BlueText fontSize="15px" padding="0">
+                휴대폰
+              </BlueText>
+              <Text marginLeft="8px">{estimateData.user.phoneNumber}</Text>
+            </UserLineWrapper>
+            <UserLineWrapper>
+              <BlueText fontSize="15px" padding="0">
+                이메일
+              </BlueText>
+              <Text marginLeft="8px">{estimateData.user.email}</Text>
             </UserLineWrapper>
           </UserInfoContainer>
+          <BlueText>진행 상태</BlueText>
+          <StatusButtonWrapper>
+            {EstimateStatus.map((status, idx) => {
+              return (
+                <StatusButton
+                  key={`SB${idx}`}
+                  isMatch={estimateStatus === status.value}
+                >
+                  {status.children}
+                </StatusButton>
+              );
+            })}
+          </StatusButtonWrapper>
+          <UpdateStatusButtonWrapper>
+            <UpdateStatusButton>상태 업데이트</UpdateStatusButton>
+          </UpdateStatusButtonWrapper>
         </InformationContainer>
       </Wrapper>
     </Container>

@@ -19,7 +19,7 @@ const Path: React.FC = () => {
             <Image logoImage={LogoImage}></Image>
           </ImageContainer>
           <ButtonContainer>
-            <Button to="/quotecontacts">견적 요청 관리</Button>
+            <Button to="/estimates/ALL">견적 요청 관리</Button>
             <Button to="/warehouses/ALL">창고 정보 관리</Button>
           </ButtonContainer>
         </PathContainer>

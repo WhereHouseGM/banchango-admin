@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  font-family: sans-serif;
-`;
+export const Container = styled.div``;
 
 export const Wrapper = styled.div`
   box-align: center;
@@ -110,23 +108,6 @@ export const Input = styled.input`
   &:focus {
     background-color: lightgray;
     border-bottom: 3px solid #1d489b;
-  }
-`;
-
-export const ArrayInput = styled.input`
-  border: none;
-  border-bottom: 1px solid #1d489b;
-  width: ${(props) => props.width};
-  margin-top: 10px;
-  margin-left: 3px;
-  margin-right: 3px;
-  transition: all 0.2s ease;
-  &:focus {
-    background-color: lightgray;
-    border-bottom: 3px solid #1d489b;
-  }
-  @media screen and (max-width: 400px) {
-    width: 256px;
   }
 `;
 

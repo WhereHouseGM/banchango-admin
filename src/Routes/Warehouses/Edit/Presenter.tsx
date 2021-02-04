@@ -25,9 +25,9 @@ interface IEditDataProps {
     mainImageUrl: string;
     deliveryTypes: Array<string>;
     warehouseCondition: Array<string>;
-    warehouseFacilityUsages: Array<string> | null;
-    warehouseUsageCautions: Array<string> | null;
-    images: Array<string> | null;
+    warehouseFacilityUsages: Array<string>;
+    warehouseUsageCautions: Array<string>;
+    images: Array<string>;
     status: string;
     insurances: Array<string>;
     securityCompanies: Array<string>;

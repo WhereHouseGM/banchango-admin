@@ -69,10 +69,11 @@ export const NavText = styled.div<{ width: string }>`
   text-align: center;
 `;
 
-export const WarehouseContainer = styled.div`
+export const EstimateContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 5px;
 `;
 
 export const Status = styled.div<{ color: string }>`
@@ -83,30 +84,12 @@ export const Status = styled.div<{ color: string }>`
   text-align: center;
 `;
 
-export const WarehouseInformationWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 10px;
-  width: 60%;
-`;
-
-export const Name = styled.div`
+export const Name = styled(Link)`
   font-size: 12px;
   font-weight: bold;
+  width: 60%;
   text-align: center;
-`;
-
-export const ButtonsContainer = styled.div``;
-
-export const Button = styled(Link)`
-  text-align: center;
-  padding: 1px 2px 1px 2px;
   color: black;
-  font-size: 8px;
-  margin-right: 2px;
-  border: 1px solid ${(props) => props.theme.blueColor};
-  border-radius: 2px;
 `;
 
 export const Date = styled.div`

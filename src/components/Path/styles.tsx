@@ -61,7 +61,6 @@ export const Button = styled(Link)`
   line-height: 1.5;
   border: 1px solid ${(props) => props.theme.blueColor};
   border-radius: 3px;
-  font-family: sans-serif;
   font-weight: bold;
   color: ${(props) => props.theme.blueColor};
   margin-bottom: 10px;

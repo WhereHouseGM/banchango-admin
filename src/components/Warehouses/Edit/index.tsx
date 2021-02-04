@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import {
   Container,
   Wrapper,
@@ -23,7 +24,6 @@ import {
   ButtonAndInputContainer,
   RemoveButton,
   SubmitButton,
-  ArrayInput,
 } from './styles';
 
 import LogoImage from '../../../assets/LOGO.png';
@@ -31,11 +31,10 @@ import LogoImage from '../../../assets/LOGO.png';
 import {
   warehouseTypes,
   mainItemTypes,
-  facilityChecks,
   airConditioningTypes,
   availableWeekdays,
   warehouseConditions,
-  InputType,
+  warehouseStatus,
 } from './static';
 
 import { warehouseApi } from '../../../api';
@@ -65,9 +64,9 @@ interface IEditDataProps {
     mainImageUrl: string;
     deliveryTypes: Array<string>;
     warehouseCondition: Array<string>;
-    warehouseFacilityUsages: Array<string> | null;
-    warehouseUsageCautions: Array<string> | null;
-    images: Array<string> | null;
+    warehouseFacilityUsages: Array<string>;
+    warehouseUsageCautions: Array<string>;
+    images: Array<string>;
     status: string;
     insurances: Array<string>;
     securityCompanies: Array<string>;
@@ -77,6 +76,9 @@ interface IEditDataProps {
 }
 
 const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
+  const params = useParams<{ warehouseId: string }>();
+  const history = useHistory();
+
   const [inputs, setInputs] = useState({
     name: warehouseData.name,
     space: warehouseData.space,
@@ -94,303 +96,97 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
     warehouseType: warehouseData.warehouseType,
     minReleasePerMonth: warehouseData.minReleasePerMonth,
     deliveryTypes: warehouseData.deliveryTypes,
-    warehouseFacilityUsages: warehouseData.warehouseFacilityUsages,
-    warehouseUsageCautions: warehouseData.warehouseUsageCautions,
+    warehouseFacilityUsages:
+      warehouseData.warehouseFacilityUsages.length === 0
+        ? ['']
+        : warehouseData.warehouseFacilityUsages,
+    warehouseUsageCautions:
+      warehouseData.warehouseUsageCautions.length === 0
+        ? ['']
+        : warehouseData.warehouseUsageCautions,
     warehouseCondition: warehouseData.warehouseCondition,
     latitude: warehouseData.latitude,
     longitude: warehouseData.longitude,
     status: warehouseData.status,
-  });
-
-  interface IFacilityChecks {
-    [key: string]: boolean;
-  }
-
-  const FacilityChecksInterface: IFacilityChecks = {
     cctvExist: warehouseData.cctvExist,
     workerExist: warehouseData.workerExist,
-    doorLockExist: warehouseData.doorLockExist,
     canPark: warehouseData.canPark,
-  };
-
-  const [facilityCheck, setFacilityCheck] = useState(FacilityChecksInterface);
-
-  const [deliveryTypes, setDeliveryTypes] = useState([
-    <ButtonAndInputContainer key="DELIVERYTYPES0">
-      <Input
-        className="deliveryTypes"
-        name="deliveryTypes"
-        type="text"
-        width="256px"
-      />
-      &nbsp;
-      <AddButton onClick={() => addDeliveryTypes()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
-  const [warehouseFacilityUsages, setWarehouseFaciltiyUsages] = useState([
-    <ButtonAndInputContainer key="WHFACILITYUSAGES0">
-      <ArrayInput
-        id="warehouseFacilityUsages0"
-        className="warehouseFacilityUsages"
-        name="warehouseFacilityUsages"
-        type="text"
-        width="316px"
-      />
-      &nbsp;
-      <AddButton onClick={() => addWarehouseFacilityUsages()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
-  const [warehouseUsageCautions, setWarehouseUsageCautions] = useState([
-    <ButtonAndInputContainer key="WHUSAGECAUTIONS0">
-      <ArrayInput
-        id="warehouseUsageCautions0"
-        className="warehouseUsageCautions"
-        name="warehouseUsageCautions"
-        type="text"
-        width="316px"
-      />
-      &nbsp;
-      <AddButton onClick={() => addWarehouseUsageCautions()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
-
-  const [insurances, setInsurances] = useState([
-    inputs.insurances.map((insurance, idx) => {
-      return (
-        <ButtonAndInputContainer key={`INSURANCES${idx}`}>
-          <Input
-            type="text"
-            width="256px"
-            name="insurances"
-            value={insurance}
-          />
-          &nbsp;
-          <AddButton onClick={() => addInsurances()}>추가</AddButton>
-        </ButtonAndInputContainer>
-      );
-    }),
-  ]);
-
-  const [securityCompanies, setSecurityCompanies] = useState([
-    <ButtonAndInputContainer key="SECCOMPS0">
-      <Input type="text" width="256px" name="securityCompanies" />
-      &nbsp;
-      <AddButton onClick={() => addSecurityCompanies()}>추가</AddButton>
-    </ButtonAndInputContainer>,
-  ]);
+    doorLockExist: warehouseData.doorLockExist,
+    blogUrl: warehouseData.blogUrl,
+  });
 
   const addInsurances = () => {
-    let arrOfInsurances = insurances;
-    let key = arrOfInsurances.length;
-    arrOfInsurances.push(
-      <ButtonAndInputContainer key={`INSURANCES${key}`}>
-        <Input type="text" width="256px" name="insurances" />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setInsurances([...arrOfInsurances]);
+    let temp = inputs.insurances;
+    temp.push('');
+    setInputs({ ...inputs, insurances: temp });
+  };
+
+  const removeInsurances = (idx: number) => {
+    let temp = inputs.insurances;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, insurances: temp });
   };
 
   const addSecurityCompanies = () => {
-    let arrOfSecurityCompanies = securityCompanies;
-    let key = arrOfSecurityCompanies.length;
-    arrOfSecurityCompanies.push(
-      <ButtonAndInputContainer key={`SECCOMPS${key}`}>
-        <Input type="text" width="256px" name="securityCompanies" />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={() => removeSecurityCompanies()}>
-            삭제
-          </RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setSecurityCompanies([...arrOfSecurityCompanies]);
+    let temp = inputs.securityCompanies;
+    temp.push('');
+    setInputs({ ...inputs, securityCompanies: temp });
+  };
+
+  const removeSecurityCompanies = (idx: number) => {
+    let temp = inputs.securityCompanies;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, securityCompanies: temp });
   };
 
   const addDeliveryTypes = () => {
-    let tempDeliveryTypes = deliveryTypes;
-    let key = tempDeliveryTypes.length;
-    tempDeliveryTypes.push(
-      <ButtonAndInputContainer key={`DELIVERYTYPES${key}`}>
-        <Input
-          className="deliveryTypes"
-          name="deliveryTypes"
-          type="text"
-          width="256px"
-        />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={removeDeliveryTypes}>삭제</RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setDeliveryTypes([...tempDeliveryTypes]);
+    let temp = inputs.deliveryTypes;
+    temp.push('');
+    setInputs({ ...inputs, deliveryTypes: temp });
+  };
+
+  const removeDeliveryTypes = (idx: number) => {
+    let temp = inputs.deliveryTypes;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, deliveryTypes: temp });
   };
 
   const addWarehouseFacilityUsages = () => {
-    let arrOfWarehouseFacilityUsages = warehouseFacilityUsages;
-    let key = arrOfWarehouseFacilityUsages.length;
-    arrOfWarehouseFacilityUsages.push(
-      <ButtonAndInputContainer key={`WHFACILITYUSAGES${key}`}>
-        <ArrayInput
-          id={`warehouseFacilityUsages${key}`}
-          className="warehouseFacilityUsages"
-          name="warehouseFacilityUsages"
-          type="text"
-          width="316px"
-        />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={removeWarehouseFacilityUsages}>
-            삭제
-          </RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setWarehouseFaciltiyUsages([...arrOfWarehouseFacilityUsages]);
+    let temp = inputs.warehouseFacilityUsages;
+    temp.push('');
+    setInputs({ ...inputs });
+  };
+
+  const removeWarehouseFacilityUsages = (idx: number) => {
+    let temp = inputs.warehouseFacilityUsages;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, warehouseFacilityUsages: temp });
   };
 
   const addWarehouseUsageCautions = () => {
-    let arrOfWarehouseUsageCautions = warehouseUsageCautions;
-    let key = arrOfWarehouseUsageCautions.length;
-    arrOfWarehouseUsageCautions.push(
-      <ButtonAndInputContainer key={`WHUSAGECAUTIONS${key}`}>
-        <ArrayInput
-          id={`warehouseUsageCautions${key}`}
-          className="warehouseUsageCautions"
-          name="warehouseUsageCautions"
-          type="text"
-          width="316px"
-        />
-        &nbsp;
-        {key === 1 ? (
-          <RemoveButton onClick={removeWarehouseUsageCautions}>
-            삭제
-          </RemoveButton>
-        ) : null}
-      </ButtonAndInputContainer>,
-    );
-    setWarehouseUsageCautions([...arrOfWarehouseUsageCautions]);
+    let temp = inputs.warehouseUsageCautions;
+    temp.push('');
+    setInputs({ ...inputs, warehouseUsageCautions: temp });
   };
 
-  const removeDeliveryTypes = () => {
-    let beforeDeliveryTypes = deliveryTypes;
-    beforeDeliveryTypes.pop();
-    setDeliveryTypes([...beforeDeliveryTypes]);
+  const removeWarehouseUsageCautions = (idx: number) => {
+    let temp = inputs.warehouseUsageCautions;
+    temp.splice(idx, 1);
+    setInputs({ ...inputs, warehouseUsageCautions: temp });
   };
 
-  const removeWarehouseFacilityUsages = () => {
-    let arrOfWarehouseFacilityUsages = warehouseFacilityUsages;
-    arrOfWarehouseFacilityUsages.pop();
-    setWarehouseFaciltiyUsages([...arrOfWarehouseFacilityUsages]);
-  };
-
-  const removeWarehouseUsageCautions = () => {
-    let arrOfWarehouseUsageCautions = warehouseUsageCautions;
-    arrOfWarehouseUsageCautions.pop();
-    setWarehouseUsageCautions([...arrOfWarehouseUsageCautions]);
-  };
-
-  const removeInsurances = () => {
-    let arrOfInsurances = insurances;
-    arrOfInsurances.pop();
-    setInsurances([...arrOfInsurances]);
-  };
-
-  const removeSecurityCompanies = () => {
-    let arrOfSecurityCompanies = securityCompanies;
-    arrOfSecurityCompanies.pop();
-    setSecurityCompanies([...arrOfSecurityCompanies]);
-  };
-
-  const setDeliveryTypesToState = () => {
-    let list = document.getElementsByName(
-      InputType.DELIVERY_TYPES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _deliveryTypes = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _deliveryTypes.push(list[i].value);
+  const checkMatch = (T: string, S: Array<string>): boolean => {
+    let result = false;
+    for (let s of S) {
+      if (T === s) {
+        result = true;
       }
     }
-    let tempInputs = inputs;
-    tempInputs.deliveryTypes = _deliveryTypes;
-    setInputs(tempInputs);
-  };
-
-  const setWarehouseFacilityUsagesToState = () => {
-    let list = document.getElementsByName(
-      InputType.WAREHOUSE_FACILITY_USAGES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _warehouseFacilityUsages = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _warehouseFacilityUsages.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.warehouseFacilityUsages = _warehouseFacilityUsages;
-    setInputs(tempInputs);
-  };
-
-  const setWarehouseUsageCautionsToState = () => {
-    let list = document.getElementsByName(
-      InputType.WAREHOUSE_USAGE_CAUTIONS,
-    ) as NodeListOf<HTMLInputElement>;
-    let _warehouseUsageCautions = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _warehouseUsageCautions.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.warehouseUsageCautions = _warehouseUsageCautions;
-    setInputs(tempInputs);
-  };
-
-  const setInsurancesToState = () => {
-    let list = document.getElementsByName(
-      InputType.INSURANCES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _insurances = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _insurances.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.insurances = _insurances;
-    setInputs(tempInputs);
-  };
-
-  const setSecurityCompaniesToState = () => {
-    let list = document.getElementsByName(
-      InputType.SECURITY_COMPANIES,
-    ) as NodeListOf<HTMLInputElement>;
-    let _securityCompanies = [];
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].value.trim() !== '') {
-        _securityCompanies.push(list[i].value);
-      }
-    }
-    let tempInputs = inputs;
-    tempInputs.securityCompanies = _securityCompanies;
-    setInputs(tempInputs);
+    return result;
   };
 
   const register = () => {
-    setDeliveryTypesToState();
-    setWarehouseFacilityUsagesToState();
-    setWarehouseUsageCautionsToState();
-    setInsurancesToState();
-    setSecurityCompaniesToState();
-    let requestBody = { ...inputs, ...facilityCheck };
+    let requestBody = { ...inputs };
     if (inputs.name === null || inputs.name.trim() === '') {
       message.warning('창고명을 입력해주세요.');
       return;
@@ -452,27 +248,29 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
       message.warning('제휴 택배사를 1개 이상 입력해주세요.');
       return;
     }
-    console.log(requestBody);
-    // message.loading('잠시만 기다려주세요.');
-    // return warehouseApi
-    //   .register(requestBody, localStorage.getItem('AccessToken'))
-    //   .then(() => {
-    //     message.destroy();
-    //     alert('창고 등록 요청이 정상적으로 처리되었습니다.');
-    //     return 'SUCCESS';
-    //   })
-    //   .catch(({ response: { status } }) => {
-    //     message.destroy();
-    //     if (status === 400) {
-    //       alert('[400]요청 형식이 잘못되었습니다.');
-    //     } else if (status === 401) {
-    //       alert('[401] 로그인을 다시 해주세요.');
-    //     } else if (status === 403) {
-    //       alert('[403] 해당 요청을 수행할 수 있는 권한이 없습니다.');
-    //     } else if (status === 500) {
-    //       alert('[500]서버 오류가 발생했습니다.');
-    //     }
-    //   });
+    message.loading('잠시만 기다려주세요.');
+    let token = localStorage.getItem('AccessToken') || 'ABC';
+    return warehouseApi
+      .updateWarehouses(token, parseInt(params.warehouseId), requestBody)
+      .then(() => {
+        message.destroy();
+        alert('창고 정보 변경 사항이 정상적으로 반영되었습니다.');
+        history.push('/warehouses/ALL');
+      })
+      .catch(({ response: { status } }) => {
+        message.destroy();
+        if (status === 400) {
+          alert('[400]요청 형식이 잘못되었습니다.');
+        } else if (status === 401) {
+          alert('[401] 로그인을 다시 해주세요.');
+        } else if (status === 403) {
+          alert('[403] 해당 요청을 수행할 수 있는 권한이 없습니다.');
+        } else if (status === 500) {
+          alert('[500]서버 오류가 발생했습니다.');
+        } else {
+          alert('알 수 없는 오류!\n관리자에게 문의해 주세요.');
+        }
+      });
   };
 
   return (
@@ -700,13 +498,73 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 <InputTitle>
                   보험사 / 보험명<span style={{ color: 'red' }}>*</span>
                 </InputTitle>
-                {insurances}
+                {inputs.insurances.map((insurance, idx) => {
+                  return (
+                    <ButtonAndInputContainer key={`INSURANCES${idx}`}>
+                      <Input
+                        type="text"
+                        width="256px"
+                        name="insurances"
+                        value={insurance}
+                        onChange={(
+                          event: React.SyntheticEvent<HTMLInputElement>,
+                        ) => {
+                          let temp = inputs.insurances;
+                          temp[idx] = event.currentTarget.value;
+                          setInputs({ ...inputs, insurances: temp });
+                        }}
+                      />
+                      &nbsp;
+                      {idx === 0 ? (
+                        <AddButton onClick={() => addInsurances()}>
+                          추가
+                        </AddButton>
+                      ) : null}
+                      {idx !== 0 ? (
+                        <RemoveButton onClick={() => removeInsurances(idx)}>
+                          삭제
+                        </RemoveButton>
+                      ) : null}
+                    </ButtonAndInputContainer>
+                  );
+                })}
               </ItemContainer>
               <ItemContainer>
                 <InputTitle>
                   경비 업체<span style={{ color: 'red' }}>*</span>
                 </InputTitle>
-                {securityCompanies}
+                {inputs.securityCompanies.map((company, idx) => {
+                  return (
+                    <ButtonAndInputContainer key={`SEC_COMPS${idx}`}>
+                      <Input
+                        type="text"
+                        width="256px"
+                        name="securityCompanies"
+                        value={company}
+                        onChange={(
+                          event: React.SyntheticEvent<HTMLInputElement>,
+                        ) => {
+                          let temp = inputs.securityCompanies;
+                          temp[idx] = event.currentTarget.value;
+                          setInputs({ ...inputs, securityCompanies: temp });
+                        }}
+                      />
+                      &nbsp;
+                      {idx === 0 ? (
+                        <AddButton onClick={() => addSecurityCompanies()}>
+                          추가
+                        </AddButton>
+                      ) : null}
+                      {idx !== 0 ? (
+                        <RemoveButton
+                          onClick={() => removeSecurityCompanies(idx)}
+                        >
+                          삭제
+                        </RemoveButton>
+                      ) : null}
+                    </ButtonAndInputContainer>
+                  );
+                })}
               </ItemContainer>
             </TwoElementContainer>
             <InputTitle>
@@ -720,6 +578,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     type="radio"
                     value={type.value}
                     name="warehouseType"
+                    checked={type.value === inputs.warehouseType}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,
                     ) => {
@@ -746,6 +605,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                     type="radio"
                     value={type.value}
                     name="airConditioningType"
+                    checked={type.value === inputs.airConditioningType}
                     onChange={(
                       event: React.SyntheticEvent<HTMLInputElement>,
                     ) => {
@@ -773,24 +633,26 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={type.value}
                       name="mainItemTypes"
+                      checked={checkMatch(type.value, inputs.mainItemTypes)}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
-                        let tempInputs = inputs;
+                        let tempInputs = inputs.mainItemTypes;
                         if (event.currentTarget.checked) {
-                          if (tempInputs.mainItemTypes.length >= 3) {
+                          if (tempInputs.length >= 3) {
                             alert('대표 품목은 최대 3개까지 선택 가능합니다.');
+                            let length = tempInputs.length;
+                            tempInputs.splice(length - 1, 1);
+                            setInputs({ ...inputs, mainItemTypes: tempInputs });
                           }
-                          tempInputs.mainItemTypes.push(
-                            event.currentTarget.value,
-                          );
+                          tempInputs.push(event.currentTarget.value);
                         } else {
-                          let index = tempInputs.mainItemTypes.indexOf(
+                          let index = tempInputs.indexOf(
                             event.currentTarget.value,
                           );
-                          tempInputs.mainItemTypes.splice(index, 1);
+                          tempInputs.splice(index, 1);
                         }
-                        setInputs(tempInputs);
+                        setInputs({ ...inputs, mainItemTypes: tempInputs });
                       }}
                     />
                     <RadioButtonLabel htmlFor={type.id}>
@@ -803,32 +665,70 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
             </CheckboxContainer>
             <InputTitle>창고 시설 해당사항 선택</InputTitle>
             <CheckboxContainer>
-              {facilityChecks.map((check, index) => (
-                <React.Fragment key={index + `CHECK`}>
-                  <CheckBoxLine>
-                    <CheckBox
-                      id={check.id}
-                      type="checkbox"
-                      value={check.value}
-                      name="facilityChecks"
-                      onChange={(
-                        event: React.SyntheticEvent<HTMLInputElement>,
-                      ) => {
-                        interface IFacilityChecks {
-                          [key: string]: boolean;
-                        }
-                        let tempFacilityCheck: IFacilityChecks = facilityCheck;
-                        tempFacilityCheck[event.currentTarget.value] =
-                          event.currentTarget.checked;
-                        setFacilityCheck(tempFacilityCheck);
-                      }}
-                    />
-                    <RadioButtonLabel htmlFor={check.id}>
-                      {check.children}
-                    </RadioButtonLabel>
-                  </CheckBoxLine>
-                </React.Fragment>
-              ))}
+              <CheckBoxLine>
+                <CheckBox
+                  id="cctvExist"
+                  type="checkbox"
+                  value="cctvExist"
+                  checked={inputs.cctvExist}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      cctvExist: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="cctvExist">CCTV</RadioButtonLabel>
+              </CheckBoxLine>
+              <CheckBoxLine>
+                <CheckBox
+                  id="doorLockExist"
+                  type="checkbox"
+                  value="doorLockExist"
+                  checked={inputs.doorLockExist}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      doorLockExist: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="doorLockExist">
+                  잠금 장치
+                </RadioButtonLabel>
+              </CheckBoxLine>
+              <CheckBoxLine>
+                <CheckBox
+                  id="workerExist"
+                  type="checkbox"
+                  value="workerExist"
+                  checked={inputs.workerExist}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      workerExist: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="workerExist">
+                  현장 인력
+                </RadioButtonLabel>
+              </CheckBoxLine>
+              <CheckBoxLine>
+                <CheckBox
+                  id="canPark"
+                  type="checkbox"
+                  value="canPark"
+                  checked={inputs.canPark}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      canPark: event.currentTarget.checked,
+                    });
+                  }}
+                />
+                <RadioButtonLabel htmlFor="canPark">주차</RadioButtonLabel>
+              </CheckBoxLine>
             </CheckboxContainer>
             <InputTitle>
               창고 유형 선택(다중 선택 가능)
@@ -843,21 +743,26 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                       type="checkbox"
                       value={condition.value}
                       name="warehouseCondition"
+                      checked={checkMatch(
+                        condition.value,
+                        inputs.warehouseCondition,
+                      )}
                       onChange={(
                         event: React.SyntheticEvent<HTMLInputElement>,
                       ) => {
-                        let tempInputs = inputs;
+                        let tempInputs = inputs.warehouseCondition;
                         if (event.currentTarget.checked) {
-                          tempInputs.warehouseCondition.push(
-                            event.currentTarget.value,
-                          );
+                          tempInputs.push(event.currentTarget.value);
                         } else {
-                          let index = tempInputs.warehouseCondition.indexOf(
+                          let index = tempInputs.indexOf(
                             event.currentTarget.value,
                           );
-                          tempInputs.warehouseCondition.splice(index, 1);
+                          tempInputs.splice(index, 1);
                         }
-                        setInputs(tempInputs);
+                        setInputs({
+                          ...inputs,
+                          warehouseCondition: tempInputs,
+                        });
                       }}
                     />
                     <RadioButtonLabel htmlFor={condition.id}>
@@ -867,20 +772,197 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
                 </React.Fragment>
               ))}
             </CheckboxContainer>
+            <TwoElementContainer>
+              <ItemContainer>
+                <InputTitle>
+                  창고 위도 값<span style={{ color: 'red' }}>*</span>
+                </InputTitle>
+                <Input
+                  id="latitude"
+                  name="latitude"
+                  type="number"
+                  placeholder="34.128392"
+                  width="256px"
+                  value={inputs.latitude}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      latitude: parseFloat(event.currentTarget.value),
+                    });
+                  }}
+                />
+              </ItemContainer>
+              <ItemContainer>
+                <InputTitle>
+                  창고 경도 값<span style={{ color: 'red' }}>*</span>
+                </InputTitle>
+                <Input
+                  id="longitude"
+                  name="longitude"
+                  type="text"
+                  placeholder="128.123123"
+                  width="256px"
+                  value={inputs.longitude}
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    setInputs({
+                      ...inputs,
+                      longitude: parseFloat(event.currentTarget.value),
+                    });
+                  }}
+                />
+              </ItemContainer>
+            </TwoElementContainer>
             <ItemContainer>
               <InputTitle>
                 제휴 택배사<span style={{ color: 'red' }}>*</span>
               </InputTitle>
-              {deliveryTypes}
+              {inputs.deliveryTypes.map((type, idx) => {
+                return (
+                  <ButtonAndInputContainer key={`DELIVERY_TYPES${idx}`}>
+                    <Input
+                      type="text"
+                      width="256px"
+                      name="deliveryTypes"
+                      value={type}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
+                        let temp = inputs.deliveryTypes;
+                        temp[idx] = event.currentTarget.value;
+                        setInputs({ ...inputs, deliveryTypes: temp });
+                      }}
+                    />
+                    &nbsp;
+                    {idx === 0 ? (
+                      <AddButton onClick={() => addDeliveryTypes()}>
+                        추가
+                      </AddButton>
+                    ) : null}
+                    {idx !== 0 ? (
+                      <RemoveButton onClick={() => removeDeliveryTypes(idx)}>
+                        삭제
+                      </RemoveButton>
+                    ) : null}
+                  </ButtonAndInputContainer>
+                );
+              })}
             </ItemContainer>
             <ItemContainer>
               <InputTitle>창고 시설 안내사항</InputTitle>
-              {warehouseFacilityUsages}
+              {inputs.warehouseFacilityUsages.map((usage, idx) => {
+                return (
+                  <ButtonAndInputContainer key={`WH_FACILITY_USAGES${idx}`}>
+                    <Input
+                      type="text"
+                      width="316px"
+                      name="warehouseFacilityUsages"
+                      value={usage}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
+                        let temp = inputs.warehouseFacilityUsages;
+                        temp[idx] = event.currentTarget.value;
+                        setInputs({ ...inputs, warehouseFacilityUsages: temp });
+                      }}
+                    />
+                    &nbsp;
+                    {idx === 0 ? (
+                      <AddButton onClick={() => addWarehouseFacilityUsages()}>
+                        추가
+                      </AddButton>
+                    ) : null}
+                    {idx !== 0 ? (
+                      <RemoveButton
+                        onClick={() => removeWarehouseFacilityUsages(idx)}
+                      >
+                        삭제
+                      </RemoveButton>
+                    ) : null}
+                  </ButtonAndInputContainer>
+                );
+              })}
             </ItemContainer>
             <ItemContainer>
               <InputTitle>창고 이용 주의사항</InputTitle>
-              {warehouseUsageCautions}
+              {inputs.warehouseUsageCautions.map((caution, idx) => {
+                return (
+                  <ButtonAndInputContainer key={`WH_USAGE_CAUTIONS${idx}`}>
+                    <Input
+                      type="text"
+                      width="316px"
+                      name="warehouseUsageCautions"
+                      value={caution}
+                      onChange={(
+                        event: React.SyntheticEvent<HTMLInputElement>,
+                      ) => {
+                        let temp = inputs.warehouseUsageCautions;
+                        temp[idx] = event.currentTarget.value;
+                        setInputs({ ...inputs, warehouseUsageCautions: temp });
+                      }}
+                    />
+                    &nbsp;
+                    {idx === 0 ? (
+                      <AddButton onClick={() => addWarehouseUsageCautions()}>
+                        추가
+                      </AddButton>
+                    ) : null}
+                    {idx !== 0 ? (
+                      <RemoveButton
+                        onClick={() => removeWarehouseUsageCautions(idx)}
+                      >
+                        삭제
+                      </RemoveButton>
+                    ) : null}
+                  </ButtonAndInputContainer>
+                );
+              })}
             </ItemContainer>
+            <ItemContainer>
+              <InputTitle>
+                블로그 주소<span style={{ color: 'red' }}>*</span>
+              </InputTitle>
+              <Input
+                id="blogUrl"
+                name="blogUrl"
+                type="text"
+                placeholder="없으면 비워 두세요."
+                width="316px"
+                value={inputs.blogUrl || ''}
+                onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                  setInputs({
+                    ...inputs,
+                    blogUrl: event.currentTarget.value,
+                  });
+                }}
+              />
+            </ItemContainer>
+            <InputTitle>
+              창고 진행 상황<span style={{ color: 'red' }}>*</span>
+            </InputTitle>
+            <RadioButtonContainer>
+              {warehouseStatus.map((status, index) => (
+                <div key={index + `WH_STATUS`}>
+                  <RadioButton
+                    id={status.id}
+                    type="radio"
+                    value={status.value}
+                    name="status"
+                    checked={status.value === inputs.status}
+                    onChange={(
+                      event: React.SyntheticEvent<HTMLInputElement>,
+                    ) => {
+                      setInputs({
+                        ...inputs,
+                        status: event.currentTarget.value,
+                      });
+                    }}
+                  />
+                  <RadioButtonLabel htmlFor={status.id}>
+                    {status.children}
+                  </RadioButtonLabel>
+                </div>
+              ))}
+            </RadioButtonContainer>
             <SubmitButton onClick={() => register()}>
               창고 정보 변경하기
             </SubmitButton>

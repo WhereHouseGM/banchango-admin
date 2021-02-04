@@ -59,7 +59,6 @@ export const TextContainer = styled.form`
 
 export const MainText = styled.div`
   color: black;
-  font-family: sans-serif;
   font-size: 20px;
   font-weight: bold;
   line-height: 1.45;
@@ -68,7 +67,6 @@ export const MainText = styled.div`
 
 export const SubText = styled.div`
   color: black;
-  font-family: sans-serif;
   font-size: 15px;
   line-height: 1.4;
   margin-bottom: 10px;

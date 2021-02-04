@@ -184,15 +184,15 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
   const addInsurances = () => {
     let arrOfInsurances = insurances;
     let key = arrOfInsurances.length;
-    // arrOfInsurances.push(
-    //   <ButtonAndInputContainer key={`INSURANCES${key}`}>
-    //     <Input type="text" width="256px" name="insurances" />
-    //     &nbsp;
-    //     {key === 1 ? (
-    //       <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
-    //     ) : null}
-    //   </ButtonAndInputContainer>,
-    // );
+    arrOfInsurances.push(
+      <ButtonAndInputContainer key={`INSURANCES${key}`}>
+        <Input type="text" width="256px" name="insurances" />
+        &nbsp;
+        {key === 1 ? (
+          <RemoveButton onClick={() => removeInsurances()}>삭제</RemoveButton>
+        ) : null}
+      </ButtonAndInputContainer>,
+    );
     setInsurances([...arrOfInsurances]);
   };
 

@@ -108,7 +108,7 @@ const Warehouses: React.FC = () => {
                       >
                         정보
                       </Button>
-                      <Button to="/">이미지</Button>
+                      <Button to={`/warehouses/edit/image/${result.warehouseId}`}>이미지</Button>
                     </ButtonsContainer>
                   </WarehouseInformationWrapper>
                   <Date>{result.lastModifiedAt}</Date>

@@ -10,6 +10,7 @@ import Path from '../Routes/Path';
 import Warehouses from '../Routes/Warehouses';
 import TokenValidator from '../components/Common/TokenValidator';
 import EditData from '../Routes/Warehouses/Edit';
+import EditImage from './Warehouses/Images';
 
 const RouterComponent: React.FC = () => {
   return (
@@ -32,6 +33,11 @@ const RouterComponent: React.FC = () => {
       <Route path="/warehouses/edit/data/:warehouseId">
         <TokenValidator>
           <EditData />
+        </TokenValidator>
+      </Route>
+      <Route path="/warehouses/edit/image/:warehouseId">
+        <TokenValidator>
+          <EditImage/>
         </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import React, { useState, useRef, Dispatch, SetStateAction, useEffect } from 'react';
 import { message } from 'antd';
 
@@ -7,43 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useCallback } from 'react';
 import { warehouseApi } from '../../../api';
 import Loading from '../../Loading';
-
-/////////////////////
-
-const ImageViewWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    margin: 1em;
-`;
-const SubTitle = styled.h1`
-    color: #1e56a0;
-`;
-
-const Image = styled.img`
-    width: 100%;
-`;
-const BottomWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
-const FilenameInput = styled.input`
-    width: 70%;
-
-    &:focus {
-        outline: none;
-    }
-`;
-const DeleteButton = styled.button`
-    width: 25%;
-`;
-const InsertButton = styled.button`
-    width: 25%;
-`;
-const FileInput = styled.input`
-    display: none;
-`;
+import { BottomWrapper, DeleteButton, EditImageWrapper, ExtraImageWrapper, FileInput, FilenameInput, HeaderWrapper, Image, ImageViewWrapper, InsertButton, LeftLogoWrapper, MainImageWrapper, RightImageWrapper, SubTitle } from './styles';
 
 interface ImageData {
     url: string,
@@ -62,7 +25,7 @@ interface IImageViewComponentProps {
 const DEFAULT_URL = "https://warehouse-image-bucket.s3.ap-northeast-2.amazonaws.com/warehouse_noimage.png";
 
 const ImageView: React.FC<IImageViewComponentProps> = ({ idx, isMain, image, token, warehouseId, updateImage }) => {
-    const [uploadFile, setUploadFile] = useState<File>()
+    const [uploadFile, setUploadFile] = useState<File | null>()
     const [hasImage, setHasImage] = useState(image !== null)
     const imageType = isMain ? 'main' : 'extra';
 
@@ -102,6 +65,7 @@ const ImageView: React.FC<IImageViewComponentProps> = ({ idx, isMain, image, tok
                     await warehouseApi.uploadMainImage(token, warehouseId, formData)
                     alert('메인 사진이 모두 등록되었습니다.');
                     setHasImage(true)
+                    setUploadFile(null)
                 }
             } 
             catch (error) {
@@ -124,6 +88,7 @@ const ImageView: React.FC<IImageViewComponentProps> = ({ idx, isMain, image, tok
                     await warehouseApi.uploadExtraImage(token, warehouseId, formData)
                     alert('추가 사진이 모두 등록되었습니다.');
                     setHasImage(true)
+                    setUploadFile(null)
                 }
             } 
             catch (error) {
@@ -202,7 +167,7 @@ const ImageView: React.FC<IImageViewComponentProps> = ({ idx, isMain, image, tok
     return (
         <ImageViewWrapper>
             <Image id={`${imageType}-image${idx}`} src={image !== null ? image.url : DEFAULT_URL } onClick={() => {
-                const fileInputRef = document.querySelector(`#${imageType}-file${idx}`) as HTMLImageElement
+                const fileInputRef = document.querySelector(`#${imageType}-file${idx}`) as HTMLInputElement
                 if(fileInputRef) fileInputRef.click(); 
             }}/>
             <BottomWrapper>
@@ -217,32 +182,6 @@ const ImageView: React.FC<IImageViewComponentProps> = ({ idx, isMain, image, tok
         </ImageViewWrapper>
     )
 }
-
-/////////////////////
-
-const EditImageWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 1em;
-`;
-
-const LeftLogoWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-`;
-const RightImageWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding-left: 2em;
-`;
-
-const HeaderWrapper = styled.div``;
-const MainImageWrapper = styled.div``;
-const ExtraImageWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-`;
 
 interface IEditImageComponentProps {}
 

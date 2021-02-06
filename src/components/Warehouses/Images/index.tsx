@@ -12,6 +12,7 @@ import {
   Image,
   ImageInput,
   AddButton,
+  FileName,
 } from './styles';
 
 interface IImage {
@@ -70,6 +71,10 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
             return (
               <ImageContainer key={`MAIN${idx}`}>
                 <Image bgImage={file.url}></Image>
+                <FileName>
+                  파일명&nbsp;:&nbsp;
+                  {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}
+                </FileName>
                 <ImageInput type="file" />
                 <AddButton>추가</AddButton>
               </ImageContainer>
@@ -80,6 +85,10 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
             return (
               <ImageContainer key={`FILE${idx}`}>
                 <Image bgImage={file.url}></Image>
+                <FileName>
+                  파일명&nbsp;:&nbsp;
+                  {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}
+                </FileName>
                 <ImageInput type="file" />
                 <AddButton>추가</AddButton>
               </ImageContainer>

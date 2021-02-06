@@ -72,3 +72,10 @@ export const Image = styled.div<{ bgImage: string }>`
 export const ImageInput = styled.input``;
 
 export const AddButton = styled.div``;
+
+export const FileName = styled.div`
+  font-size: 15px;
+  color: ${(props) => props.theme.blueColor};
+  border-radius: 5px;
+  text-align: center;
+`;

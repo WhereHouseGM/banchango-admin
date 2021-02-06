@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 
 import LogoImage from '../../assets/LOGO.png';
@@ -238,7 +232,6 @@ const EditImage: React.FC<IEditImageComponentProps> = () => {
   const [loading, setLoading] = useState(true);
   const [mainImages, setMainImages] = useState<Array<ImageData | null>>([]);
   const [extraImages, setExtraImages] = useState<Array<ImageData | null>>([]);
-  let images = [];
 
   const getApi = useCallback(() => {
     warehouseApi

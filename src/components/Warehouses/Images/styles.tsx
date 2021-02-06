@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100vh;
+  height: 100%;
   overflow: auto;
 `;
 
@@ -21,7 +21,6 @@ export const InformationContainer = styled.div`
   background-color: white;
   width: 375px;
   border-radius: 10px;
-  overflow: hidden;
   border: 1px solid #d5d5d5;
 `;
 
@@ -51,4 +50,26 @@ export const Text = styled.div`
   margin-left: 10px;
   font-weight: bold;
   border-bottom: 1px solid #a1a1a1;
+  margin-bottom: 10px;
+  line-height: 1.3;
 `;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const Image = styled.div<{ bgImage: string }>`
+  background-image: url(${(props) => props.bgImage});
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 400px;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
+`;
+
+export const ImageInput = styled.input``;
+
+export const AddButton = styled.div``;

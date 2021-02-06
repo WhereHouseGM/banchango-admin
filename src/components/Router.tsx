@@ -37,6 +37,11 @@ const RouterComponent: React.FC = () => {
           <EditWarehouseData />
         </TokenValidator>
       </Route>
+      <Route path="/warehouses/edit/image/:warehouseId">
+        <TokenValidator>
+          <EditImage />
+        </TokenValidator>
+      </Route>
       <Route path="/estimates/:estimateStatus" exact={true}>
         <TokenValidator>
           <Estimates />
@@ -45,11 +50,6 @@ const RouterComponent: React.FC = () => {
       <Route path="/estimates/edit/:estimateId">
         <TokenValidator>
           <UpdateEstimateData />
-        </TokenValidator>
-      </Route>
-      <Route path="/warehouses/edit/image/:warehouseId">
-        <TokenValidator>
-          <EditImage/>
         </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />

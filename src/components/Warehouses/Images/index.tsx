@@ -28,8 +28,35 @@ interface IEditImageProps {
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
   console.log(imageData);
+
   const lengthOfExtraImages = (): number =>
     imageData.images.filter((image) => image.isMain === false).length;
+
+  const parseFileName = (rawUrl: string): string => {
+    const splitted = rawUrl.split('/');
+    return splitted[splitted.length - 1];
+  };
+
+  const convertedMainImage = (): IImage[] => {
+    let temp = imageData.images.filter((image) => image.isMain === true);
+    if (temp.length === 0) {
+      temp.push({ url: NO_IMAGE, isMain: true });
+    }
+    return temp;
+  };
+
+  const convertExtraImage = (): IImage[] => {
+    let temp = imageData.images.filter((image) => image.isMain === false);
+    if (temp.length === 5) {
+      return temp;
+    } else {
+      for (let i = temp.length; i < 5; i++) {
+        temp.push({ url: NO_IMAGE, isMain: false });
+      }
+      return temp;
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -39,23 +66,25 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
           </LogoImageContainer>
           <Text>창고 사진 수정 - {imageData.warehouseName}</Text>
           <Text>메인 사진</Text>
-          <ImageContainer>
-            <Image bgImage={NO_IMAGE}></Image>
-            <ImageInput type="file" />
-            <AddButton>추가</AddButton>
-          </ImageContainer>
+          {convertedMainImage().map((file, idx) => {
+            return (
+              <ImageContainer key={`MAIN${idx}`}>
+                <Image bgImage={file.url}></Image>
+                <ImageInput type="file" />
+                <AddButton>추가</AddButton>
+              </ImageContainer>
+            );
+          })}
           <Text>추가 사진({lengthOfExtraImages()})</Text>
-          {imageData.images
-            .filter((image) => image.isMain === false)
-            .map((file, idx) => {
-              return (
-                <ImageContainer key={`FILE${idx}`}>
-                  <Image bgImage={file.url}></Image>
-                  <ImageInput type="file" />
-                  <AddButton>추가</AddButton>
-                </ImageContainer>
-              );
-            })}
+          {convertExtraImage().map((file, idx) => {
+            return (
+              <ImageContainer key={`FILE${idx}`}>
+                <Image bgImage={file.url}></Image>
+                <ImageInput type="file" />
+                <AddButton>추가</AddButton>
+              </ImageContainer>
+            );
+          })}
         </InformationContainer>
       </Wrapper>
     </Container>

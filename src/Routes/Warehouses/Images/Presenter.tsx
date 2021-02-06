@@ -8,7 +8,10 @@ interface Image {
 }
 
 interface IEditImageProps {
-  imageData: Array<Image>;
+  imageData: {
+    warehouseName: string;
+    images: Array<Image>;
+  };
 }
 
 const Presenter: React.FC<IEditImageProps> = ({ imageData }) => (

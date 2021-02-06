@@ -42,6 +42,13 @@ export const LogoImage = styled.div<{ logoImage: string }>`
   height: 45px;
   background-image: url(${(props) => props.logoImage});
   background-size: contain;
-  align-self: center;
+  align-self: flex-start;
+  margin-left: 10px;
   background-repeat: no-repeat;
+`;
+
+export const Text = styled.div`
+  margin-left: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #a1a1a1;
 `;

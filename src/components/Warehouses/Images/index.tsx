@@ -6,6 +6,7 @@ import {
   InformationContainer,
   LogoImage,
   LogoImageContainer,
+  Text,
 } from './styles';
 
 interface Image {
@@ -14,7 +15,10 @@ interface Image {
 }
 
 interface IEditImageProps {
-  imageData: Array<Image>;
+  imageData: {
+    warehouseName: string;
+    images: Array<Image>;
+  };
 }
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
@@ -26,6 +30,7 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
           <LogoImageContainer>
             <LogoImage logoImage={LOGO_IMAGE}></LogoImage>
           </LogoImageContainer>
+          <Text>창고 사진 수정</Text>
         </InformationContainer>
       </Wrapper>
     </Container>

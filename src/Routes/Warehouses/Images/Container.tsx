@@ -9,13 +9,21 @@ const Container: React.FC = () => {
   const params = useParams<{ warehouseId: string }>();
   const [loading, setLoading] = useState<Boolean>(true);
   const token = localStorage.getItem('AccessToken') || 'abc';
-  const [imageData, setImageData] = useState([]);
+  const [imageData, setImageData] = useState({
+    warehouseName: '',
+    images: [
+      {
+        url: '',
+        isMain: false,
+      },
+    ],
+  });
 
   const getApi = useCallback(() => {
     warehouseApi
       .getWarehouseImages(token, parseInt(params.warehouseId))
-      .then(({ data: { images } }) => {
-        setImageData(images);
+      .then(({ data }) => {
+        setImageData(data);
         setLoading(false);
       })
       .catch(({ response: { status } }) => {

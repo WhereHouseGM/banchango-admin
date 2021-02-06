@@ -73,6 +73,7 @@ export const WarehouseContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 3px;
 `;
 
 export const Status = styled.div<{ color: string }>`
@@ -99,7 +100,18 @@ export const Name = styled.div`
 
 export const ButtonsContainer = styled.div``;
 
-export const Button = styled(Link)`
+export const InformationEditButton = styled(Link)`
+  text-align: center;
+  padding: 1px 2px 1px 2px;
+  color: black;
+  font-size: 8px;
+  margin-right: 2px;
+  border: 1px solid ${(props) => props.theme.blueColor};
+  border-radius: 2px;
+`;
+
+export const ImageEditButton = styled(Link)<{ isImageUpdatable: boolean }>`
+  display: ${(props) => (props.isImageUpdatable === true ? 'normal' : 'none')};
   text-align: center;
   padding: 1px 2px 1px 2px;
   color: black;

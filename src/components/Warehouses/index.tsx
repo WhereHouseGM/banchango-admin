@@ -15,7 +15,8 @@ import {
   WarehouseInformationWrapper,
   Name,
   ButtonsContainer,
-  Button,
+  InformationEditButton,
+  ImageEditButton,
   Date,
   ShowMoreButton,
 } from './styles';
@@ -103,12 +104,20 @@ const Warehouses: React.FC = () => {
                   <WarehouseInformationWrapper>
                     <Name>{result.name}</Name>
                     <ButtonsContainer>
-                      <Button
+                      <InformationEditButton
                         to={`/warehouses/edit/data/${result.warehouseId}`}
                       >
                         정보
-                      </Button>
-                      <Button to={`/warehouses/edit/image/${result.warehouseId}`}>이미지</Button>
+                      </InformationEditButton>
+                      <ImageEditButton
+                        to={`/warehouses/edit/image/${result.warehouseId}`}
+                        isImageUpdatable={
+                          result.status === 'IN_PROGRESS' ||
+                          result.status === 'VIEWABLE'
+                        }
+                      >
+                        이미지
+                      </ImageEditButton>
                     </ButtonsContainer>
                   </WarehouseInformationWrapper>
                   <Date>{result.lastModifiedAt}</Date>

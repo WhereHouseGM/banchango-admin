@@ -9,10 +9,11 @@ import Main from '../Routes/Main';
 import Path from '../Routes/Path';
 import Warehouses from '../Routes/Warehouses';
 import TokenValidator from '../components/Common/TokenValidator';
-import EditImage from './Warehouses/Images';
+// import EditImage from './Warehouses/Images';
 import EditWarehouseData from '../Routes/Warehouses/Edit';
 import Estimates from '../Routes/Estimates';
 import UpdateEstimateData from '../Routes/Estimates/Update';
+import EditImage from './temp';
 
 const RouterComponent: React.FC = () => {
   return (
@@ -32,15 +33,18 @@ const RouterComponent: React.FC = () => {
           <Warehouses />
         </TokenValidator>
       </Route>
+      <Route path="/temp/:warehouseId">
+        <TokenValidator>
+          <EditImage />
+        </TokenValidator>
+      </Route>
       <Route path="/warehouses/edit/data/:warehouseId">
         <TokenValidator>
           <EditWarehouseData />
         </TokenValidator>
       </Route>
       <Route path="/warehouses/edit/image/:warehouseId">
-        <TokenValidator>
-          <EditImage />
-        </TokenValidator>
+        <TokenValidator>{/* TODO */}</TokenValidator>
       </Route>
       <Route path="/estimates/:estimateStatus" exact={true}>
         <TokenValidator>

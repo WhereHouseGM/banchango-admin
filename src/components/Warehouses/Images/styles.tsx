@@ -59,8 +59,7 @@ export const ImageContainer = styled.div`
   justify-content: center;
 `;
 
-export const Image = styled.div<{ bgImage: string }>`
-  background-image: url(${(props) => props.bgImage});
+export const Image = styled.img`
   background-repeat: no-repeat;
   background-size: contain;
   height: 400px;

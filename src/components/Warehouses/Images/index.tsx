@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LOGO_IMAGE from '../../../assets/LOGO.png';
 import NO_IMAGE from '../../../assets/NO_IMAGE.png';
 import {
@@ -28,6 +28,17 @@ interface IEditImageProps {
 }
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
+  //   const [mainImage, setMainImage] = useState(
+  //     (): IImage => {
+  //       return imageData.images.filter((img) => img.isMain === true).length > 1
+  //         ? imageData.images.filter((img) => img.isMain === true)[0]
+  //         : { isMain: true, url: NO_IMAGE };
+  //     },
+  //   );
+  //   const [extraImages, setExtraImages] = useState(
+  //     imageData.images.filter((img) => img.isMain === false),
+  //   );
+
   console.log(imageData);
 
   const lengthOfExtraImages = (): number =>
@@ -38,7 +49,7 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
     return splitted[splitted.length - 1];
   };
 
-  const convertedMainImage = (): IImage[] => {
+  const convertMainImage = (): IImage[] => {
     let temp = imageData.images.filter((image) => image.isMain === true);
     if (temp.length === 0) {
       temp.push({ url: NO_IMAGE, isMain: true });
@@ -58,6 +69,10 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
     }
   };
 
+  const handleMainImageChange = (
+    event: React.SyntheticEvent<HTMLInputElement>,
+  ): void => {};
+
   return (
     <Container>
       <Wrapper>
@@ -67,10 +82,10 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
           </LogoImageContainer>
           <Text>창고 사진 수정 - {imageData.warehouseName}</Text>
           <Text>메인 사진</Text>
-          {convertedMainImage().map((file, idx) => {
+          {convertMainImage().map((file, idx) => {
             return (
               <ImageContainer key={`MAIN${idx}`}>
-                <Image bgImage={file.url}></Image>
+                <Image src={file.url}></Image>
                 <FileName>
                   파일명&nbsp;:&nbsp;
                   {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}
@@ -84,7 +99,7 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
           {convertExtraImage().map((file, idx) => {
             return (
               <ImageContainer key={`FILE${idx}`}>
-                <Image bgImage={file.url}></Image>
+                <Image src={file.url}></Image>
                 <FileName>
                   파일명&nbsp;:&nbsp;
                   {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}

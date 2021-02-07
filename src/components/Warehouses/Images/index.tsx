@@ -29,6 +29,7 @@ interface IEditImageProps {
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
   console.log(imageData);
+  const token = localStorage.getItem('AccessToken') || 'abc';
 
   const lengthOfExtraImages = (): number =>
     imageData.images.filter((image) => image.isMain === false).length;
@@ -84,23 +85,27 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                     파일명&nbsp;:&nbsp;{parseFileName(file.url)}
                   </FileName>
                 )}
-                <ImageInput
-                  type="file"
-                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
-                    if (event.currentTarget.files !== null) {
-                      let file = event.currentTarget.files[0];
-                      setUploadFile(file);
-                      let reader = new FileReader();
-                      reader.onload = (event) => {
-                        if (mainImageRef.current && event.target) {
-                          mainImageRef.current.src = event.target
-                            .result as string;
-                        }
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
-                />
+                {file.url === NO_IMAGE ? (
+                  <ImageInput
+                    type="file"
+                    onChange={(
+                      event: React.SyntheticEvent<HTMLInputElement>,
+                    ) => {
+                      if (event.currentTarget.files !== null) {
+                        let file = event.currentTarget.files[0];
+                        setUploadFile(file);
+                        let reader = new FileReader();
+                        reader.onload = (event) => {
+                          if (mainImageRef.current && event.target) {
+                            mainImageRef.current.src = event.target
+                              .result as string;
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                ) : null}
                 <AddButton>추가</AddButton>
               </ImageContainer>
             );
@@ -110,11 +115,12 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
             return (
               <ImageContainer key={`FILE${idx}`}>
                 <Image src={file.url} id={`EXTRA_IMAGE_${idx}`}></Image>
-                <FileName>
-                  파일명&nbsp;:&nbsp;
-                  {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}
-                </FileName>
-                <ImageInput type="file" />
+                {file.url === NO_IMAGE ? null : (
+                  <FileName>
+                    파일명&nbsp;:&nbsp;{parseFileName(file.url)}
+                  </FileName>
+                )}
+                {file.url === NO_IMAGE ? <ImageInput type="file" /> : null}
                 <AddButton>추가</AddButton>
               </ImageContainer>
             );

@@ -107,9 +107,9 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                   />
                 ) : null}
                 {file.url === NO_IMAGE ? (
-                  <Button>추가</Button>
+                  <Button isRemove={false}>추가</Button>
                 ) : (
-                  <Button>삭제</Button>
+                  <Button isRemove={true}>삭제</Button>
                 )}
               </ImageContainer>
             );
@@ -148,9 +148,9 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                   />
                 ) : null}
                 {file.url === NO_IMAGE ? (
-                  <Button>추가</Button>
+                  <Button isRemove={false}>추가</Button>
                 ) : (
-                  <Button>삭제</Button>
+                  <Button isRemove={true}>삭제</Button>
                 )}
               </ImageContainer>
             );

@@ -70,10 +70,10 @@ export const Image = styled.img`
 
 export const ImageInput = styled.input``;
 
-export const Button = styled.div`
+export const Button = styled.div<{ isRemove: boolean }>`
   text-align: center;
-  border: 2px solid ${(props) => props.theme.blueColor};
-  color: ${(props) => props.theme.blueColor};
+  color: black;
+  background-color: ${(props) => (props.isRemove ? '#d9534f' : '#5cb85c')};
   width: 50%;
   align-self: center;
   margin-top: 5px;
@@ -81,7 +81,6 @@ export const Button = styled.div`
   padding: 5px;
   border-radius: 5px;
   &:hover {
-    background-color: #a1a1a1;
     cursor: pointer;
   }
 `;

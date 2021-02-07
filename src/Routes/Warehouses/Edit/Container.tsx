@@ -7,7 +7,7 @@ import Loading from '../../../components/Loading';
 
 const Container: React.FC = () => {
   const params = useParams<{ warehouseId: string }>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<Boolean>(true);
   const [warehouseData, setWarehouseData] = useState({
     name: '',
     space: -1,
@@ -51,7 +51,6 @@ const Container: React.FC = () => {
         message.destroy();
         if (status === 400) {
           message.warning('[400] : 요청 형식이 잘못되었습니다.');
-          return;
         } else if (status === 401) {
           message.warning(
             '[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.',

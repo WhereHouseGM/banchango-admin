@@ -15,7 +15,8 @@ import {
   WarehouseInformationWrapper,
   Name,
   ButtonsContainer,
-  Button,
+  InformationEditButton,
+  ImageEditButton,
   Date,
   ShowMoreButton,
 } from './styles';
@@ -103,12 +104,17 @@ const Warehouses: React.FC = () => {
                   <WarehouseInformationWrapper>
                     <Name>{result.name}</Name>
                     <ButtonsContainer>
-                      <Button
+                      <InformationEditButton
                         to={`/warehouses/edit/data/${result.warehouseId}`}
                       >
                         정보
-                      </Button>
-                      <Button to="/">이미지</Button>
+                      </InformationEditButton>
+                      <ImageEditButton
+                        to={`/warehouses/edit/image/${result.warehouseId}`}
+                        status={result.status}
+                      >
+                        이미지
+                      </ImageEditButton>
                     </ButtonsContainer>
                   </WarehouseInformationWrapper>
                   <Date>{result.lastModifiedAt}</Date>

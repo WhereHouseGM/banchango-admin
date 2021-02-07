@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { warehouseApi } from '../../../api';
 import LOGO_IMAGE from '../../../assets/LOGO.png';
 import NO_IMAGE from '../../../assets/NO_IMAGE.png';
+import { message } from 'antd';
 import {
   Container,
   Wrapper,
@@ -67,15 +68,18 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
       alert('사진을 먼저 선택해주세요.');
       return;
     } else {
+      message.loading('잠시만 기다려 주세요..');
       let formData = new FormData();
       formData.append('file', uploadFile as Blob);
       warehouseApi
         .uploadMainImage(token, parseInt(params.warehouseId), formData)
         .then(() => {
+          message.destroy();
           alert('메인 사진을 등록했습니다.');
           window.location.reload();
         })
         .catch(({ response: { status } }) => {
+          message.destroy();
           if (status === 400) {
             alert('[400] : 요청 형식이 잘못되었습니다.');
             return;
@@ -103,15 +107,18 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
       alert('사진을 먼저 선택해주세요.');
       return;
     } else {
+      message.loading('잠시만 기다려 주세요..');
       let formData = new FormData();
       formData.append('file', uploadFile as Blob);
       warehouseApi
         .uploadExtraImage(token, parseInt(params.warehouseId), formData)
         .then(() => {
-          alert('메인 사진을 등록했습니다.');
+          message.destroy();
+          alert('추가 사진을 등록했습니다.');
           window.location.reload();
         })
         .catch(({ response: { status } }) => {
+          message.destroy();
           if (status === 400) {
             alert('[400] : 요청 형식이 잘못되었습니다.');
             return;

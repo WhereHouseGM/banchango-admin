@@ -1,4 +1,4 @@
-import React, { createRef, useState, useRef, MutableRefObject } from 'react';
+import React, { useState, useRef, MutableRefObject } from 'react';
 import { useParams } from 'react-router-dom';
 import { warehouseApi } from '../../../api';
 import LOGO_IMAGE from '../../../assets/LOGO.png';

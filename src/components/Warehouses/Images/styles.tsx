@@ -70,7 +70,21 @@ export const Image = styled.img`
 
 export const ImageInput = styled.input``;
 
-export const AddButton = styled.div``;
+export const Button = styled.div`
+  text-align: center;
+  border: 2px solid ${(props) => props.theme.blueColor};
+  color: ${(props) => props.theme.blueColor};
+  width: 50%;
+  align-self: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  &:hover {
+    background-color: #a1a1a1;
+    cursor: pointer;
+  }
+`;
 
 export const FileName = styled.div`
   font-size: 15px;

@@ -11,7 +11,7 @@ import {
   ImageContainer,
   Image,
   ImageInput,
-  AddButton,
+  Button,
   FileName,
 } from './styles';
 
@@ -106,7 +106,11 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                     }}
                   />
                 ) : null}
-                <AddButton>추가</AddButton>
+                {file.url === NO_IMAGE ? (
+                  <Button>추가</Button>
+                ) : (
+                  <Button>삭제</Button>
+                )}
               </ImageContainer>
             );
           })}
@@ -120,8 +124,34 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                     파일명&nbsp;:&nbsp;{parseFileName(file.url)}
                   </FileName>
                 )}
-                {file.url === NO_IMAGE ? <ImageInput type="file" /> : null}
-                <AddButton>추가</AddButton>
+                {file.url === NO_IMAGE ? (
+                  <ImageInput
+                    type="file"
+                    onChange={(
+                      event: React.SyntheticEvent<HTMLInputElement>,
+                    ) => {
+                      if (event.currentTarget.files !== null) {
+                        let file = event.currentTarget.files[0];
+                        setUploadFile(file);
+                        let reader = new FileReader();
+                        reader.onload = (event) => {
+                          let extraImageRef = document.querySelector(
+                            `#EXTRA_IMAGE_${idx}`,
+                          ) as HTMLImageElement;
+                          if (extraImageRef && event.target) {
+                            extraImageRef.src = event.target.result as string;
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                ) : null}
+                {file.url === NO_IMAGE ? (
+                  <Button>추가</Button>
+                ) : (
+                  <Button>삭제</Button>
+                )}
               </ImageContainer>
             );
           })}

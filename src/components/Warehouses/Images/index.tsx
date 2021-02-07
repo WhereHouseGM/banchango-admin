@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState, useRef, MutableRefObject } from 'react';
 import LOGO_IMAGE from '../../../assets/LOGO.png';
 import NO_IMAGE from '../../../assets/NO_IMAGE.png';
 import {
@@ -28,17 +28,6 @@ interface IEditImageProps {
 }
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
-  //   const [mainImage, setMainImage] = useState(
-  //     (): IImage => {
-  //       return imageData.images.filter((img) => img.isMain === true).length > 1
-  //         ? imageData.images.filter((img) => img.isMain === true)[0]
-  //         : { isMain: true, url: NO_IMAGE };
-  //     },
-  //   );
-  //   const [extraImages, setExtraImages] = useState(
-  //     imageData.images.filter((img) => img.isMain === false),
-  //   );
-
   console.log(imageData);
 
   const lengthOfExtraImages = (): number =>
@@ -69,9 +58,9 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
     }
   };
 
-  const handleMainImageChange = (
-    event: React.SyntheticEvent<HTMLInputElement>,
-  ): void => {};
+  const mainImageRef = useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
+
+  const [uploadFile, setUploadFile] = useState<File | null>();
 
   return (
     <Container>
@@ -85,12 +74,33 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
           {convertMainImage().map((file, idx) => {
             return (
               <ImageContainer key={`MAIN${idx}`}>
-                <Image src={file.url}></Image>
-                <FileName>
-                  파일명&nbsp;:&nbsp;
-                  {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}
-                </FileName>
-                <ImageInput type="file" />
+                <Image
+                  src={file.url}
+                  id="MAIN_IMAGE"
+                  ref={mainImageRef}
+                ></Image>
+                {file.url === NO_IMAGE ? null : (
+                  <FileName>
+                    파일명&nbsp;:&nbsp;{parseFileName(file.url)}
+                  </FileName>
+                )}
+                <ImageInput
+                  type="file"
+                  onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                    if (event.currentTarget.files !== null) {
+                      let file = event.currentTarget.files[0];
+                      setUploadFile(file);
+                      let reader = new FileReader();
+                      reader.onload = (event) => {
+                        if (mainImageRef.current && event.target) {
+                          mainImageRef.current.src = event.target
+                            .result as string;
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
                 <AddButton>추가</AddButton>
               </ImageContainer>
             );
@@ -99,7 +109,7 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
           {convertExtraImage().map((file, idx) => {
             return (
               <ImageContainer key={`FILE${idx}`}>
-                <Image src={file.url}></Image>
+                <Image src={file.url} id={`EXTRA_IMAGE_${idx}`}></Image>
                 <FileName>
                   파일명&nbsp;:&nbsp;
                   {file.url === NO_IMAGE ? '없음' : parseFileName(file.url)}

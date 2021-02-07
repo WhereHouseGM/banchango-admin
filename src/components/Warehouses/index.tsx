@@ -111,10 +111,7 @@ const Warehouses: React.FC = () => {
                       </InformationEditButton>
                       <ImageEditButton
                         to={`/warehouses/edit/image/${result.warehouseId}`}
-                        isImageUpdatable={
-                          result.status === 'IN_PROGRESS' ||
-                          result.status === 'VIEWABLE'
-                        }
+                        status={result.status}
                       >
                         이미지
                       </ImageEditButton>

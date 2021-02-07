@@ -110,8 +110,11 @@ export const InformationEditButton = styled(Link)`
   border-radius: 2px;
 `;
 
-export const ImageEditButton = styled(Link)<{ isImageUpdatable: boolean }>`
-  display: ${(props) => (props.isImageUpdatable === true ? 'normal' : 'none')};
+export const ImageEditButton = styled(Link)<{ status: string }>`
+  display: ${(props) =>
+    props.status === 'IN_PROGRESS' || props.status === 'VIEWABLE'
+      ? 'normal'
+      : 'none'};
   text-align: center;
   padding: 1px 2px 1px 2px;
   color: black;

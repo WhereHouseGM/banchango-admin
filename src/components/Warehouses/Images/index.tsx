@@ -1,4 +1,6 @@
 import React, { createRef, useState, useRef, MutableRefObject } from 'react';
+import { useParams } from 'react-router-dom';
+import { warehouseApi } from '../../../api';
 import LOGO_IMAGE from '../../../assets/LOGO.png';
 import NO_IMAGE from '../../../assets/NO_IMAGE.png';
 import {
@@ -30,6 +32,7 @@ interface IEditImageProps {
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
   console.log(imageData);
   const token = localStorage.getItem('AccessToken') || 'abc';
+  const params = useParams<{ warehouseId: string }>();
 
   const lengthOfExtraImages = (): number =>
     imageData.images.filter((image) => image.isMain === false).length;
@@ -56,6 +59,78 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
         temp.push({ url: NO_IMAGE, isMain: false });
       }
       return temp;
+    }
+  };
+
+  const uploadMainImage = () => {
+    if (uploadFile === null || uploadFile === undefined) {
+      alert('사진을 먼저 선택해주세요.');
+      return;
+    } else {
+      let formData = new FormData();
+      formData.append('file', uploadFile as Blob);
+      warehouseApi
+        .uploadMainImage(token, parseInt(params.warehouseId), formData)
+        .then(() => {
+          alert('메인 사진을 등록했습니다.');
+          window.location.reload();
+        })
+        .catch(({ response: { status } }) => {
+          if (status === 400) {
+            alert('[400] : 요청 형식이 잘못되었습니다.');
+            return;
+          } else if (status === 401) {
+            alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
+            return;
+          } else if (status === 403) {
+            alert(
+              '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
+            );
+            return;
+          } else if (status === 406) {
+            alert(
+              '[406] : 해당 창고는 이미 메인 사진이 있습니다.\n기존 사진을 먼저 삭제하고 등록해주세요.',
+            );
+          } else {
+            alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
+          }
+        });
+    }
+  };
+
+  const uploadExtraImage = () => {
+    if (uploadFile === null || uploadFile === undefined) {
+      alert('사진을 먼저 선택해주세요.');
+      return;
+    } else {
+      let formData = new FormData();
+      formData.append('file', uploadFile as Blob);
+      warehouseApi
+        .uploadExtraImage(token, parseInt(params.warehouseId), formData)
+        .then(() => {
+          alert('메인 사진을 등록했습니다.');
+          window.location.reload();
+        })
+        .catch(({ response: { status } }) => {
+          if (status === 400) {
+            alert('[400] : 요청 형식이 잘못되었습니다.');
+            return;
+          } else if (status === 401) {
+            alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
+            return;
+          } else if (status === 403) {
+            alert(
+              '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
+            );
+            return;
+          } else if (status === 406) {
+            alert(
+              '[406] : 해당 창고는 이미 추가 사진이 5장 있습니다.\n추가 사진의 최대 개수는 5장입니다.',
+            );
+          } else {
+            alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
+          }
+        });
     }
   };
 
@@ -107,7 +182,9 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                   />
                 ) : null}
                 {file.url === NO_IMAGE ? (
-                  <Button isRemove={false}>추가</Button>
+                  <Button isRemove={false} onClick={uploadMainImage}>
+                    추가
+                  </Button>
                 ) : (
                   <Button isRemove={true}>삭제</Button>
                 )}
@@ -148,7 +225,9 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                   />
                 ) : null}
                 {file.url === NO_IMAGE ? (
-                  <Button isRemove={false}>추가</Button>
+                  <Button isRemove={false} onClick={uploadExtraImage}>
+                    추가
+                  </Button>
                 ) : (
                   <Button isRemove={true}>삭제</Button>
                 )}

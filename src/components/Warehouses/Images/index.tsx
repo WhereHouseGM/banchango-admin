@@ -141,6 +141,38 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
     }
   };
 
+  const removeMainImage = () => {
+    message.loading('잠시만 기다려 주세요..');
+    warehouseApi
+      .deleteMainImage(token, parseInt(params.warehouseId))
+      .then(() => {
+        message.destroy();
+        alert('메인 사진이 정상적으로 삭제되었습니다.');
+        window.location.reload();
+      })
+      .catch(({ response: { status } }) => {
+        message.destroy();
+        if (status === 400) {
+          alert('[400] : 요청 형식이 잘못되었습니다.');
+          return;
+        } else if (status === 401) {
+          alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
+          return;
+        } else if (status === 403) {
+          alert(
+            '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
+          );
+          return;
+        } else if (status === 404) {
+          alert(
+            '[404] : 기존에 있던 메인 사진이 없거나 존재하지 않는 창고입니다.',
+          );
+        } else {
+          alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
+        }
+      });
+  };
+
   const mainImageRef = useRef<HTMLImageElement>() as MutableRefObject<HTMLImageElement>;
 
   const [uploadFile, setUploadFile] = useState<File | null>();
@@ -193,7 +225,9 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
                     추가
                   </Button>
                 ) : (
-                  <Button isRemove={true}>삭제</Button>
+                  <Button isRemove={true} onClick={removeMainImage}>
+                    삭제
+                  </Button>
                 )}
               </ImageContainer>
             );

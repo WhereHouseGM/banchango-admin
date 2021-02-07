@@ -13,7 +13,6 @@ import EditImage from '../Routes/Warehouses/Images';
 import EditWarehouseData from '../Routes/Warehouses/Edit';
 import Estimates from '../Routes/Estimates';
 import UpdateEstimateData from '../Routes/Estimates/Update';
-import EditImageTemp from './temp';
 
 const RouterComponent: React.FC = () => {
   return (
@@ -31,11 +30,6 @@ const RouterComponent: React.FC = () => {
       <Route path="/warehouses/:warehouseStatus" exact={true}>
         <TokenValidator>
           <Warehouses />
-        </TokenValidator>
-      </Route>
-      <Route path="/temp/:warehouseId">
-        <TokenValidator>
-          <EditImageTemp />
         </TokenValidator>
       </Route>
       <Route path="/warehouses/edit/data/:warehouseId">

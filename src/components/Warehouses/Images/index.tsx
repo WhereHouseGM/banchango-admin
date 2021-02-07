@@ -31,7 +31,6 @@ interface IEditImageProps {
 }
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
-  console.log(imageData);
   const token = localStorage.getItem('AccessToken') || 'abc';
   const params = useParams<{ warehouseId: string }>();
 

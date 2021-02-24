@@ -49,8 +49,8 @@ const Users: React.FC = () => {
     );
   }, []);
 
-  const searchApi = async (pageIndex: number, isExtraLoading: boolean) => {
-    await userApi
+  const searchApi = (pageIndex: number, isExtraLoading: boolean) => {
+    userApi
       .searchUsersByCompanyName(token, searchQuery, pageIndex, 10)
       .then(({ data }) => {
         if (isExtraLoading) {
@@ -68,8 +68,8 @@ const Users: React.FC = () => {
       });
   };
 
-  const getApi = async (pageIndex: number, isExtraLoading: boolean) => {
-    await userApi
+  const getApi = (pageIndex: number, isExtraLoading: boolean) => {
+    userApi
       .getUsers(token, pageIndex, 10)
       .then(({ data }) => {
         if (isExtraLoading) {

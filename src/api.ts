@@ -6,6 +6,32 @@ const api = axios.create({
 
 export const userApi = {
   signIn: (body: object) => api.post('users/sign-in', body),
+  getUsers: (token: string, page: number, size: number) =>
+    api.get('/users', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        page: page,
+        size: size,
+      },
+    }),
+  searchUsersByCompanyName: (
+    token: string,
+    companyName: string,
+    page: number,
+    size: number,
+  ) =>
+    api.get('/users/search', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        page: page,
+        size: size,
+        companyName: companyName,
+      },
+    }),
 };
 
 export const estimateApi = {

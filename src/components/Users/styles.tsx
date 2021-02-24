@@ -27,6 +27,8 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   align-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 export const Image = styled.div<{ logoImage: string }>`

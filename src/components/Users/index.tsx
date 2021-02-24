@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   ImageContainer,
@@ -33,6 +33,7 @@ const Users: React.FC = () => {
   const [results, setResults] = useState<Array<ApiResult>>([]);
   const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const convertTypeToText = (type: string): string => {
     if (type === 'OWNER') {
@@ -42,8 +43,33 @@ const Users: React.FC = () => {
     } else return '알 수 없음';
   };
 
-  const getApi = useCallback(async () => {
-    userApi
+  useEffect(() => {
+    message.warning(
+      '일부 기능이 원활하지 않습니다. 잘 안되면 새로고침 해주세요. ex) 처음에는 더 보기 버튼 2번 눌러야 작동합니다.',
+    );
+  }, []);
+
+  const searchApi = async (pageIndex: number, isExtraLoading: boolean) => {
+    await userApi
+      .searchUsersByCompanyName(token, searchQuery, pageIndex, 10)
+      .then(({ data }) => {
+        if (isExtraLoading) {
+          setResults((prevResults) => [...prevResults, ...data]);
+        } else {
+          setResults(data);
+        }
+      })
+      .catch(({ response: { status } }) => {
+        if (status === 401 || status === 403) {
+          message.warning('토큰에 문제가 있습니다. 로그인을 다시 해주세요.');
+        } else {
+          alert(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
+        }
+      });
+  };
+
+  const getApi = async (pageIndex: number, isExtraLoading: boolean) => {
+    await userApi
       .getUsers(token, pageIndex, 10)
       .then(({ data }) => {
         if (isExtraLoading) {
@@ -59,11 +85,7 @@ const Users: React.FC = () => {
           alert(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
         }
       });
-  }, [pageIndex, isExtraLoading, setResults, token]);
-
-  useEffect(() => {
-    getApi();
-  }, [getApi]);
+  };
 
   if (token === null) {
     return (
@@ -89,9 +111,28 @@ const Users: React.FC = () => {
                 placeholder="창고 명으로 검색"
                 onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
                   setSearchQuery(event.currentTarget.value);
+                  setPageIndex(0);
+                  setIsExtraLoading(false);
+                  setIsSearching(true);
                 }}
               />
-              <SearchButton>검색</SearchButton>
+              <SearchButton
+                onClick={(event: React.FormEvent) => {
+                  event.preventDefault();
+                  if (isSearching) {
+                    if (searchQuery === undefined) {
+                      setIsExtraLoading(false);
+                      getApi(pageIndex, isExtraLoading);
+                    } else {
+                      searchApi(pageIndex, isExtraLoading);
+                    }
+                  } else {
+                    getApi(pageIndex, isExtraLoading);
+                  }
+                }}
+              >
+                검색
+              </SearchButton>
             </SearchContainer>
             <TextContainer>
               <Text width={'20%'}>이름</Text>
@@ -126,8 +167,13 @@ const Users: React.FC = () => {
             {results.length % 10 === 0 && results.length !== 0 ? (
               <ShowMoreButton
                 onClick={() => {
-                  setPageIndex(pageIndex + 1);
                   setIsExtraLoading(true);
+                  setPageIndex(pageIndex + 1);
+                  if (isSearching) {
+                    searchApi(pageIndex, isExtraLoading);
+                  } else {
+                    getApi(pageIndex, isExtraLoading);
+                  }
                 }}
               >
                 더 보기

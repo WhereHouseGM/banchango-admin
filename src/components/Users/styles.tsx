@@ -56,6 +56,7 @@ export const HeaderText = styled.div`
 
 export const SearchContainer = styled.form`
   display: flex;
+  margin-bottom: 15px;
 `;
 
 export const SearchInput = styled.input`
@@ -85,7 +86,6 @@ export const UserInfoContainer = styled.div`
 `;
 
 export const TextContainer = styled.div`
-  margin-top: 15px;
   display: flex;
 `;
 
@@ -96,4 +96,23 @@ export const Text = styled.div<{ width: string }>`
   text-align: center;
   width: ${(props) => props.width};
   padding: 4px;
+`;
+
+export const ShowMoreButton = styled.div`
+  align-self: center;
+  justify-self: center;
+  padding: 5px;
+  margin: 20px auto 5px auto;
+  text-align: center;
+  width: 120px;
+  font-size: 14px;
+  border-radius: 5px;
+  color: white;
+  background-color: #1583d6;
+  font-weight: bold;
+  transition: all 0.2s;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
 `;

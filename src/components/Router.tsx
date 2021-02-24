@@ -13,6 +13,7 @@ import EditImage from '../Routes/Warehouses/Images';
 import EditWarehouseData from '../Routes/Warehouses/Edit';
 import Estimates from '../Routes/Estimates';
 import UpdateEstimateData from '../Routes/Estimates/Update';
+import Users from '../Routes/Users';
 
 const RouterComponent: React.FC = () => {
   return (
@@ -50,6 +51,11 @@ const RouterComponent: React.FC = () => {
       <Route path="/estimates/edit/:estimateId">
         <TokenValidator>
           <UpdateEstimateData />
+        </TokenValidator>
+      </Route>
+      <Route path="/users" exact={true}>
+        <TokenValidator>
+          <Users />
         </TokenValidator>
       </Route>
       <Redirect path="*" to="/" />

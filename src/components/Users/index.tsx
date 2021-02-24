@@ -26,6 +26,9 @@ interface ApiResult {
 const Users: React.FC = () => {
   const token = localStorage.getItem('AccessToken') || 'abc';
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [results, setResults] = useState<Array<ApiResult>>([]);
+  const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
+  const [pageIndex, setPageIndex] = useState<number>();
 
   if (token === null) {
     return (

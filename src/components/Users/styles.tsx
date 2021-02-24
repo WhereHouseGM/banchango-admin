@@ -48,7 +48,52 @@ export const InformationContainer = styled.div`
   border: 1px solid #d5d5d5;
 `;
 
-export const Text = styled.div`
+export const HeaderText = styled.div`
   margin-left: 10px;
   font-weight: bold;
+  margin-bottom: 5px;
+`;
+
+export const SearchContainer = styled.form`
+  display: flex;
+`;
+
+export const SearchInput = styled.input`
+  flex: 3;
+  line-height: 3;
+  border: 1px solid gray;
+  border-radius: 20px;
+  padding-left: 15px;
+  margin-right: 10px;
+`;
+
+export const SearchButton = styled.button`
+  background-color: #1583d6;
+  flex: 1;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.2s;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
+`;
+
+export const UserInfoContainer = styled.div`
+  display: flex;
+`;
+
+export const TextContainer = styled.div`
+  margin-top: 15px;
+  display: flex;
+`;
+
+export const Text = styled.div<{ width: string }>`
+  font-weight: bold;
+  font-size: 12px;
+  border: 1px solid lightgray;
+  text-align: center;
+  width: ${(props) => props.width};
+  padding: 4px;
 `;

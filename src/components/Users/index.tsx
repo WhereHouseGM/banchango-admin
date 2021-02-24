@@ -1,30 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   ImageContainer,
   InformationContainer,
   Wrapper,
   Image,
+  HeaderText,
+  SearchContainer,
+  SearchInput,
+  SearchButton,
+  TextContainer,
+  Text,
 } from './styles';
 import LogoImage from '../../assets/LOGO.png';
 import ErrorPage from '../Common/ErrorPage';
 
-interface IUserInfo {
-  userId: number;
+interface ApiResult {
   name: string;
   email: string;
-  type: string;
   companyName: string;
   phoneNumber?: string;
   telephoneNumber: string;
 }
 
-interface IApiResult {
-  users: Array<IUserInfo>;
-}
-
 const Users: React.FC = () => {
   const token = localStorage.getItem('AccessToken') || 'abc';
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   if (token === null) {
     return (
@@ -43,6 +44,24 @@ const Users: React.FC = () => {
             <ImageContainer>
               <Image logoImage={LogoImage}></Image>
             </ImageContainer>
+            <HeaderText>회원 정보 조회</HeaderText>
+            <SearchContainer>
+              <SearchInput
+                type="text"
+                placeholder="창고 명으로 검색"
+                onChange={(event: React.SyntheticEvent<HTMLInputElement>) => {
+                  setSearchQuery(event.currentTarget.value);
+                }}
+              />
+              <SearchButton>검색</SearchButton>
+            </SearchContainer>
+            <TextContainer>
+              <Text width={'20%'}>이름</Text>
+              <Text width={'20%'}>이메일</Text>
+              <Text width={'20%'}>휴대폰 번호</Text>
+              <Text width={'20%'}>유선 전화 번호</Text>
+              <Text width={'20%'}>회사(창고)명</Text>
+            </TextContainer>
           </InformationContainer>
         </Wrapper>
       </Container>

@@ -21,7 +21,7 @@ const Path: React.FC = () => {
           <ButtonContainer>
             <Button to="/estimates/ALL">견적 요청 관리</Button>
             <Button to="/warehouses/ALL">창고 정보 관리</Button>
-            <Button to="/">회원 정보 조회</Button>
+            <Button to="/users">회원 정보 조회</Button>
           </ButtonContainer>
         </PathContainer>
       </Wrapper>

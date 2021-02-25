@@ -71,7 +71,7 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchButton = styled.button`
-  background-color: #1583d6;
+  background-color: ${(props) => props.theme.lightBlueColor};
   flex: 1;
   color: white;
   border-radius: 10px;

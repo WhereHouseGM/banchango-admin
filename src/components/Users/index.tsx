@@ -62,7 +62,9 @@ const Users: React.FC = () => {
       })
       .catch(({ response: { status } }) => {
         if (status === 401 || status === 403) {
-          message.warning('토큰에 문제가 있습니다. 로그인을 다시 해주세요.');
+          message.error(
+            `[${status}]토큰에 문제가 있습니다. 로그인을 다시 해주세요.`,
+          );
         } else {
           alert(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
         }
@@ -81,7 +83,9 @@ const Users: React.FC = () => {
       })
       .catch(({ response: { status } }) => {
         if (status === 401 || status === 403) {
-          message.warning('토큰에 문제가 있습니다. 로그인을 다시 해주세요.');
+          message.error(
+            `[${status}]토큰에 문제가 있습니다. 로그인을 다시 해주세요.`,
+          );
         } else {
           alert(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
         }

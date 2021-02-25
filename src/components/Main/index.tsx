@@ -58,7 +58,7 @@ const Main: React.FC = () => {
       .catch(({ response: { status } }) => {
         message.destroy();
         if (status === 400) {
-          message.warning('[400] 요청 형식이 잘못되었습니다.');
+          message.error('[400] 요청 형식이 잘못되었습니다.');
         } else if (status === 404) {
           message.error('[404] 이메일 또는 비밀번호가 일치하지 않습니다.');
           clearInputs();

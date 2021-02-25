@@ -16,6 +16,7 @@ import {
   Input,
   SignInButton,
 } from './styles';
+import { handleApiError } from '../Common/static';
 
 const Main: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -56,14 +57,11 @@ const Main: React.FC = () => {
         history.push('/path');
       })
       .catch(({ response: { status } }) => {
-        if (status === 400) {
-          message.destroy();
-          message.warning('[400] 요청 형식이 잘못되었습니다.');
-        } else if (status === 404) {
-          message.destroy();
-          message.error('이메일 또는 비밀번호가 일치하지 않습니다.');
+        message.destroy();
+        if (status === 404) {
           clearInputs();
         }
+        handleApiError(status, '이메일 또는 비밀번호가 일치하지 않습니다.');
       });
   };
 

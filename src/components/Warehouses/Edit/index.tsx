@@ -40,7 +40,7 @@ import {
 import { warehouseApi } from '../../../api';
 
 import { message } from 'antd';
-import { WRONG_TOKEN } from '../../Common/static';
+import { handleApiError, WRONG_TOKEN } from '../../Common/static';
 
 interface IEditDataProps {
   warehouseData: {
@@ -260,17 +260,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
       })
       .catch(({ response: { status } }) => {
         message.destroy();
-        if (status === 400) {
-          alert('[400]요청 형식이 잘못되었습니다.');
-        } else if (status === 401) {
-          alert('[401] 로그인을 다시 해주세요.');
-        } else if (status === 403) {
-          alert('[403] 해당 요청을 수행할 수 있는 권한이 없습니다.');
-        } else if (status === 500) {
-          alert('[500]서버 오류가 발생했습니다.');
-        } else {
-          alert('알 수 없는 오류!\n관리자에게 문의해 주세요.');
-        }
+        handleApiError(status, '');
       });
   };
 

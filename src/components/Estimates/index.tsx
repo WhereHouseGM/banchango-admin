@@ -51,9 +51,15 @@ const Estimates: React.FC = () => {
       .catch(({ response: { status } }) => {
         if (status === 404) {
           if (isExtraLoading) {
-            message.warning('더 이상 결과가 없습니다.');
+            message.error('더 이상 결과가 없습니다.');
           } else {
-            message.warning('결과가 존재하지 않습니다.');
+            message.error('결과가 존재하지 않습니다.');
+          }
+        } else {
+          if (status === 401 || status === 403) {
+            message.error(`[${status}] : 로그인을 다시 해주세요.`);
+          } else {
+            message.error(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
           }
         }
       });

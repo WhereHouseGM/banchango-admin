@@ -17,7 +17,7 @@ import ErrorPage from '../Common/ErrorPage';
 import { userApi } from '../../api';
 import { message } from 'antd';
 import { ShowMoreButton } from '../Warehouses/styles';
-import { WRONG_TOKEN } from '../Common/static';
+import { handleApiError, WRONG_TOKEN } from '../Common/static';
 
 interface ApiResult {
   name: string;
@@ -61,11 +61,7 @@ const Users: React.FC = () => {
         }
       })
       .catch(({ response: { status } }) => {
-        if (status === 401 || status === 403) {
-          message.warning('토큰에 문제가 있습니다. 로그인을 다시 해주세요.');
-        } else {
-          alert(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
-        }
+        handleApiError(status, '');
       });
   };
 
@@ -80,11 +76,7 @@ const Users: React.FC = () => {
         }
       })
       .catch(({ response: { status } }) => {
-        if (status === 401 || status === 403) {
-          message.warning('토큰에 문제가 있습니다. 로그인을 다시 해주세요.');
-        } else {
-          alert(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
-        }
+        handleApiError(status, '');
       });
   };
 

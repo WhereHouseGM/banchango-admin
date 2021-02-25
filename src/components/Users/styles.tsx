@@ -110,7 +110,7 @@ export const ShowMoreButton = styled.div`
   font-size: 14px;
   border-radius: 5px;
   color: white;
-  background-color: ${(props) => props.theme.lightBlueColor}
+  background-color: ${(props) => props.theme.lightBlueColor};
   font-weight: bold;
   transition: all 0.2s;
   &:hover {

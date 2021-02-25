@@ -10,12 +10,7 @@ export const ImageContainer = styled.div`
   background-color: inherit;
   height: 70px;
   display: flex;
-  box-pack: center;
   justify-content: center;
-  box-align: center;
-  box-orient: vertical;
-  box-direction: normal;
-  flex-direction: column;
 `;
 
 export const Wrapper = styled.div`
@@ -47,6 +42,42 @@ export const Image = styled.div<{ logoImage: string }>`
   align-self: flex-start;
   margin-left: 10px;
   background-repeat: no-repeat;
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
+export const ToPathButton = styled.div`
+  text-align: center;
+  background-color: ${(props) => props.theme.lightBlueColor};
+  transition: all 0.2s;
+  color: white;
+  align-self: flex-end;
+  border-radius: 8px;
+  font-size: 13px;
+  padding: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
+  margin-right: 3px;
+`;
+
+export const LogoutButton = styled.div`
+  text-align: center;
+  background-color: ${(props) => props.theme.lightBlueColor};
+  transition: all 0.2s;
+  color: white;
+  align-self: flex-end;
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 13px;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
 `;
 
 export const Text = styled.div`

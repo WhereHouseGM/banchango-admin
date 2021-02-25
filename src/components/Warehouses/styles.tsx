@@ -9,13 +9,8 @@ export const Container = styled.div`
 export const ImageContainer = styled.div`
   background-color: inherit;
   height: 70px;
-  display: flex;
-  box-pack: center;
   justify-content: center;
-  box-align: center;
-  box-orient: vertical;
-  box-direction: normal;
-  flex-direction: column;
+  display: flex;
 `;
 
 export const Wrapper = styled.div`
@@ -28,6 +23,42 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   align-content: center;
+`;
+
+export const ToPathButton = styled.div`
+  text-align: center;
+  background-color: ${(props) => props.theme.lightBlueColor};
+  transition: all 0.2s;
+  color: white;
+  align-self: flex-end;
+  border-radius: 8px;
+  font-size: 13px;
+  padding: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
+  margin-right: 3px;
+`;
+
+export const LogoutButton = styled.div`
+  text-align: center;
+  background-color: ${(props) => props.theme.lightBlueColor};
+  transition: all 0.2s;
+  color: white;
+  align-self: flex-end;
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 13px;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
 `;
 
 export const InformationContainer = styled.div`

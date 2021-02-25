@@ -18,7 +18,7 @@ import {
   ShowMoreButton,
   ToPathButton,
   LogoutButton,
-  ButtonsContainer,
+  ButtonsWrapper,
 } from './styles';
 import LogoImage from '../../assets/LOGO.png';
 import { estimateApi } from '../../api';
@@ -88,7 +88,7 @@ const Estimates: React.FC = () => {
           <InformationContainer>
             <ImageContainer>
               <Image logoImage={LogoImage}></Image>
-              <ButtonsContainer>
+              <ButtonsWrapper>
                 <ToPathButton
                   onClick={() => {
                     window.location.href = '/path';
@@ -102,9 +102,9 @@ const Estimates: React.FC = () => {
                     window.location.href = '/';
                   }}
                 >
-                  로그아웃 하기
+                  로그아웃
                 </LogoutButton>
-              </ButtonsContainer>
+              </ButtonsWrapper>
             </ImageContainer>
             <Text>견적 요청 관리</Text>
             <Header

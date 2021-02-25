@@ -19,6 +19,9 @@ import {
   ImageEditButton,
   Date,
   ShowMoreButton,
+  ButtonsWrapper,
+  ToPathButton,
+  LogoutButton,
 } from './styles';
 import { statusToColor, statusToText } from './static';
 import LogoImage from '../../assets/LOGO.png';
@@ -90,6 +93,23 @@ const Warehouses: React.FC = () => {
           <InformationContainer>
             <ImageContainer>
               <Image logoImage={LogoImage}></Image>
+              <ButtonsWrapper>
+                <ToPathButton
+                  onClick={() => {
+                    window.location.href = '/path';
+                  }}
+                >
+                  메인 페이지로 가기
+                </ToPathButton>
+                <LogoutButton
+                  onClick={() => {
+                    localStorage.clear();
+                    window.location.href = '/';
+                  }}
+                >
+                  로그아웃
+                </LogoutButton>
+              </ButtonsWrapper>
             </ImageContainer>
             <Text>창고 정보 관리</Text>
             <Header

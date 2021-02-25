@@ -11,7 +11,6 @@ export const ImageContainer = styled.div`
   height: 70px;
   display: flex;
   justify-content: center;
-  /* flex-direction: column; */
 `;
 
 export const Wrapper = styled.div`
@@ -45,7 +44,7 @@ export const Image = styled.div<{ logoImage: string }>`
   background-repeat: no-repeat;
 `;
 
-export const ButtonsContainer = styled.div`
+export const ButtonsWrapper = styled.div`
   display: flex;
   align-items: flex-end;
 `;

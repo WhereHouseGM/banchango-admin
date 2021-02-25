@@ -11,6 +11,9 @@ import {
   SearchButton,
   TextContainer,
   Text,
+  ButtonsWrapper,
+  ToPathButton,
+  LogoutButton,
 } from './styles';
 import LogoImage from '../../assets/LOGO.png';
 import ErrorPage from '../Common/ErrorPage';
@@ -96,6 +99,23 @@ const Users: React.FC = () => {
           <InformationContainer>
             <ImageContainer>
               <Image logoImage={LogoImage}></Image>
+              <ButtonsWrapper>
+                <ToPathButton
+                  onClick={() => {
+                    window.location.href = '/path';
+                  }}
+                >
+                  메인 페이지로 가기
+                </ToPathButton>
+                <LogoutButton
+                  onClick={() => {
+                    localStorage.clear();
+                    window.location.href = '/';
+                  }}
+                >
+                  로그아웃
+                </LogoutButton>
+              </ButtonsWrapper>
             </ImageContainer>
             <HeaderText>회원 정보 조회</HeaderText>
             <SearchContainer>

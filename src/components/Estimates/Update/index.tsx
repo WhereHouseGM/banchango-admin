@@ -24,7 +24,7 @@ import {
   UpdateStatusButtonWrapper,
 } from './styles';
 import { message } from 'antd';
-import { WRONG_TOKEN } from '../../Common/static';
+import { handleApiError, WRONG_TOKEN } from '../../Common/static';
 
 interface IUser {
   userId: number;
@@ -81,24 +81,7 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
       })
       .catch(({ response: { status } }) => {
         message.destroy();
-        if (status === 400) {
-          message.error('[400] : 요청 형식이 잘못되었습니다.');
-          return;
-        } else if (status === 401) {
-          message.error('[401] : 토큰이 잘못되었습니다. 다시 로그인 해주세요.');
-          return;
-        } else if (status === 403) {
-          message.error(
-            '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
-          );
-          return;
-        } else if (status === 404) {
-          message.error('[404] 해당 견적 요청을 찾을 수 없습니다.');
-          return;
-        } else {
-          message.error(`[${status}]알 수 없는 오류가 발생했습니다.`);
-          return;
-        }
+        handleApiError(status, '해당 견적 요청을 찾을 수 없습니다.');
       });
   };
   return (

@@ -17,7 +17,7 @@ import {
   Button,
   FileName,
 } from './styles';
-import { WRONG_TOKEN } from '../../Common/static';
+import { handleApiError, WRONG_TOKEN } from '../../Common/static';
 
 interface IImage {
   url: string;
@@ -80,25 +80,12 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
         })
         .catch(({ response: { status } }) => {
           message.destroy();
-          if (status === 400) {
-            alert('[400] : 요청 형식이 잘못되었습니다.');
-            return;
-          } else if (status === 401) {
-            alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
-            return;
-          } else if (status === 403) {
-            alert(
-              '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
-            );
-            return;
-          } else if (status === 406) {
+          if (status === 406) {
             alert(
               '[406] : 해당 창고는 이미 메인 사진이 있습니다.\n기존 사진을 먼저 삭제하고 등록해주세요.',
             );
-            return;
           } else {
-            alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
-            return;
+            handleApiError(status, '');
           }
         });
     }
@@ -121,25 +108,12 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
         })
         .catch(({ response: { status } }) => {
           message.destroy();
-          if (status === 400) {
-            alert('[400] : 요청 형식이 잘못되었습니다.');
-            return;
-          } else if (status === 401) {
-            alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
-            return;
-          } else if (status === 403) {
-            alert(
-              '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
-            );
-            return;
-          } else if (status === 406) {
+          if (status === 406) {
             alert(
               '[406] : 해당 창고는 이미 추가 사진이 5장 있습니다.\n추가 사진의 최대 개수는 5장입니다.',
             );
-            return;
           } else {
-            alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
-            return;
+            handleApiError(status, '');
           }
         });
     }
@@ -156,26 +130,10 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
       })
       .catch(({ response: { status } }) => {
         message.destroy();
-        if (status === 400) {
-          alert('[400] : 요청 형식이 잘못되었습니다.');
-          return;
-        } else if (status === 401) {
-          alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
-          return;
-        } else if (status === 403) {
-          alert(
-            '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
-          );
-          return;
-        } else if (status === 404) {
-          alert(
-            '[404] : 기존에 있던 메인 사진이 없거나 존재하지 않는 창고입니다.',
-          );
-          return;
-        } else {
-          alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
-          return;
-        }
+        handleApiError(
+          status,
+          '기존에 있던 메인 사진이 없거나 존재하지 않는 창고입니다.',
+        );
       });
   };
 
@@ -190,26 +148,10 @@ const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
       })
       .catch(({ response: { status } }) => {
         message.destroy();
-        if (status === 400) {
-          alert('[400] : 요청 형식이 잘못되었습니다.');
-          return;
-        } else if (status === 401) {
-          alert('[401] : 토큰값이 잘못되었습니다. 다시 로그인 해주세요.');
-          return;
-        } else if (status === 403) {
-          alert(
-            '[403] : 로그인한 사용자가 관리자가 아닙니다. 다시 로그인 해주세요.',
-          );
-          return;
-        } else if (status === 404) {
-          alert(
-            '[404] : 기존에 없던 추가 사진이거나 존재하지 않는 창고입니다.',
-          );
-          return;
-        } else {
-          alert('알 수 없는 오류가 발생했습니다.\n관리자에게 문의해 주세요.');
-          return;
-        }
+        handleApiError(
+          status,
+          '기존에 없던 추가 사진이거나 존재하지 않는 창고입니다.',
+        );
       });
   };
 

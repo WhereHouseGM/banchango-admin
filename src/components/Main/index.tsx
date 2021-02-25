@@ -16,6 +16,7 @@ import {
   Input,
   SignInButton,
 } from './styles';
+import { handleApiError } from '../Common/static';
 
 const Main: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -57,18 +58,10 @@ const Main: React.FC = () => {
       })
       .catch(({ response: { status } }) => {
         message.destroy();
-        if (status === 400) {
-          message.error('[400] 요청 형식이 잘못되었습니다.');
-        } else if (status === 404) {
-          message.error('[404] 이메일 또는 비밀번호가 일치하지 않습니다.');
+        if (status === 404) {
           clearInputs();
-        } else if (status === 401 || status === 403) {
-          message.error(
-            `[${status}] : 토큰값이 잘못되었습니다. 로그인을 다시 해주세요.`,
-          );
-        } else {
-          message.error(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
         }
+        handleApiError(status, '이메일 또는 비밀번호가 일치하지 않습니다.');
       });
   };
 

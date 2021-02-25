@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Presenter from './Presenter';
-import { message } from 'antd';
 import { warehouseApi } from '../../../api';
 import Loading from '../../../components/Loading';
 import { handleApiError, WRONG_TOKEN } from '../../../components/Common/static';

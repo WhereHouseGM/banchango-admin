@@ -4,6 +4,7 @@ import Presenter from './Presenter';
 import { message } from 'antd';
 import Loading from '../../../components/Loading';
 import { estimateApi } from '../../../api';
+import { WRONG_TOKEN } from '../../../components/Common/static';
 
 const Container: React.FC = () => {
   const params = useParams<{ estimateId: string }>();
@@ -39,7 +40,7 @@ const Container: React.FC = () => {
       },
     ],
   });
-  const token = localStorage.getItem('AccessToken') || 'abc';
+  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
   const getApi = useCallback(() => {
     estimateApi
       .getEstimateData(token, parseInt(params.estimateId))

@@ -17,6 +17,7 @@ import {
   Button,
   FileName,
 } from './styles';
+import { WRONG_TOKEN } from '../../Common/static';
 
 interface IImage {
   url: string;
@@ -31,7 +32,7 @@ interface IEditImageProps {
 }
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
-  const token = localStorage.getItem('AccessToken') || 'abc';
+  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
   const params = useParams<{ warehouseId: string }>();
 
   const lengthOfExtraImages = (): number =>

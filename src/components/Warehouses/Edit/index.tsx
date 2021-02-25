@@ -40,6 +40,7 @@ import {
 import { warehouseApi } from '../../../api';
 
 import { message } from 'antd';
+import { WRONG_TOKEN } from '../../Common/static';
 
 interface IEditDataProps {
   warehouseData: {
@@ -249,7 +250,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
       return;
     }
     message.loading('잠시만 기다려주세요.');
-    let token = localStorage.getItem('AccessToken') || 'ABC';
+    let token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
     return warehouseApi
       .updateWarehouses(token, parseInt(params.warehouseId), requestBody)
       .then(() => {

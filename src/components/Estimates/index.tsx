@@ -21,6 +21,7 @@ import LogoImage from '../../assets/LOGO.png';
 import { estimateApi } from '../../api';
 import ErrorPage from '../Common/ErrorPage';
 import { message } from 'antd';
+import { WRONG_TOKEN } from '../Common/static';
 
 interface ApiResult {
   warehouseId: number;
@@ -35,7 +36,7 @@ const Estimates: React.FC = () => {
   const [results, setResults] = useState<Array<ApiResult>>([]);
   const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
-  const token = localStorage.getItem('AccessToken') || 'abc';
+  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
 
   const getApi = useCallback(async () => {
     estimateApi
@@ -62,7 +63,7 @@ const Estimates: React.FC = () => {
     getApi();
   }, [getApi]);
 
-  if (token === null) {
+  if (token === WRONG_TOKEN) {
     return (
       <ErrorPage
         title="잘못된 접근입니다."

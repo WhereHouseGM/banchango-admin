@@ -4,11 +4,12 @@ import Presenter from './Presenter';
 import { message } from 'antd';
 import { warehouseApi } from '../../../api';
 import Loading from '../../../components/Loading';
+import { WRONG_TOKEN } from '../../../components/Common/static';
 
 const Container: React.FC = () => {
   const params = useParams<{ warehouseId: string }>();
   const [loading, setLoading] = useState<Boolean>(true);
-  const token = localStorage.getItem('AccessToken') || 'abc';
+  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
   const [imageData, setImageData] = useState({
     warehouseName: '',
     images: [

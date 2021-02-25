@@ -24,6 +24,7 @@ import {
   UpdateStatusButtonWrapper,
 } from './styles';
 import { message } from 'antd';
+import { WRONG_TOKEN } from '../../Common/static';
 
 interface IUser {
   userId: number;
@@ -66,7 +67,7 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
   const [estimateStatus, setEstimateStatus] = useState(estimateData.status);
 
   const updateStatus = (): void => {
-    let token = localStorage.getItem('AccessToken') || 'abc';
+    let token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
     let requestBody = {
       status: estimateStatus,
     };

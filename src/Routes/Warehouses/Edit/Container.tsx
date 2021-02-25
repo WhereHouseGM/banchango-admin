@@ -4,6 +4,7 @@ import Presenter from './Presenter';
 import { warehouseApi } from '../../../api';
 import { message } from 'antd';
 import Loading from '../../../components/Loading';
+import { WRONG_TOKEN } from '../../../components/Common/static';
 
 const Container: React.FC = () => {
   const params = useParams<{ warehouseId: string }>();
@@ -39,7 +40,7 @@ const Container: React.FC = () => {
     mainItemTypes: [''],
     blogUrl: '',
   });
-  const token = localStorage.getItem('AccessToken') || 'abc';
+  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
   const getApi = useCallback(() => {
     warehouseApi
       .getWarehouseData(token, parseInt(params.warehouseId))

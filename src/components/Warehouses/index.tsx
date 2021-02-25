@@ -58,6 +58,14 @@ const Warehouses: React.FC = () => {
           } else {
             message.warning('결과가 존재하지 않습니다.');
           }
+        } else {
+          if (status === 401 || status === 403) {
+            message.error(
+              `[${status}] : 토큰값이 잘못되었습니다. 로그인을 다시 해주세요.`,
+            );
+          } else {
+            message.error(`[${status}] : 알 수 없는 오류가 발생했습니다.`);
+          }
         }
       });
   }, [pageIndex, isExtraLoading, setResults, params, token]);

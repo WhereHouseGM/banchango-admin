@@ -67,7 +67,7 @@ const UpdateData: React.FC<IUpdateDataProps> = ({ estimateData }) => {
   const [estimateStatus, setEstimateStatus] = useState(estimateData.status);
 
   const updateStatus = (): void => {
-    let token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+    let token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
     let requestBody = {
       status: estimateStatus,
     };

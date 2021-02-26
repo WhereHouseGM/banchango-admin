@@ -42,7 +42,7 @@ const Warehouses: React.FC = () => {
   const [results, setResults] = useState<Array<ApiResult>>([]);
   const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
-  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+  const token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
 
   const getApi = useCallback(async () => {
     warehouseApi
@@ -103,7 +103,7 @@ const Warehouses: React.FC = () => {
                 </ToPathButton>
                 <LogoutButton
                   onClick={() => {
-                    localStorage.clear();
+                    sessionStorage.clear();
                     window.location.href = '/';
                   }}
                 >

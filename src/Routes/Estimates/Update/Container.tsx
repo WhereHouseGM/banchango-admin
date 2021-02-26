@@ -40,7 +40,7 @@ const Container: React.FC = () => {
       },
     ],
   });
-  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+  const token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
   const getApi = useCallback(() => {
     estimateApi
       .getEstimateData(token, parseInt(params.estimateId))

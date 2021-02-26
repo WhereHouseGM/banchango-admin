@@ -26,7 +26,7 @@ const Path: React.FC = () => {
             <LogoutButton
               onClick={() => {
                 sessionStorage.clear();
-                window.location.reload();
+                window.location.href = '/';
               }}
             >
               로그아웃

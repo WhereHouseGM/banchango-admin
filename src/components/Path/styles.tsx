@@ -65,3 +65,19 @@ export const Button = styled(Link)`
   color: ${(props) => props.theme.blueColor};
   margin-bottom: 10px;
 `;
+
+export const LogoutButton = styled.div`
+  text-align: center;
+  background-color: ${(props) => props.theme.lightBlueColor};
+  transition: all 0.2s;
+  color: white;
+  align-self: center;
+  padding: 5px 10px 5px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: ${(props) => props.theme.blueColor};
+  }
+`;

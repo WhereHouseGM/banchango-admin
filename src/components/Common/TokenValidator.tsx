@@ -22,7 +22,7 @@ const TokenAndTypeValidator: React.FC<ITokenAndTypeValidatorProps> = ({
 
   const verifyAccess: any = useCallback(() => {
     const isTokenExpired = (): boolean => {
-      const accessToken: string | null = localStorage.getItem('AccessToken');
+      const accessToken: string | null = sessionStorage.getItem('AccessToken');
       if (accessToken !== null) {
         return (
           jwtDecode<TokenExp>(accessToken).exp * 1000 < new Date().getTime()
@@ -31,13 +31,13 @@ const TokenAndTypeValidator: React.FC<ITokenAndTypeValidatorProps> = ({
     };
 
     const isUserLoggedIn = (): boolean => {
-      return localStorage.getItem('AccessToken') !== null;
+      return sessionStorage.getItem('AccessToken') !== null;
     };
 
     switch (location.pathname) {
       case PathNames.MAIN:
         if (isUserLoggedIn()) {
-          localStorage.clear();
+          sessionStorage.clear();
           return (
             <ErrorPage
               title="이미 로그인이 되어 있었습니다."
@@ -52,7 +52,7 @@ const TokenAndTypeValidator: React.FC<ITokenAndTypeValidatorProps> = ({
       default:
         if (isUserLoggedIn()) {
           if (isTokenExpired()) {
-            localStorage.clear();
+            sessionStorage.clear();
             return (
               <ErrorPage
                 title="로그인 휴효기간이 만료되었습니다."
@@ -65,7 +65,7 @@ const TokenAndTypeValidator: React.FC<ITokenAndTypeValidatorProps> = ({
             return children;
           }
         } else {
-          localStorage.clear();
+          sessionStorage.clear();
           return (
             <ErrorPage
               title="잘못된 접근입니다."

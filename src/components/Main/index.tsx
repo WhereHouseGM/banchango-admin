@@ -53,7 +53,7 @@ const Main: React.FC = () => {
     userApi
       .signIn(requestBody)
       .then(({ data: { accessToken } }) => {
-        localStorage.setItem('AccessToken', accessToken);
+        sessionStorage.setItem('AccessToken', accessToken);
         history.push('/path');
       })
       .catch(({ response: { status } }) => {

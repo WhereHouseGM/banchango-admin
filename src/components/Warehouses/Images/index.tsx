@@ -32,7 +32,7 @@ interface IEditImageProps {
 }
 
 const EditImage: React.FC<IEditImageProps> = ({ imageData }) => {
-  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+  const token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
   const params = useParams<{ warehouseId: string }>();
 
   const lengthOfExtraImages = (): number =>

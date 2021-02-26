@@ -32,7 +32,7 @@ interface ApiResult {
 }
 
 const Users: React.FC = () => {
-  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+  const token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [results, setResults] = useState<Array<ApiResult>>([]);
   const [isExtraLoading, setIsExtraLoading] = useState<boolean>(false);
@@ -109,7 +109,7 @@ const Users: React.FC = () => {
                 </ToPathButton>
                 <LogoutButton
                   onClick={() => {
-                    localStorage.clear();
+                    sessionStorage.clear();
                     window.location.href = '/';
                   }}
                 >

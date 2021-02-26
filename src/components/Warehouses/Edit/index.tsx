@@ -250,7 +250,7 @@ const EditData: React.FC<IEditDataProps> = ({ warehouseData }) => {
       return;
     }
     message.loading('잠시만 기다려주세요.');
-    let token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+    let token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
     return warehouseApi
       .updateWarehouses(token, parseInt(params.warehouseId), requestBody)
       .then(() => {

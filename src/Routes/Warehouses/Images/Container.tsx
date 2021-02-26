@@ -8,7 +8,7 @@ import { handleApiError, WRONG_TOKEN } from '../../../components/Common/static';
 const Container: React.FC = () => {
   const params = useParams<{ warehouseId: string }>();
   const [loading, setLoading] = useState<Boolean>(true);
-  const token = localStorage.getItem('AccessToken') || WRONG_TOKEN;
+  const token = sessionStorage.getItem('AccessToken') || WRONG_TOKEN;
   const [imageData, setImageData] = useState({
     warehouseName: '',
     images: [
